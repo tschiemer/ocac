@@ -5,7 +5,7 @@
 #ifndef OCAC_OCC_DATATYPES_EVENTSUBSCRIPTION_H
 #define OCAC_OCC_DATATYPES_EVENTSUBSCRIPTION_H
 
-#include "framework.h"
+#include "ocac/occ/datatypes/framework.h"
 
 #ifdef __cplusplus
 extern "C" {

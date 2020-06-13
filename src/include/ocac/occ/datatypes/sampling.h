@@ -5,8 +5,7 @@
 #ifndef OCAC_SAMPLING_H
 #define OCAC_SAMPLING_H
 
-#include "base.h"
-#include "worker.h"
+#include "ocac/occ/datatypes/worker.h"
 
 #ifdef __cplusplus
 extern "C" {

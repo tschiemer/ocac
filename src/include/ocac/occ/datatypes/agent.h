@@ -5,7 +5,7 @@
 #ifndef OCAC_OCC_DATATYPES_AGENT_H
 #define OCAC_OCC_DATATYPES_AGENT_H
 
-#include "framework.h"
+#include "ocac/occ/datatypes/framework.h"
 
 #ifdef __cplusplus
 extern "C" {

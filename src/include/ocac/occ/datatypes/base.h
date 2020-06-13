@@ -5,7 +5,7 @@
 #ifndef OCAC_OCC_DATATYPES_BASE_H
 #define OCAC_OCC_DATATYPES_BASE_H
 
-#include "../../arch.h"
+#include "ocac/arch.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,6 +56,7 @@ typedef s64_t OcaInt64;
 typedef float OcaFloat32;
 typedef double OcaFloat64;
 
+//typedef u8_t OcaChar;
 
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/bpstruct.h"
@@ -69,6 +70,13 @@ PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/epstruct.h"
 #endif
+
+
+#define OCAC_STRING(maxlen) \
+    struct { \
+        PACK_STRUCT_FIELD(OcaUint16 Len); \
+        PACK_STRUCT_FIELD(u8_t Value[maxlen]); \
+    } PACK_STRUCT_STRUCT
 
 
 #ifdef PACK_STRUCT_USE_INCLUDES

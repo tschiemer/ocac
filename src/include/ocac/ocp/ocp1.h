@@ -5,8 +5,8 @@
 #ifndef OCAC_OCP1_H
 #define OCAC_OCP1_H
 
-#include <ocac/occ/datatypes/eventsubscription.h>
 #include "ocac/occ/datatypes/framework.h"
+#include "ocac/occ/datatypes/eventsubscription.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -5,9 +5,8 @@
 #ifndef OCAC_OCC_DATATYPESLIBRARY_H
 #define OCAC_OCC_DATATYPESLIBRARY_H
 
-#include "base.h"
-#include "framework.h"
-#include "worker.h"
+#include "ocac/occ/datatypes/framework.h"
+#include "ocac/occ/datatypes/worker.h"
 
 #ifdef __cplusplus
 extern "C" {

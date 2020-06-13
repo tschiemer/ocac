@@ -5,8 +5,7 @@
 #ifndef OCAC_OCC_DATATYPES_MANAGEMENT_H
 #define OCAC_OCC_DATATYPES_MANAGEMENT_H
 
-#include "base.h"
-#include "framework.h"
+#include "ocac/occ/datatypes/framework.h"
 
 #ifdef __cplusplus
 extern "C" {

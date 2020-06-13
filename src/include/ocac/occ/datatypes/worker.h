@@ -5,7 +5,7 @@
 #ifndef OCAC_OCC_DATATYPES_WORKER_H
 #define OCAC_OCC_DATATYPES_WORKER_H
 
-#include "base.h"
+#include "ocac/occ/datatypes/base.h"
 
 #ifdef __cplusplus
 extern "C" {
