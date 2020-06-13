@@ -22,4 +22,8 @@
 #define OCAC_CLASS_NAME(name) ocac_occ_ ## name
 #endif
 
+#ifndef OCAC_OBJ_NAME
+#define OCAC_OBJ_NAME(name) ocac_obj_ ## name
+#endif
+
 #endif //OCAC_OPT_H

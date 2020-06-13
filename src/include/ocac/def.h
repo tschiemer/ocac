@@ -21,6 +21,14 @@ extern "C" {
 #endif
 #endif
 
+#ifndef true
+#define true 1
+#endif
+
+#ifndef false
+#define false 0
+#endif
+
 
 #if BYTE_ORDER == BIG_ENDIAN
 #define ocac_htons(x) ((u16_t)(x))

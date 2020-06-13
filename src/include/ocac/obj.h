@@ -21,7 +21,7 @@ extern "C" {
     PACK_STRUCT_BEGIN \
     struct ocac_obj_ ## name { \
         OcaONo  ono; \
-        OCAC_BASE_CLASS * class_ptr; \
+        OCAC_CLASS_BASE * class_ptr; \
         \
 
 #define OCAC_OBJ_DEF_END(name) \
@@ -31,8 +31,9 @@ extern "C" {
 
 
 #define OCAC_OBJ_TYPE(name) struct ocac_obj_ ## name
-#define OCAC_BASE_OBJ OCAC_OBJ_TYPE(base)
-#define OCAC_OBJ_PTR(obj_ptr) ((OCAC_BASE_OBJ *)obj_ptr)
+#define OCAC_OBJ_BASE OCAC_OBJ_TYPE(base)
+#define OCAC_OBJ_CAST(name,obj_ptr) ((OCAC_OBJ_TYPE(name)*)obj_ptr)
+#define OCAC_OBJ_PTR(obj_ptr) OCAC_OBJ_CAST(base, obj_ptr)
 
 OCAC_OBJ_DEF_BEGIN(base)
 OCAC_OBJ_DEF_END(base)
@@ -47,8 +48,13 @@ OCAC_OBJ_DEF_END(base)
 //    OCAC_ASSERT("obj != NULL", obj != NULL); \
 //    OCAC_ASSERT("argvlen != 0", reqlen != 0); \
 
-OcaStatus ocac_obj_exec(OCAC_BASE_OBJ * obj, u16_t deflevel, u16_t index, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
+OcaStatus ocac_obj_exec(OCAC_OBJ_BASE * obj, u16_t deflevel, u16_t index, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
 
+#ifdef DEBUG
+
+void ocac_dump_obj( OCAC_OBJ_BASE * obj );
+
+#endif
 
 #ifdef __cplusplus
 }
