@@ -2,10 +2,7 @@
 // Created by Philip Tschiemer on 12.06.20.
 //
 
-#include <ocac/occ/datatypes/framework.h>
 #include "ocac/class.h"
-
-#include "ocac/occ/datatypes/framework.h"
 #include "ocac/debug.h"
 
 
@@ -13,7 +10,7 @@ struct ocac_class_method * ocac_class_get_method(OCAC_CLASS_BASE * class_ptr, u1
 {
     OCAC_ASSERT("class_ptr != NULL", class_ptr != NULL);
     OCAC_ASSERT("deflevel > 0", deflevel > 0);
-    OCAC_ASSERT("event defined by child", class_ptr->class_identification.ClassID.FieldCount < deflevel);
+    OCAC_ASSERT("method defined by child", class_ptr->class_identification.ClassID.FieldCount >= deflevel );
 
     #ifdef OCAC_CLASS_NO_EVENT_OVERRIDE
     while (class_ptr->class_identification.ClassID.FieldCount > deflevel){
@@ -38,7 +35,7 @@ struct ocac_class_property * ocac_class_get_property(OCAC_CLASS_BASE * class_ptr
 {
     OCAC_ASSERT("class_ptr != NULL", class_ptr != NULL);
     OCAC_ASSERT("deflevel > 0", deflevel > 0);
-    OCAC_ASSERT("property defined by child", class_ptr->class_identification.ClassID.FieldCount < deflevel);
+    OCAC_ASSERT("property defined by child", class_ptr->class_identification.ClassID.FieldCount >= deflevel);
 
     #ifdef OCAC_CLASS_NO_PROPERTY_OVERRIDE
     while (class_ptr->class_identification.ClassID.FieldCount > deflevel){
@@ -63,7 +60,7 @@ struct ocac_class_event * ocac_class_get_event(OCAC_CLASS_BASE * class_ptr, u16_
 {
     OCAC_ASSERT("class_ptr != NULL", class_ptr != NULL);
     OCAC_ASSERT("deflevel > 0", deflevel > 0);
-    OCAC_ASSERT("method defined by child", class_ptr->class_identification.ClassID.FieldCount < deflevel);
+    OCAC_ASSERT("event defined by child", class_ptr->class_identification.ClassID.FieldCount >= deflevel);
 
     #ifdef OCAC_CLASS_NO_METHOD_OVERRIDE
     while (class_ptr->class_identification.ClassID.FieldCount > deflevel){
