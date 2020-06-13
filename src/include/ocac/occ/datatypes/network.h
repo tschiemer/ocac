@@ -12,63 +12,60 @@ extern "C" {
 #endif
 
 
-typedef OcaBlob OcaNetworkHostID;
 
-typedef OcaBlob OcaNetworkNodeID;
-
-typedef OcaBlob OcaNetworkAddress;
-
-typedef struct {
-    OcaNetworkAddress MyNetworkAddress;
-    OcaBlob SystemInterfaceHandle;
-} OcaNetworkSystemInterfaceID;
-
-typedef OcaBlob OcaStreamID;
-
-typedef OcaUint16 OcaStreamIndex;
-
-typedef OcaBlob OcaStreamParameters;
-
-typedef OcaBlob OcaStreamConnectorID;
-
-typedef struct {
-    OcaNetworkHostID HostID;
-    OcaNetworkAddress NetworkAddress;
-    OcaNetworkNodeID NodeID;
-    OcaStreamConnectorID StreamConnectorID;
-} OcaStreamConnectorIdentification;
-
-typedef OcaUint16 OcaStreamConnectorPinIndex;
-
-typedef OcaBlob OcaNetworkSignalChannelID;
-
-typedef struct {
-    u32_t rxPacketErrors;
-    u32_t txPacketErrors;
-} OcaNetworkStatistics;
-
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef enum {
     OcaEncoding_None    = 0,
     OcaEncoding_Pcm16   = 1,
     OcaEncoding_Pcm24   = 2,
     OcaEncoding_Pcm32   = 3
-} OcaEncoding;
+} PACK_STRUCT_STRUCT OcaEncoding;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef enum {
     OcaNetworkStatus_Unknown    = 0,
     OcaNetworkStatus_Ready      = 1,
     OcaNetworkStatus_StartingUp = 2,
     OcaNetworkStatus_Stopped    = 3
-} OcaNetworkStatus;
+} PACK_STRUCT_STRUCT OcaNetworkStatus;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef enum {
     OcaNetworkLinkType_None             = 0,
     OcaNetworkLinkType_EthernetWired    = 1,
     OcaNetworkLinkType_EthernetWireless = 2,
     OcaNetworkLinkType_USB              = 3,
     OcaNetworkLinkType_SerialP2P        = 4
-} OcaNetworkLinkType;
+} PACK_STRUCT_STRUCT OcaNetworkLinkType;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef enum {
     OcaNetworkMediaProtocol_None        = 0,
     OcaNetworkMediaProtocol_AV3         = 1,
@@ -78,46 +75,172 @@ typedef enum {
     OcaNetworkMediaProtocol_AES67       = 5,
     OcaNetworkMediaProtocol_SMPTEAudio  = 6,
     OcaNetworkMediaProtocol_LiveWire    = 7
-} OcaNetworkMediaProtocol;
+} PACK_STRUCT_STRUCT OcaNetworkMediaProtocol;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef enum {
     OcaNetworkControlProtocol_None  = 0,
     OcaNetworkControlProtocol_OCP01 = 1,
     OcaNetworkControlProtocol_OCP02 = 2,
     OcaNetworkControlProtocol_OCP03 = 3
-} OcaNetworkControlProtocol;
+} PACK_STRUCT_STRUCT OcaNetworkControlProtocol;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef enum {
     OcaStreamType_None      = 0,
     OcaStreamType_Unicast   = 1,
     OcaStreamType_Multicast = 2
-} OcaStreamType;
+} PACK_STRUCT_STRUCT OcaStreamType;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef enum {
     OcaStreamStatus_NotConnected    = 0,
     OcaStreamStatus_Connected       = 1,
     OcaStreamStatus_Paused          = 2
-} OcaStreamStatus;
+} PACK_STRUCT_STRUCT OcaStreamStatus;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef enum {
     OcaStreamConnectorStatus_NotAvailable   = 0,
     OcaStreamConnectorStatus_Idle           = 1,
     OcaStreamConnectorStatus_Connected      = 2,
     OcaStreamConnectorStatus_Paused         = 3
-} OcaStreamConnectorStatus;
+} PACK_STRUCT_STRUCT OcaStreamConnectorStatus;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef enum {
     OcaNetworkSignalChannelStatus_NotConnected  = 0,
     OcaNetworkSignalChannelStatus_Connected     = 1,
     OcaNetworkSignalChannelStatus_Muted         = 2
-} OcaNetworkSignalChannelStatus;
+} PACK_STRUCT_STRUCT OcaNetworkSignalChannelStatus;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef enum {
     OcaNetworkMediaSourceOrSink_None    = 0,
     OcaNetworkMediaSourceOrSink_Source  = 1,
     OcaNetworkMediaSourceOrSink_Sink    = 2
-} OcaNetworkMediaSourceOrSink;
+} PACK_STRUCT_STRUCT OcaNetworkMediaSourceOrSink;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
+
+typedef OcaBlob OcaNetworkHostID;
+
+typedef OcaBlob OcaNetworkNodeID;
+
+typedef OcaBlob OcaNetworkAddress;
+
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+typedef struct {
+    OcaNetworkAddress MyNetworkAddress;
+    OcaBlob SystemInterfaceHandle;
+} PACK_STRUCT_STRUCT OcaNetworkSystemInterfaceID;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+typedef OcaBlob OcaStreamID;
+
+typedef OcaUint16 OcaStreamIndex;
+
+typedef OcaBlob OcaStreamParameters;
+
+typedef OcaBlob OcaStreamConnectorID;
+
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+typedef struct {
+    OcaNetworkHostID HostID;
+    OcaNetworkAddress NetworkAddress;
+    OcaNetworkNodeID NodeID;
+    OcaStreamConnectorID StreamConnectorID;
+} PACK_STRUCT_STRUCT OcaStreamConnectorIdentification;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+typedef OcaUint16 OcaStreamConnectorPinIndex;
+
+typedef OcaBlob OcaNetworkSignalChannelID;
+
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+typedef struct {
+    u32_t rxPacketErrors;
+    u32_t txPacketErrors;
+} PACK_STRUCT_STRUCT OcaNetworkStatistics;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef struct {
     OcaUint16 ErrorNumber;
     OcaStreamID IDAdvertised;
@@ -130,7 +253,11 @@ typedef struct {
     OcaStreamType StreamType;
     OcaStreamParameters StreamParameters;
     OcaString Label;
-} OcaStream;
+} PACK_STRUCT_STRUCT OcaStream;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
 
 #ifdef __cplusplus

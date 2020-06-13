@@ -11,6 +11,8 @@
 extern "C" {
 #endif
 
+
+
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/bpstruct.h"
 #endif
@@ -33,7 +35,8 @@ typedef enum {
     OcaBaseDataType_Blob             = 14,
     OcaBaseDataType_BlobFixedLen     = 15
 
-} PACK_STRUCT_END OcaBaseDataType;
+} PACK_STRUCT_STRUCT OcaBaseDataType;
+PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/epstruct.h"
 #endif
@@ -100,16 +103,23 @@ typedef u8_t OcaBlobFixedLen1[1];
 typedef u8_t OcaBlobFixedLen2[2];
 typedef u8_t OcaBlobFixedLen3[3];
 typedef u8_t OcaBlobFixedLen4[4];
+typedef u8_t OcaBlobFixedLen8[8];
+typedef u8_t OcaBlobFixedLen16[16];
 
 // TODO OcaList
 // TODO OcaList2D
 // TODO OcaMap
 // TODO OcaMapItem
 
+
+
+
 /**
  * OCA Object Number (unique identifier)
+ * (moved here to resolve circular dependency)
  */
 typedef OcaUint32 OcaONo;
+
 
 #ifdef __cplusplus
 }

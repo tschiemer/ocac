@@ -22,7 +22,8 @@ typedef enum {
     OcaPowerStateWorking    = 1,
     OcaPowerStateStandby    = 2,
     OcaPowerStateOff        = 3
-} OcaPowerState PACK_STRUCT_END;
+} PACK_STRUCT_STRUCT OcaPowerState;
+PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/epstruct.h"
 #endif
@@ -38,7 +39,8 @@ typedef enum {
     OcaDeviceStateDisabled          = 0x0004,
     OcaDeviceStateInitializing      = 0x0008,
     OcaDeviceStateUpdating          = 0x0010,
-} OcaDeviceState PACK_STRUCT_END;
+} PACK_STRUCT_STRUCT OcaDeviceState;
+PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/epstruct.h"
 #endif
@@ -54,7 +56,8 @@ typedef enum {
     OcaResetCauseInternalError      = 1,
     OcaResetCauseUpgrade            = 2,
     OcaResetCauseExternalRequest    = 3
-} OcaResetCause PACK_STRUCT_END;
+} PACK_STRUCT_STRUCT OcaResetCause;
+PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/epstruct.h"
 #endif
@@ -65,7 +68,8 @@ typedef enum {
 PACK_STRUCT_BEGIN
 typedef enum {
     OcaComponentBootLoader       = 0
-} OcaComponent PACK_STRUCT_END;
+} PACK_STRUCT_STRUCT OcaComponent;
+PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/epstruct.h"
 #endif
@@ -80,7 +84,8 @@ typedef struct {
     OcaClassVersionNumber ClassVersion;
     OcaONo ObjectNumber;
     OcaString Name;
-} OcaManagerDescriptor PACK_STRUCT_END;
+} PACK_STRUCT_STRUCT OcaManagerDescriptor;
+PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/epstruct.h"
 #endif
@@ -100,7 +105,8 @@ typedef struct {
     PACK_STRUCT_FIELD(OcaONo MediaClockManager);
     PACK_STRUCT_FIELD(OcaONo LibraryManager);
     PACK_STRUCT_FIELD(OcaONo OcaDeviceTimeManager);
-} OcaManagerDefaultObjectNumber PACK_STRUCT_END;
+} PACK_STRUCT_STRUCT OcaManagerDefaultObjectNumber;
+PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/epstruct.h"
 #endif
@@ -114,7 +120,8 @@ typedef struct {
     PACK_STRUCT_FIELD(OcaBlobFixedLen3 MfrCode);
     PACK_STRUCT_FIELD(OcaBlobFixedLen4 ModelCode);
     PACK_STRUCT_FIELD(OcaBlobFixedLen1 Reserved);
-} OcaModelGUID PACK_STRUCT_END;
+} PACK_STRUCT_STRUCT OcaModelGUID;
+PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/epstruct.h"
 #endif
@@ -128,7 +135,8 @@ typedef struct {
     PACK_STRUCT_FIELD(OcaString Manufacturer);
     PACK_STRUCT_FIELD(OcaString Name);
     PACK_STRUCT_FIELD(OcaString Version);
-} OcaModelDescriptor PACK_STRUCT_END;
+} PACK_STRUCT_STRUCT OcaModelDescriptor;
+PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/epstruct.h"
 #endif

@@ -11,20 +11,11 @@
 extern "C" {
 #endif
 
-typedef struct {
-    OcaONo EmitterONo;
-    OcaEventID EventID;
-} OcaEvent;
 
-typedef struct {
-    OcaMethodID MethodID;
-    OcaONo ONo;
-} OcaMethod;
-
-typedef OcaEvent OcaEventData;
-
-// TODO OcaObjectListEventData;
-
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef enum {
     OcaPropertyChangeType_CurrentChanged = 1,
     OcaPropertyChangeType_MinChanged     = 2,
@@ -32,27 +23,17 @@ typedef enum {
     OcaPropertyChangeType_ItemAdded      = 4,
     OcaPropertyChangeType_ItemChanged    = 5,
     OcaPropertyChangeType_ItemDeleted    = 6
-} OcaPropertyChangeType;
+} PACK_STRUCT_STRUCT OcaPropertyChangeType;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
-// TODO OcaPropertyChangedEventData (depends on key+value types)
-typedef struct {
-    OcaPropertyChangeType ChangeType;
-    OcaPropertyID PropertyID;
-//    PropertyKey
-//    PropertyValue
-} OcaPropertyChangedEventData;
 
-typedef struct {
-    OcaEvent Event;
-    OcaFloat64 Reading;
-} OcaObservationEventData;
-
-// TODO OcaObservationListEventData (like w/o List)
-typedef struct {
-    OcaEvent Event;
-    OcaFloat64 Reading[];
-} OcaObservationListEventData;
-
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef enum {
     OcaGrouperStatusChangeType_CitizenAdded                      = 1,
     OcaGrouperStatusChangeType_CitizenDeleted                    = 2,
@@ -61,23 +42,134 @@ typedef enum {
     OcaGrouperStatusChangeType_CitizenError                      = 5,
     OcaGrouperStatusChangeType_Enrollment                        = 6,
     OcaGrouperStatusChangeType_UnEnrollment                      = 7
-} OcaGrouperStatusChangeType;
+} PACK_STRUCT_STRUCT OcaGrouperStatusChangeType;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+typedef enum {
+    OcaNotificationDeliveryMode_Reliable = 1,
+    OcaNotificationDeliveryMode_Fast     = 2
+} PACK_STRUCT_STRUCT OcaNotificationDeliveryMode;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+typedef enum {
+    OcaSubscriptionManagerState_Normal           = 1,
+    OcaSubscriptionManagerState_EventsDisabled   = 2
+} PACK_STRUCT_STRUCT OcaSubscriptionManagerState;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+typedef struct {
+    OcaONo EmitterONo;
+    OcaEventID EventID;
+} PACK_STRUCT_STRUCT OcaEvent;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+
+typedef OcaEvent OcaEventData;
+
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+typedef struct {
+    OcaMethodID MethodID;
+    OcaONo ONo;
+} PACK_STRUCT_STRUCT OcaMethod;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+
+// TODO OcaObjectListEventData;
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+// TODO OcaPropertyChangedEventData (depends on key+value types)
+typedef struct {
+    OcaPropertyChangeType ChangeType;
+    OcaPropertyID PropertyID;
+//    PropertyKey
+//    PropertyValue
+} PACK_STRUCT_STRUCT OcaPropertyChangedEventData;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+typedef struct {
+    OcaEvent Event;
+    OcaFloat64 Reading;
+} PACK_STRUCT_STRUCT OcaObservationEventData;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+// TODO OcaObservationListEventData (like w/o List)
+typedef struct {
+    OcaEvent Event;
+    OcaFloat64 Reading[];
+} PACK_STRUCT_STRUCT OcaObservationListEventData;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
 typedef struct {
     OcaGrouperStatusChangeType ChangeType;
     OcaUint16 GroupIndex;
     OcaUint16 CitizenIndex;
-} OcaGrouperStatusChangeEventData;
+} PACK_STRUCT_STRUCT OcaGrouperStatusChangeEventData;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
 
-typedef enum {
-    OcaNotificationDeliveryMode_Reliable = 1,
-    OcaNotificationDeliveryMode_Fast     = 2
-} OcaNotificationDeliveryMode;
-
-typedef enum {
-    OcaSubscriptionManagerState_Normal           = 1,
-    OcaSubscriptionManagerState_EventsDisabled   = 2
-} OcaSubscriptionManagerState;
 
 #ifdef __cplusplus
 }
