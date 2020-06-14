@@ -6,8 +6,8 @@
 #include "ocac/occ/classes/root.h"
 #include "ocac/def.h"
 
-
-const OCAC_CLASS_TYPE(Root) OCAC_CLASS_NAME(Root) = {
+#ifndef OCAC_CLASS_NO_DEFAULT_ALLOCATION
+OCAC_CLASS_TYPE(OcaRoot) OCAC_CLASS_NAME(OcaRoot) = {
     .class_identification = {
         .ClassID = OCAC_CLASS_ROOT_ID,
         .ClassVersion = OCAC_CLASS_ROOT_VERSION
@@ -29,14 +29,8 @@ const OCAC_CLASS_TYPE(Root) OCAC_CLASS_NAME(Root) = {
     .dump = ocac_dump_root
 #endif
 
-};
-
-const OCAC_OBJ_TYPE(Root) OCAC_OBJ_NAME(Root) = {
-    .ono = OCAC_OBJ_ROOT_ONO,
-    .class_ptr =  OCAC_CLASS_PTR(&OCAC_CLASS_NAME(Root)),
-    .lockable = false,
-    .role = {6, "FOOBAR"}
-};
+} OCAC_CLASS_ROOT_ATTRIBUTE;
+#endif //OCAC_CLASS_NO_DEFAULT_ALLOCATION
 
 OcaStatus ocac_m_root_getClassIdentification(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen)
 {
@@ -83,7 +77,7 @@ OcaStatus ocac_m_root_getLockable(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen,
 //        return OcaStatus_BufferOverflow;
 //    }
 
-    *rsp = ((OCAC_OBJ_TYPE(Root)*)obj)->lockable;
+    *rsp = ((OCAC_OBJ_TYPE(OcaRoot)*)obj)->lockable;
     *rsplen = 1;
 
     return OcaStatus_OK;
@@ -122,7 +116,7 @@ OcaStatus ocac_m_root_getRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_
     OCAC_ASSERT("rsp != NULL", rsp != NULL);
     OCAC_ASSERT("rsplen != NULL", rsplen != NULL);
 
-    OcaString * role = (OcaString*) &((OCAC_OBJ_TYPE(Root)*)obj)->role;
+    OcaString * role = (OcaString*) &((OCAC_OBJ_TYPE(OcaRoot)*)obj)->role;
 
     // Len (OcaUint16) + string
     u16_t size = sizeof(OcaUint16) + role->Len;
@@ -144,18 +138,25 @@ OcaStatus ocac_m_root_getRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_
 }
 
 #ifdef DEBUG
-void ocac_dump_root(void * obj)
+void ocac_dump_root(OCAC_OBJ_BASE * obj)
 {
-    OCAC_OBJ_TYPE(Root) * root_obj = OCAC_OBJ_CAST(Root,obj);
-    OCAC_CLASS_TYPE(Root) * root_class = OCAC_CLASS_CAST(Root, root_obj->class_ptr);
+    #if OCAC_CLASS_DEFINITION == OCAC_CLASS_DEFINITION_CUSTOM
+    OCAC_ASSERT("Please define your own class dumper", 0);
+    #endif
 
+    OCAC_OBJ_TYPE(OcaRoot) * root_obj = OCAC_OBJ_CAST(OcaRoot,obj);
+    OCAC_CLASS_TYPE(OcaRoot) * root_class = OCAC_CLASS_CAST(OcaRoot, root_obj->class_ptr);
 
+    #if OCAC_CLASS_DEFINITION == OCAC_CLASS_DEFINITION_MAX
     printf(" Role (%d) = ", root_obj->role.Len);
     for(u16_t i = 0; i < root_obj->role.Len; i++){
         printf("%c", root_obj->role.Value[i]);
     }
     printf("\n");
+    #endif
 
+    #if OCAC_CLASS_DEFINITION == OCAC_CLASS_DEFINITION_MIN || OCAC_CLASS_DEFINITION == OCAC_CLASS_DEFINITION_MAX
     printf(" Lockable = %d\n", root_obj->lockable);
+    #endif
 }
 #endif

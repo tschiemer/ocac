@@ -12,9 +12,10 @@ struct ocac_class_method * ocac_class_get_method(OCAC_CLASS_BASE * class_ptr, u1
     OCAC_ASSERT("deflevel > 0", deflevel > 0);
     OCAC_ASSERT("method defined by child", class_ptr->class_identification.ClassID.FieldCount >= deflevel );
 
+    #define OCAC_CLASS_NO_EVENT_OVERRIDE
     #ifdef OCAC_CLASS_NO_EVENT_OVERRIDE
     while (class_ptr->class_identification.ClassID.FieldCount > deflevel){
-        OCAC_ASSERT("", class_ptr->class_identification.ClassID.FieldCount > 0)
+        OCAC_ASSERT("", class_ptr->class_identification.ClassID.FieldCount > 0);
         class_ptr = class_ptr->parent;
     }
     #endif
@@ -62,9 +63,9 @@ struct ocac_class_event * ocac_class_get_event(OCAC_CLASS_BASE * class_ptr, u16_
     OCAC_ASSERT("deflevel > 0", deflevel > 0);
     OCAC_ASSERT("event defined by child", class_ptr->class_identification.ClassID.FieldCount >= deflevel);
 
-    #ifdef OCAC_CLASS_NO_METHOD_OVERRIDE
+    #ifdef OCAC_CLASS_NO_EVENT_OVERRIDE
     while (class_ptr->class_identification.ClassID.FieldCount > deflevel){
-        OCAC_ASSERT("", class_ptr->class_identification.ClassID.FieldCount > 0)
+        OCAC_ASSERT("", class_ptr->class_identification.ClassID.FieldCount > 0);
         class_ptr = class_ptr->parent;
     }
     #endif
@@ -86,11 +87,11 @@ struct ocac_class_event * ocac_class_get_event(OCAC_CLASS_BASE * class_ptr, u16_
 void ocac_dump_class_id(OCAC_CLASS_BASE * class_ptr)
 {
 
-    printf(" OcaClassIdentification.OcaClassID = %d", class_ptr->class_identification.ClassID.Fields[0]);
+    printf(" OcaClassID = %d", class_ptr->class_identification.ClassID.Fields[0]);
     for(int i = 1; i < class_ptr->class_identification.ClassID.FieldCount; i++){
-        printf(";%d", class_ptr->class_identification.ClassID.Fields[i]);
+        printf(" %d", class_ptr->class_identification.ClassID.Fields[i]);
     }
-    printf("\n");
+    printf(" (v%d)\n", class_ptr->class_identification.ClassVersion);
 }
 
 void ocac_dump_class(OCAC_CLASS_BASE * class_ptr){
@@ -98,7 +99,7 @@ void ocac_dump_class(OCAC_CLASS_BASE * class_ptr){
 
     ocac_dump_class_id(class_ptr);
 
-    printf(" OcaClassIdentification.OcaClassVersion = %d\n", class_ptr->class_identification.ClassVersion);
+//    printf(" ClassVersion = %d\n", class_ptr->class_identification.ClassVersion);
 
     struct ocac_class_property * properties = OCAC_CLASS_PROPERTIES(class_ptr);
     printf(" properties (%d) @ %p\n", class_ptr->property_count, properties);

@@ -6,6 +6,7 @@
 #define OCAC_OCC_DATATYPES_NETWORK_H
 
 #include "ocac/occ/datatypes/base.h"
+#include "ocac/opt.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -174,11 +175,11 @@ PACK_STRUCT_END
 #endif
 
 
-typedef OcaBlob OcaNetworkHostID;
+typedef OCAC_BLOB(OCAC_OCC_NETWORK_HOSTID_MAXLEN) OcaNetworkHostID;
 
-typedef OcaBlob OcaNetworkNodeID;
+typedef OCAC_BLOB(OCAC_OCC_NETWORK_NODEID_MAXLEN) OcaNetworkNodeID;
 
-typedef OcaBlob OcaNetworkAddress;
+typedef OCAC_BLOB(OCAC_OCC_NETWORK_ADDR_MAXLEN) OcaNetworkAddress;
 
 
 #ifdef PACK_STRUCT_USE_INCLUDES
@@ -194,13 +195,13 @@ PACK_STRUCT_END
 #  include "arch/epstruct.h"
 #endif
 
-typedef OcaBlob OcaStreamID;
+typedef OCAC_BLOB(OCAC_OCC_NETWORK_STREAMID_MAXLEN) OcaStreamID;
 
 typedef OcaUint16 OcaStreamIndex;
 
-typedef OcaBlob OcaStreamParameters;
+typedef OCAC_BLOB(OCAC_OCC_NETWORK_STREAMPARAM_MAXLEN) OcaStreamParameters;
 
-typedef OcaBlob OcaStreamConnectorID;
+typedef OCAC_BLOB(OCAC_OCC_NETWORK_STREAMCONNID_MAXLEN) OcaStreamConnectorID;
 
 
 #ifdef PACK_STRUCT_USE_INCLUDES

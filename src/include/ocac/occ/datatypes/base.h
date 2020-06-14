@@ -78,6 +78,12 @@ PACK_STRUCT_END
         PACK_STRUCT_FIELD(u8_t Value[maxlen]); \
     } PACK_STRUCT_STRUCT
 
+#define OCAC_STRING_STR(str) \
+    struct { \
+        PACK_STRUCT_FIELD(OcaUint16 Len); \
+        PACK_STRUCT_FIELD(u8_t Value[sizeof(str)]); \
+    } PACK_STRUCT_STRUCT
+
 
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/bpstruct.h"
@@ -99,12 +105,18 @@ PACK_STRUCT_END
 PACK_STRUCT_BEGIN
 typedef struct {
     PACK_STRUCT_FIELD(OcaUint16 DataSize);
-    PACK_STRUCT_FIELD(u8_t Data);
+    PACK_STRUCT_FIELD(u8_t Data[]);
 } PACK_STRUCT_STRUCT OcaBlob;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/epstruct.h"
 #endif
+
+#define OCAC_BLOB(maxlen) \
+    struct { \
+        OcaUint16 DataSize; \
+        u8_t Data[maxlen]; \
+    }
 
 //typedef OcaBlob OcaBlobFixedLen;
 typedef u8_t OcaBlobFixedLen1[1];
@@ -128,6 +140,13 @@ typedef u8_t OcaBlobFixedLen16[16];
  */
 typedef OcaUint32 OcaONo;
 
+#ifdef DEBUG
+
+void ocac_dump_string( OcaString * string );
+void ocac_dump_blob( OcaBlob * blob );
+void ocac_dump_blobfixedlen( u8_t * blob, size_t len );
+
+#endif
 
 #ifdef __cplusplus
 }

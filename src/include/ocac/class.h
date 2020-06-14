@@ -33,7 +33,7 @@ struct ocac_class_method {
 };
 
 #ifdef DEBUG
-#define OCAC_CLASS_DEF_DUMP void (*dump)(void * obj);
+#define OCAC_CLASS_DEF_DUMP void (*dump)(struct ocac_obj_base * obj);
 #else
 #define OCAC_CLASS_DEF_DUMP
 #endif

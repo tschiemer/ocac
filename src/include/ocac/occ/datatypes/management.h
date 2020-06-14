@@ -51,7 +51,7 @@ PACK_STRUCT_END
 #endif
 PACK_STRUCT_BEGIN
 typedef enum {
-    OcaResetCausePowerOn            = 0
+    OcaResetCausePowerOn            = 0,
     OcaResetCauseInternalError      = 1,
     OcaResetCauseUpgrade            = 2,
     OcaResetCauseExternalRequest    = 3
@@ -131,10 +131,10 @@ PACK_STRUCT_END
 #endif
 PACK_STRUCT_BEGIN
 typedef struct {
-    PACK_STRUCT_FIELD(OcaString Manufacturer);
-    PACK_STRUCT_FIELD(OcaString Name);
-    PACK_STRUCT_FIELD(OcaString Version);
-} PACK_STRUCT_STRUCT OcaModelDescriptor;
+    PACK_STRUCT_FIELD(OCAC_STRING(OCAC_OCC_MANAGEMENT_MODEL_MANUFACTURER_MAXLEN) Manufacturer);
+    PACK_STRUCT_FIELD(OCAC_STRING(OCAC_OCC_MANAGEMENT_MODEL_NAME_MAXLEN) Name);
+    PACK_STRUCT_FIELD(OCAC_STRING(OCAC_OCC_MANAGEMENT_MODEL_VERSION_MAXLEN) Version);
+} PACK_STRUCT_STRUCT OcaModelDescription;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/epstruct.h"
