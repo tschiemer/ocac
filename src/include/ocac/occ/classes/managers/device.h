@@ -141,29 +141,29 @@ OCAC_CLASS_DEF_END(OcaDeviceManager)
 
 
 #define OCAC_OBJ_DEVICEMANAGER_DEF_MAX \
-    OcaModelGUID model_guid;                                                    // 03p01 \
-    OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_SN_MAXLEN) serial;                       // 03p02 \
-    OcaModelDescription model_desc;                                             // 03p03 \
-    OCAC_STRING(OCAC_OBJ_ROOT_ROLE_MAXLEN) device_name;                         // 03p04 \
-    OcaUint16 oca_version;                                                      // 03p05 \
-    OCAC_STRING(OCAC_OBJ_ROOT_ROLE_MAXLEN) role;                                // 03p06 \
-    OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_INVENTORYCODE_MAXLEN) inventory_code;    // 03p07 \
-    OcaBoolean enabled;                                                         // 03p08 \
-    OcaDeviceState state;                                                       // 03p09 \
-    OcaBoolean busy;                                                            // 03p10 \
-    OcaResetCause reset_cause;                                                  // 03p11 \
-    OCAC_STRING(OCAC_OBJ_ROOT_ROLE_MAXLEN) message;                             // 03p12 \
-//  OcaList<OcaManagerDescriptor> Managers                                      // 03p13 (does not make so much sense to use this)
+    OcaModelGUID model_guid; \
+    s8_t serial[OCAC_DEVICE_SERIAL_LEN]; \
+    OcaModelDescription model_desc; \
+    OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_DEVICENAME_MAXLEN) device_name; \
+    OcaUint16 oca_version; \
+    OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_INVENTORYCODE_MAXLEN) inventory_code; \
+    OcaBoolean enabled; \
+    OcaDeviceState state; \
+    OcaBoolean busy; \
+    OcaResetCause reset_cause; \
+    OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_MSG_MAXLEN) message; \
+//  OcaList<OcaManagerDescriptor> Managers  // 03p13 (does not make so much sense to use this)
+// also not using OCAC_STRING(OCAC_OBJ_ROOT_ROLE_MAXLEN) role; is duplicate
 
 #define OCAC_OBJ_DEVICEMANAGER_DEF_MIN \
-    OcaModelGUID model_guid;                                                    // 03p01 \
-    OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_SN_MAXLEN) serial;                       // 03p02 \
-    OcaModelDescription model_desc;                                             // 03p03 \
-    OCAC_STRING(OCAC_OBJ_ROOT_ROLE_MAXLEN) device_name;                         // 03p04 \
-    OcaUint16 oca_version;                                                      // 03p05 \
-    OcaBoolean enabled;                                                         // 03p08 \
-    OcaDeviceState state;                                                       // 03p09 \
-//  OcaList<OcaManagerDescriptor> Managers                                      // 03p13 (does not make so much sense to use this)
+    OcaModelGUID model_guid; \
+    s8_t serial[OCAC_DEVICE_SERIAL_LEN]; \
+    OcaModelDescription model_desc; \
+    OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_DEVICENAME_MAXLEN) device_name; \
+    OcaUint16 oca_version; \
+    OcaBoolean enabled; \
+    OcaDeviceState state; \
+//  OcaList<OcaManagerDescriptor> Managers  // 03p13 (does not make so much sense to use this)
 
 
 #if OCAC_CLASS_DEFINITION == OCAC_CLASS_DEFINITION_CUSTOM

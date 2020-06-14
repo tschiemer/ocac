@@ -24,11 +24,11 @@ OCAC_CLASS_TYPE(OcaManager) OCAC_CLASS_NAME(OcaManager) = {
 #endif //OCAC_CLASS_NO_DEFAULT_ALLOCATION
 
 
-#ifndef OCAC_OBJ_NO_DEFAULT_ALLOCATION
-OCAC_OBJ_TYPE(OcaManager) OCAC_OBJ_NAME(OcaManager) = {
-        .class_ptr = (OCAC_CLASS_BASE *) &OCAC_CLASS_NAME(OcaManager)
-};
-#endif
+//#ifndef OCAC_OBJ_NO_DEFAULT_ALLOCATION
+//OCAC_OBJ_TYPE(OcaManager) OCAC_OBJ_NAME(OcaManager) = {
+//        .class_ptr = (OCAC_CLASS_BASE *) &OCAC_CLASS_NAME(OcaManager)
+//};
+//#endif
 
 #ifdef DEBUG
 void ocac_dump_manager(OCAC_OBJ_BASE * obj){
@@ -38,11 +38,11 @@ void ocac_dump_manager(OCAC_OBJ_BASE * obj){
     OCAC_OBJ_TYPE(OcaManager) * manager_obj = OCAC_OBJ_CAST(OcaManager,obj);
 
     #if OCAC_CLASS_DEFINITION == OCAC_CLASS_DEFINITION_MIN || OCAC_CLASS_DEFINITION == OCAC_CLASS_DEFINITION_MAX
-    printf(" Name = ");
-    for(int i = 0; i < manager_obj->name.Len; i++){
-        printf("%c", manager_obj->name.Value[i]);
-    }
-    printf("\n");
+    printf(" Name = %s\n", manager_obj->name);
+//    for(int i = 0; i < sizeof(manager_obj->name) && manager_obj->name[i] != '\0'; i++){
+//        printf("%c", manager_obj->name[i]);
+//    }
+//    printf("\n");
     #endif
 }
 #endif

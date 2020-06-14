@@ -78,13 +78,6 @@ PACK_STRUCT_END
         PACK_STRUCT_FIELD(u8_t Value[maxlen]); \
     } PACK_STRUCT_STRUCT
 
-#define OCAC_STRING_STR(str) \
-    struct { \
-        PACK_STRUCT_FIELD(OcaUint16 Len); \
-        PACK_STRUCT_FIELD(u8_t Value[sizeof(str)]); \
-    } PACK_STRUCT_STRUCT
-
-
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/bpstruct.h"
 #endif

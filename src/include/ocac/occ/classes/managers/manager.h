@@ -61,7 +61,7 @@ OCAC_CLASS_DEF_END(OcaManager)
 
 
 #define OCAC_OBJ_MANAGER_DEF_MINMAX \
-    OCAC_STRING(OCAC_OBJ_MANAGER_NAME_MAXLEN) name; // Needed for manager descripter (see device manager) \
+    const char name[OCAC_OBJ_MANAGER_NAME_MAXLEN]; // Needed for manager descripter (see device manager) \
 
 #if OCAC_CLASS_DEFINITION == OCAC_CLASS_DEFINITION_CUSTOM
 #define OCAC_OBJ_MANAGER_DEF \
@@ -84,9 +84,9 @@ OCAC_OBJ_DEF_END(OcaManager)
 extern OCAC_CLASS_TYPE(OcaManager) OCAC_CLASS_NAME(OcaManager);
 #endif
 
-#ifndef OCAC_OBJ_NO_DEFAULT_ALLOCATION
-extern OCAC_OBJ_TYPE(OcaManager) OCAC_OBJ_NAME(OcaManager);
-#endif
+//#ifndef OCAC_OBJ_NO_DEFAULT_ALLOCATION
+//extern OCAC_OBJ_TYPE(OcaManager) OCAC_OBJ_NAME(OcaManager);
+//#endif
 
 
 #ifdef DEBUG
