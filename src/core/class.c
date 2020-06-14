@@ -101,6 +101,9 @@ void ocac_dump_class(OCAC_CLASS_BASE * class_ptr){
 
 //    printf(" ClassVersion = %d\n", class_ptr->class_identification.ClassVersion);
 
+    
+    printf( " parent = %p\n", class_ptr->parent);
+
     struct ocac_class_property * properties = OCAC_CLASS_PROPERTIES(class_ptr);
     printf(" properties (%d) @ %p\n", class_ptr->property_count, properties);
     for(int i = 0; i < class_ptr->property_count; i++){

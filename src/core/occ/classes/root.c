@@ -12,6 +12,7 @@ OCAC_CLASS_TYPE(OcaRoot) OCAC_CLASS_NAME(OcaRoot) = {
         .ClassID = OCAC_CLASS_ROOT_ID,
         .ClassVersion = OCAC_CLASS_ROOT_VERSION
     },
+    .parent = NULL,
     .property_count = OCAC_CLASS_ROOT_PROPERTIES,
     .method_count = OCAC_CLASS_ROOT_METHODS,
     .event_count = OCAC_CLASS_ROOT_EVENTS,

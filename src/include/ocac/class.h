@@ -44,7 +44,6 @@ struct ocac_class_method {
         const OcaClassIdentification class_identification; \
         \
         OCAC_CLASS_BASE * parent; \
-        OCAC_CLASS_BASE * next; \
         \
         const u8_t property_count; \
         const u8_t method_count; \
