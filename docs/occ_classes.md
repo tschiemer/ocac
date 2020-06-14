@@ -22,18 +22,18 @@ ID | Class | ONo [1] | Required
 1 1 5 | OcaMatrix
 1 1 6 | OcaNetworkSignalChannel
 | |
-1 2 | OcaAgent
+1 2 | OcaAgent  | | (YES [3,4])
 1 2 1 | OcaNetwork *DEPRECATED*
 1 2 2 | OcaGrouper
 1 2 3 | OcaRamper
 1 2 4 | OcaNumericObserver
 1 2 5 | OcaLibrary
-1 2 6 | OcaMediaClock
+1 2 6 | OcaMediaClock |  | YES [4]
 1 2 7 | OcaPowerSupply
 1 2 8 | OcaEventHandler
 1 2 9 | OcaNumericObserverList
-1 2 10 | OcaStreamNetwork
-1 2 11 | OcaStreamConnector
+1 2 10 | OcaStreamNetwork | | YES [3]
+1 2 11 | OcaStreamConnector | | YES [3]
 | |
 1 3 | OcaManager | | (YES)
 1 3 1 | OcaDeviceManager | 1 | YES
