@@ -15,7 +15,8 @@ AES70/Open Control Architecture (OCA) defines a standard for device control and 
 - [AES70-2-2018 (Part2: Class structure (OCC)](http://www.aes.org/publications/standards/search.cfm?docID=102)
 - [AES70-3-2018 (Part3: Protocol for IP Networks (OCP1))](http://www.aes.org/publications/standards/search.cfm?docID=103)
 - [Official *Tools and Demos* CPP Implementation](https://github.com/OCAAlliance/OcaToolsAndDemos/)
+- [More on github](https://github.com/topics/aes70)
 
 
-In the future [ANEMAN](https://www.aneman.net/) - the free connection management tool - is ment to support AES70 and would seem promising.
+In the future [ANEMAN](https://www.aneman.net/) - a free connection management tool - is ment to support AES70 and would seem promising.
 
