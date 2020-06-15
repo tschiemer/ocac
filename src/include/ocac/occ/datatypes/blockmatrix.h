@@ -13,154 +13,85 @@ extern "C" {
 #endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
+typedef struct {
+    OcaObjectIdentification MemberObjectIdentification;
+    OcaONo ContainerObjectNumber;
+} PACK_STRUCT_STRUCT OcaBlockMember;
+
+
 typedef enum {
     OcaPortMode_Input   = 1,
     OcaPortMode_Output  = 2
 } PACK_STRUCT_STRUCT OcaPortMode;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
-
-
-typedef OcaUint32 OcaProtoONo;
-typedef OcaUint16 OcaMatrixCoordinate;
-
-
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
-    OcaONo ContainerObjectNumber;
-    OcaObjectIdentification MemberObjectIdentification;
-} PACK_STRUCT_STRUCT OcaBlockMember;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
-
-
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
-typedef struct {
-    OcaUint16 Index;
     OcaPortMode Mode;
+    OcaUint16 Index;
 } PACK_STRUCT_STRUCT OcaPortID;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
-    OcaPortID ID;
     OcaONo Owner;
+    OcaPortID ID;
     OcaString Name;
 } PACK_STRUCT_STRUCT OcaPort;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     OcaPort SourcePort;
     OcaPort SinkPort;
 } PACK_STRUCT_STRUCT OcaSignalPath;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
+typedef OcaUint32 OcaProtoONo;
+
+
 typedef struct {
     OcaONo ProtoMemberPONo;
 } PACK_STRUCT_STRUCT OcaProtoMember;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
-    OcaClassIdentification ClassIdentification;
     OcaProtoONo PONo;
+    OcaClassIdentification ClassIdentification;
 } PACK_STRUCT_STRUCT OcaProtoObjectIdentification;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
-    OcaUint16 Index;
     OcaPortMode Mode;
+    OcaUint16 Index;
 } PACK_STRUCT_STRUCT OcaProtoPortID;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     OcaProtoONo Owner;
     OcaProtoPortID ProtoID;
     OcaString Name;
 } PACK_STRUCT_STRUCT OcaProtoPort;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     OcaProtoPort SourceProtoPort;
     OcaProtoPort SinkProtoPort;
 } PACK_STRUCT_STRUCT OcaProtoSignalPath;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
+typedef OcaUint16 OcaMatrixCoordinate;
+
+typedef struct {
+    OcaONo ONo;
+    OcaClassIdentification ClassIdentification;
+    OcaONoPath ContainerPath;
+    OcaString Role;
+    OcaString Label;
+} OcaObjectSearchResult;
+
+// TODO OcaObjectSearchResultFlags
+// #define OcaObjectSearchResultFlags_ONo                   0b1000000000000000 // 1
+// #define OcaObjectSearchResultFlags_ClassIdentification   0b0100000000000000 // 2
+// #define OcaObjectSearchResultFlags_ContainerPath         0b0010000000000000 // 3
+// #define OcaObjectSearchResultFlags_Role                  0b0001000000000000 // 4
+// #define OcaObjectSearchResultFlags_Label                 0b0000100000000000 // 5
+// #define OcaObjectSearchResultFlags_Unused                0b0000011111111111
+//#define OcaObjectSearchResultFlags 0x00
+
+typedef OcaUint16 OcaObjectSearchResultFlags;
 
 #ifdef __cplusplus
 }

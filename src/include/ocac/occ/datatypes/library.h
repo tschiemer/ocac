@@ -12,105 +12,76 @@
 extern "C" {
 #endif
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
-    OcaLibVolType_None      = 0,
-    OcaLibVolType_ParamSet  = 1,
-    OcaLibVolType_Patch     = 2
+    OcaLibVolStandardTypeID_None        = 0,
+    OcaLibVolStandardTypeID_ParamSet    = 1,
+    OcaLibVolStandardTypeID_Patch       = 2,
+    OcaLibVolStandardTypeID_Program     = 3
+} PACK_STRUCT_STRUCT OcaLibVolStandardTypeID;
+
+typedef struct {
+    OcaOrganizationID Authority;
+    OcaUint32 ID;
 } PACK_STRUCT_STRUCT OcaLibVolType;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
+typedef struct {
+    OcaLibVolType Type;
+    OcaONo ONo;
+} PACK_STRUCT_STRUCT OcaLibraryIdentifier;
+
+
+typedef OcaUint32 OcaLibVolID;
+
+typedef struct {
+    OcaONo Library;
+    OcaLibVolID ID;
+} PACK_STRUCT_STRUCT OcaLibVolIdentifier;
+
+
 typedef enum {
     OcaLibAccess_None       = 0,
     OcaLibAccess_ReadOnly   = 1,
     OcaLibAccess_ReadExpand = 2,
     OcaLibAccess_Full       = 3
 } PACK_STRUCT_STRUCT OcaLibAccess;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
-
-
-typedef OcaUint32 OcaLibVolID;
-
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
-typedef struct {
-    OcaLibVolID ID;
-    OcaONo Library;
-} PACK_STRUCT_STRUCT OcaLibVolIdentifier;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 // TODO OcaLibVolMetadata (multiple strings...)
 typedef struct {
-    OcaLibAccess Access;
-    OcaString Creator;
     OcaString Name;
     OcaLibVolType Type;
-    OcaTimeOfDay UpDate;
+    OcaLibAccess Access;
     OcaUint32 Version;
+    OcaString Creator;
+    OcaTimePTP UpDate;
 } PACK_STRUCT_STRUCT OcaLibVolMetadata;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 // TODO OcaLibVol
+//typedef struct {
+//    OcaLibVolMetadata Metadata;
+//    OcaBlob Data;
+//} OcaLibVol;
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     OcaONo TargetBlockType;
     OcaBlob ParData;
 } PACK_STRUCT_STRUCT OcaLibVolData_ParamSet;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+
+typedef struct {
+    OcaLibVolIdentifier ParamSetIdentifier;
+    OcaONo TargetBlockONo;
+} PACK_STRUCT_STRUCT OcaLibParamSetAssignment;
 
 // TODO OcaLibVolData_Patch
-
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
-    OcaONo TargetBlockONo;
-    OcaLibVolIdentifier ParamSetIdentifier;
-} PACK_STRUCT_STRUCT OcaLibParamSetAssignment;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+    OCAC_LIST(OcaLibParamSetAssignment,) Assignments;
+} PACK_STRUCT_STRUCT OcaLibVolData_Patch;
+
+typedef struct {
+    OcaBlob ProgramContent;
+} PACK_STRUCT_STRUCT OcaLiobVolData_Program;
 
 #ifdef __cplusplus
 }

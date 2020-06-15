@@ -11,38 +11,38 @@
 extern "C" {
 #endif
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
+
+typedef OcaFloat32 OcaDB;
+typedef OcaDB OcaDBV;
+typedef OcaDB OcaDBu;
+typedef OcaDB OcaDBFS;
+typedef OcaDB OcaDBz;
+
+typedef struct {
+    OcaDBz Ref;
+    OcaDB Value;
+} PACK_STRUCT_STRUCT OcaDBr;
+
+typedef OcaFloat32 OcaVoltage;
+typedef OcaFloat32 OcaCurrent;
+
+typedef struct {
+    OcaFloat32 Magnitude;
+    OcaFloat32 Phase;
+} PACK_STRUCT_STRUCT OcaImpedance;
+
 typedef enum {
     OcaMuteState_Muted   = 1;
     OcaMuteState_Unmuted = 2;
 } PACK_STRUCT_STRUCT OcaMuteState;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaPolarityState_NonInverted = 1,
     OcaPolarityState_Inverted    = 2
 } PACK_STRUCT_STRUCT OcaPolarityState;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaDelayUnit_Time            = 1,
     OcaDelayUnit_Distance        = 2,
@@ -53,32 +53,42 @@ typedef enum {
     OcaDelayUnit_Inches          = 7,
     OcaDelayUnit_Feet            = 8
 } PACK_STRUCT_STRUCT OcaDelayUnit;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
+typedef struct {
+    OcaDelayUnit DelayUnit;
+    OcaFloat32 DelayValue;
+} PACK_STRUCT_STRUCT OcaDelayValue;
+
+
+typedef OcaFloat32 OcaFrequency;
+
+#define OCAC_FREQUENCYRESPONSE(len) \
+    OCAC_MAP(OcaFrequency, OcaDB, len)
+
+typedef OCAC_FREQUENCYRESPONSE() OcaFrequencyResponse;
+
+// TODO OCAC_TRANSFERFUNCTION ???
+#define OCAC_TRANSFERFUNCTION(len) \
+    struct { \
+        OcaFrequency Frequency[len]; \
+        OcaFloat32 Amplitude[len]; \
+        OcaFloat32 Phase[len]; \
+    } PACK_STRUCT_STRUCT
+
+//typedef OcaFloat32 OcaTimeInterval;
+
+typedef OcaUint32 OcaPeriod;
+
+
 typedef enum {
     OcaClassicalFilterShape_Butterworth      = 1,
     OcaClassicalFilterShape_Bessel           = 2,
     OcaClassicalFilterShape_Chebyshev        = 3,
     OcaClassicalFilterShape_LinkwitzRiley    = 4
 } PACK_STRUCT_STRUCT OcaClassicalFilterShape;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaFilterPassBand_HiPass     = 1,
     OcaFilterPassBand_LowPass    = 2,
@@ -86,16 +96,8 @@ typedef enum {
     OcaFilterPassBand_BandReject = 4,
     OcaFilterPassBand_AllPass    = 5
 } PACK_STRUCT_STRUCT OcaFilterPassBand;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaParametricEQShape_PEQ                     = 1,
     OcaParametricEQShape_LowShelv                = 2,
@@ -110,16 +112,8 @@ typedef enum {
     OcaParametricEQShape_ToneControlHighFixed    = 11,
     OcaParametricEQShape_ToneControlHighSliding  = 12
 } PACK_STRUCT_STRUCT OcaParametricEQShape;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaDynamicsFunction_None     = 0,
     OcaDynamicsFunction_Compress = 1,
@@ -128,17 +122,16 @@ typedef enum {
     OcaDynamicsFunction_Gate     = 4,
     OcaDynamicsFunction_AGC      = 5
 } PACK_STRUCT_STRUCT OcaDynamicsFunction;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+
+
+typedef struct {
+    OcaDBr Threshold;
+    OcaFrequency Frequency;
+    OcaPeriod PollInterval;
+} PACK_STRUCT_STRUCT OcaPilotToneDetectorSpec;
 
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaWaveformType_None         = 0,
     OcaWaveformType_DC           = 1,
@@ -149,31 +142,15 @@ typedef enum {
     OcaWaveformType_NoiseWhite   = 6,
     OcaWaveformType_PolarityTest = 7
 } PACK_STRUCT_STRUCT OcaWaveformType;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaSweepType_None        = 0,
     OcaSweepType_Linear      = 1,
     OcaSweepType_Logarithmic = 2
 } PACK_STRUCT_STRUCT OcaSweepType;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaUnitOfMeasure_None            = 0,
     OcaUnitOfMeasure_Hertz           = 1,
@@ -182,46 +159,25 @@ typedef enum {
     OcaUnitOfMeasure_Ampere          = 4,
     OcaUnitOfMeasure_Ohm             = 5
 } PACK_STRUCT_STRUCT OcaUnitOfMeasure;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaPresentationUnit_dBu  = 0,
     OcaPresentationUnit_dBV  = 1,
     OcaPresentationUnit_V    = 2
 } PACK_STRUCT_STRUCT OcaPresentationUnit;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
+typedef OcaFloat32 OcaTemperature;
+
+
 typedef enum {
     OcaLevelDetectionLaw_None    = 0,
     OcaLevelDetectionLaw_RMS     = 1,
     OcaLevelDetectionLaw_Peak    = 2
 } PACK_STRUCT_STRUCT OcaLevelDetectionLaw;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaSensorReadingState_Unknown    = 0,
     OcaSensorReadingState_Valid      = 1,
@@ -229,16 +185,8 @@ typedef enum {
     OcaSensorReadingState_Overrange  = 3
     OcaSensorReadingState_Error      = 4
 } PACK_STRUCT_STRUCT OcaSensorReadingState;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaLevelMeterLaw_VU          = 1,
     OcaLevelMeterLaw_StandardVU  = 2,
@@ -248,73 +196,7 @@ typedef enum {
     OcaLevelMeterLaw_RMS         = 6,
     OcaLevelMeterLaw_Peak        = 7
 } PACK_STRUCT_STRUCT OcaLevelMeterLaw;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
-
-
-typedef OcaFloat32 OcaDB;
-typedef OcaDB OcaDBV;
-typedef OcaDB OcaDBu;
-typedef OcaDB OcaDBFS;
-typedef OcaDB OcaDBz;
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
-typedef struct {
-    OcaDBz Ref;
-    OcaDB Value;
-} PACK_STRUCT_STRUCT OcaDBr;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
-
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
-typedef struct {
-    OcaDelayUnit DelayUnit;
-    OcaFloat32 DelayValue;
-} PACK_STRUCT_STRUCT OcaDelayValue;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
-
-
-typedef OcaFloat32 OcaFrequency;
-
-// TODO OcaFrequencyResponse (depends on OcaMap)
-
-// TODO OcaTransferFunction (depends on OcaList)
-
-typedef OcaUint64 OcaTimeOfDay;
-typedef OcaFloat32 OcaTimeInterval;
-typedef OcaUint32 OcaPeriod;
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
-typedef struct {
-    OcaFrequency Frequency;
-    OcaPeriod PollInterval;
-    OcaDBr Threshold;
-} PACK_STRUCT_STRUCT OcaPilotToneDetectorSpec;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
-
-
-typedef OcaFloat32 OcaTemperature;
 
 
 #ifdef __cplusplus

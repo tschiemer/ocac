@@ -12,11 +12,6 @@ extern "C" {
 #endif
 
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaBaseDataType_None             = 0,
     OcaBaseDataType_Boolean          = 1,
@@ -33,13 +28,10 @@ typedef enum {
     OcaBaseDataType_String           = 12,
     OcaBaseDataType_BitString        = 13,
     OcaBaseDataType_Blob             = 14,
-    OcaBaseDataType_BlobFixedLen     = 15
+    OcaBaseDataType_BlobFixedLen     = 15,
+    OcaBaseDataType_Bit              = 16
 
 } PACK_STRUCT_STRUCT OcaBaseDataType;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 typedef u8_t OcaBoolean;
 
@@ -58,18 +50,11 @@ typedef double OcaFloat64;
 
 //typedef u8_t OcaChar;
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     PACK_STRUCT_FIELD(OcaUint16 Len);
     PACK_STRUCT_FIELD(u8_t Value[]);
 } PACK_STRUCT_STRUCT OcaString;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+
 
 
 #define OCAC_STRING(maxlen) \
@@ -78,52 +63,57 @@ PACK_STRUCT_END
         PACK_STRUCT_FIELD(u8_t Value[maxlen]); \
     } PACK_STRUCT_STRUCT
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
-typedef struct {
-    PACK_STRUCT_FIELD(OcaUint16 NrBits);
-    PACK_STRUCT_FIELD(u8_t Bitstring[]);
-} PACK_STRUCT_STRUCT OcaBitString;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
+typedef OCAC_STRING() OcaBitString;
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
-typedef struct {
-    PACK_STRUCT_FIELD(OcaUint16 DataSize);
-    PACK_STRUCT_FIELD(u8_t Data[]);
-} PACK_STRUCT_STRUCT OcaBlob;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 #define OCAC_BLOB(maxlen) \
     struct { \
         OcaUint16 DataSize; \
         u8_t Data[maxlen]; \
-    }
+    } PACK_STRUCT_STRUCT
 
-//typedef OcaBlob OcaBlobFixedLen;
-typedef u8_t OcaBlobFixedLen1[1];
-typedef u8_t OcaBlobFixedLen2[2];
-typedef u8_t OcaBlobFixedLen3[3];
-typedef u8_t OcaBlobFixedLen4[4];
-typedef u8_t OcaBlobFixedLen8[8];
-typedef u8_t OcaBlobFixedLen16[16];
+typedef OCAC_BLOB() OcaBlob;
 
-// TODO OcaList
-// TODO OcaList2D
-// TODO OcaMap
-// TODO OcaMapItem
+#define OCAC_BLOBFIXEDLEN(len) \
+    struct { \
+        u8_t bytes[len]; \
+    } PACK_STRUCT_STRUCT
 
+typedef OCAC_BLOBFIXEDLEN(1) OcaBlobFixedLen1;
+typedef OCAC_BLOBFIXEDLEN(3) OcaBlobFixedLen3;
+typedef OCAC_BLOBFIXEDLEN(4) OcaBlobFixedLen4;
+typedef OCAC_BLOBFIXEDLEN(8) OcaBlobFixedLen8;
+typedef OCAC_BLOBFIXEDLEN(16) OcaBlobFixedLen16;
+
+
+
+#define OCAC_LIST(type, len) \
+    struct { \
+        OcaUint16 Count; \
+        type Items[len]; \
+    } PACK_STRUCT_STRUCT
+
+
+#define OCAC_LIST2D(type, xn, yn) \
+    struct { \
+        OcaUint16 Count; \
+        type Items[xn*yn]; \
+    } PACK_STRUCT_STRUCT
+
+
+#define OCAC_MAP_ITEM(keytype, valuetype) \
+    struct { \
+        keytype Key; \
+        valuetype Value; \
+    } PACK_STRUCT_STRUCT
+
+#define OCAC_MAP(keytype, valuetype, len) \
+    OCAC_LIST(OCAC_MAP_ITEM(keytype,valuetype), len)
+
+
+#define OCAC_MULTIMAP(keytype, valuetype, len) \
+    OCAC_MAP(keytype, valuetype, len)
 
 
 
