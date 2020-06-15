@@ -20,20 +20,20 @@ Ver | ID | Class | ONo [1] | Required
 2 | 1 1 3 | OcaBlock | 100 [2] | YES
 2 | 1 1 4 | OcaBlockFactory
 2 | 1 1 5 | OcaMatrix
- | 1 1 6 | OcaNetworkSignalChannel *DEPRECATED*
+| | 1 1 6 | OcaNetworkSignalChannel *DEPRECATED*
 | |
 2 | 1 2 | OcaAgent  | | (YES [3,4])
- | 1 2 1 | OcaNetwork *DEPRECATED*
+| | 1 2 1 | OcaNetwork *DEPRECATED*
 2 | 1 2 2 | OcaGrouper
 2 | 1 2 3 | OcaRamper
 2 | 1 2 4 | OcaNumericObserver
 2 | 1 2 5 | OcaLibrary
- | 1 2 6 | OcaMediaClock *DEPRECATED*
+| | 1 2 6 | OcaMediaClock *DEPRECATED*
 2 | 1 2 7 | OcaPowerSupply
 2 | 1 2 8 | OcaEventHandler
 2 | 1 2 9 | OcaNumericObserverList
- | 1 2 10 | OcaStreamNetwork *DEPRECATED*
- | 1 2 11 | OcaStreamConnector *DEPRECATED*
+| | 1 2 10 | OcaStreamNetwork *DEPRECATED*
+| | 1 2 11 | OcaStreamConnector *DEPRECATED*
 1 | 1 2 15 | OcaMediaClock3
 1 | 1 2 16 | OcaTimeSource
 1 | 1 2 17 | OcaPhysicalPosition
@@ -54,13 +54,14 @@ Ver | ID | Class | ONo [1] | Required
 1 | 1 3 13 | OcaDiagnosticManager | 13
 | |
 1 | 1 4 | OcaApplicationNetwork | | (YES)
-1 | 1 4 1 | OcaControlNetwork
-1 | 1 4 2 | OcaMediaTransportNetwork
+1 | 1 4 1 | OcaControlNetwork | | YES [5]
+1 | 1 4 2 | OcaMediaTransportNetwork | | YES [4]
 
 1. iff singleton (manager) or object root
 2. Object root is an instance of OcaBlock
 3. For secured devices
 4. For streaming devices
+5. 
 
 ## OcaRoot
 ID 1, Version 2
