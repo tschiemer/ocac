@@ -1,51 +1,61 @@
 # OCC Classes
 
-Human readable form of AES70-2 Appendix A *(extract)*.
+Human readable form of AES70-2-2018 Appendix A (also see [XMI](http://www.aes.org/standards/models/AES70-2-2018-AnnexA.xmi), [EAP](http://www.aes.org/standards/models/AES70-2-2018-AnnexA.eap)) *(extract)*
 
 Required functionality according to AES70-2 Appendix B.
 
 ## Overview
 
-ID | Class | ONo [1] | Required
-:--- | :--- | ---: | :---:
-1 | OcaRoot | | (YES)
+Ver | ID | Class | ONo [1] | Required
+--- |:--- | :--- | ---: | :---:
+2 | 1 | OcaRoot | | (YES)
 | |
-1 1 | OcaWorker | | (YES)
-1 1 1 | OcaActuator
-1 1 1 XY | ...
+2 | 1 1 | OcaWorker | | (YES)
+2 | 1 1 1 | OcaActuator
+2 | 1 1 1 XY | ...
 | |
-1 1 2 | OcaSensor
-1 1 2 XY | ...
+2 | 1 1 2 | OcaSensor
+2 | 1 1 2 XY | ...
 | |
-1 1 3 | OcaBlock | 100 [2] | YES
-1 1 4 | OcaBlockFactory
-1 1 5 | OcaMatrix
-1 1 6 | OcaNetworkSignalChannel
+2 | 1 1 3 | OcaBlock | 100 [2] | YES
+2 | 1 1 4 | OcaBlockFactory
+2 | 1 1 5 | OcaMatrix
+ | 1 1 6 | OcaNetworkSignalChannel *DEPRECATED*
 | |
-1 2 | OcaAgent  | | (YES [3,4])
-1 2 1 | OcaNetwork *DEPRECATED*
-1 2 2 | OcaGrouper
-1 2 3 | OcaRamper
-1 2 4 | OcaNumericObserver
-1 2 5 | OcaLibrary
-1 2 6 | OcaMediaClock |  | YES [4]
-1 2 7 | OcaPowerSupply
-1 2 8 | OcaEventHandler
-1 2 9 | OcaNumericObserverList
-1 2 10 | OcaStreamNetwork | | YES [3]
-1 2 11 | OcaStreamConnector | | YES [3]
+2 | 1 2 | OcaAgent  | | (YES [3,4])
+ | 1 2 1 | OcaNetwork *DEPRECATED*
+2 | 1 2 2 | OcaGrouper
+2 | 1 2 3 | OcaRamper
+2 | 1 2 4 | OcaNumericObserver
+2 | 1 2 5 | OcaLibrary
+ | 1 2 6 | OcaMediaClock *DEPRECATED*
+2 | 1 2 7 | OcaPowerSupply
+2 | 1 2 8 | OcaEventHandler
+2 | 1 2 9 | OcaNumericObserverList
+ | 1 2 10 | OcaStreamNetwork *DEPRECATED*
+ | 1 2 11 | OcaStreamConnector *DEPRECATED*
+1 | 1 2 15 | OcaMediaClock3
+1 | 1 2 16 | OcaTimeSource
+1 | 1 2 17 | OcaPhysicalPosition
 | |
-1 3 | OcaManager | | (YES)
-1 3 1 | OcaDeviceManager | 1 | YES
-1 3 2 | OcaSecurityManager | 2 | YES [3]
-1 3 3 | OcaFirmwareManager | 3 | YES
-1 3 4 | OcaSubscriptionManager | 4 | YES
-1 3 5 | OcaPowerManager | 5
-1 3 6 | OcaNetworkManager | 6 | YES
-1 3 7 | OcaMediaClockManager | 7 | YES [4]
-1 3 8 | OcaLibraryManager | 8
-1 3 9 | OcaAudioProcessingManager | 9
-1 3 10 | OcaDeviceTimeManager | 10
+2 | 1 3 | OcaManager | | (YES)
+2 | 1 3 1 | OcaDeviceManager | 1 | YES
+2 | 1 3 2 | OcaSecurityManager | 2 | YES [3]
+2 | 1 3 3 | OcaFirmwareManager | 3 | YES
+2 | 1 3 4 | OcaSubscriptionManager | 4 | YES
+2 | 1 3 5 | OcaPowerManager | 5
+2 | 1 3 6 | OcaNetworkManager | 6 | YES
+2 | 1 3 7 | OcaMediaClockManager | 7 | YES [4]
+2 | 1 3 8 | OcaLibraryManager | 8
+2 | 1 3 9 | OcaAudioProcessingManager | 9
+2 | 1 3 10 | OcaDeviceTimeManager | 10
+1 | 1 3 11 | OcaTaskManager | 11
+1 | 1 3 12 | OcaCodingManager | 12
+1 | 1 3 13 | OcaDiagnosticManager | 13
+| |
+1 | 1 4 | OcaApplicationNetwork | | (YES)
+1 | 1 4 1 | OcaControlNetwork
+1 | 1 4 2 | OcaMediaTransportNetwork
 
 1. iff singleton (manager) or object root
 2. Object root is an instance of OcaBlock
@@ -53,15 +63,16 @@ ID | Class | ONo [1] | Required
 4. For streaming devices
 
 ## OcaRoot
-ID 1
+ID 1, Version 2
 
 ID | Declaration | Required
---- | --- | :---:
+--- | --- | ---
 01m01 | GetClassIdentification() -> OcaClassIdentification
 01m02 | GetLockable() -> OcaBoolean | YES
-01m03 | Lock() | YES
+01m03 | LockTotal() | YES
 01m04 | Unlock() | YES
 01m05 | GetRole() -> OcaString
+01m06 | LockReadonly()
 | |
 01p01 | OcaClassID ClassID
 01p02 | OcaClassVersionNumber ClassVersion
@@ -73,10 +84,10 @@ ID | Declaration | Required
 
 
 ## OcaWorker
-ID 1 1
+ID 1 1, Version 2
 
 ID | Declaration | Required
---- | --- | :---:
+--- | --- | ---
 02m01 | GetEnabled() -> OcaBoolean | YES
 02m02 | SetEnabled(OcaBoolean) | YES
 02m03 | AddPort(OcaString, OcaPortMode) -> OcaPortID
@@ -89,6 +100,7 @@ ID | Declaration | Required
 02m10 | GetOwner() -> OcaONo
 02m11 | GetLatency() -> OcaTimeInterval
 02m12 | SetLatency(OcaTimeInterval)
+02m13 | GetPath() -> OcaNamePath, OcaONoPath
 | |
 02p01 | OcaBoolean Enabled
 02p02 | OcaList<OcaPort> Ports
@@ -97,13 +109,13 @@ ID | Declaration | Required
 02p05 | OcaTimeInterval Latency
 
 ### OcaActuator
-ID 1 1 1
+ID 1 1 1, Version 2
 
 ### OcaSensor
-ID 1 1 2
+ID 1 1 2, Version 2
 
 ### OcaBlock
-ID 1 1 3
+ID 1 1 3, Version 2
 
 ID | Declaration | Required
 --- | --- | ---
@@ -121,22 +133,32 @@ ID | Declaration | Required
 03m12 | ApplyParamSet() -> OcaLibVolIdentifier
 03m13 | GetCurrentParamSetData() -> OcaLibVolData_ParamSet
 03m14 | StoreCurrentParamSetData(OcaLibVolIdentifier)
+03m15 | GetGlobalType() -> OcaGlobalTypeIdentifier
+03m16 | GetONoMap() -> OcaMap<OcaProtoONo, OcaONo>
+03m19 | FindObjectsByLabelRecursive(OcaString searchName, OcaStringComparisonType, OcaClassID, OcaObjectSearchResultFlags) -> OcaList<OcaObjectSearchResult>
+03m20 | FindObjectsByPath(OcaNamePath, OcaObjectSearchResultFlags) -> OcaList<OcaObjectSearchResult>
+03m17 | FindObjectsByRole(OcaString searchName, OcaStringComparisonType, OcaClassID, OcaObjectSearchResultFlags) -> OcaList<OcaObjectSearchResult>
+03m18 | FindObjectsByRoleRecursive(OcaString searchName, OcaStringComparisonType, OcaClassID, OcaObjectSearchResultFlags) -> OcaList<OcaObjectSearchResult>
 | |
 03p01 | OcaONo Type [1]
 03p02 | OcaList<OcaObjectIdentification> Members
 03p03 | OcaMap<OcaUin16, OcaSignalPath> SignalPaths
 03p04 | OcaLibVolIdentifier MostRecentParamSetIdentifier
+03p05 | OcaGlobalTypeIdentifier GlobalType
+03p06 | OcaMap<OcaProtoONo, OcaONo> ONoMap
 
 1. For root block the value is 1. For dynamically-defined blocks this is the factory ONo. For statically-defined blocks
 this value "correspond to the unique configuration of this block".
 
 ### OcaBlockFactory
-ID 1 1 4
+ID 1 1 4, Version 2
 
 ### OcaMatrix
-ID 1 1 5
+ID 1 1 5, Version 2
 
 ### OcaNetworkSignalChannel
+
+*DEPRECATED*
 ID 1 1 6
 
 ID | Declaration | Required
@@ -161,19 +183,22 @@ ID | Declaration | Required
 03p06 | OcaNetworkSignalChannelStatus Status
 
 ## OcaAgent
-ID 1 2
+ID 1 2, Version 2
 
 ID | Declaration | Required
 --- | --- | ---
 02m01 | GetLabel() -> OcaString
 02m02 | SetLabel(OcaString)
 02m03 | GetOwner() -> OcaONo
+2 | 02m04 | GetPath() -> OcaNamePath, OcaONoPath
 | |
 02p01 | OcaString Label
 02p02 | OcaONo Owner
 
 
-### OcaNetwork *DEPRECATED*
+### OcaNetwork
+*DEPRECATED*
+
 ID 1 2 1
 
 ID | Declaration | Required
@@ -192,30 +217,32 @@ ID | Declaration | Required
 03m12 | Startup() | YES [1]
 03m13 | Shutdown() | YES [1]
 | |
-03p03 | OcaNetworkControlProtocol ControlProtocol
-03p02 | OcaNetworkNodeID IDAdvertised
 03p01 | OcaNetworkLinkType LinkType
-03p07 | OcaList<OcaONo> MediaPorts
+03p02 | OcaNetworkNodeID IDAdvertised
+03p03 | OcaNetworkControlProtocol ControlProtocol
 03p04 | OcaNetworkMediaProtocol MediaProtocol
-03p08 | OcaNetworkStatistics Statistics
 03p05 | OcaNetworkStatus Status
 03p06 | OcaList<OcaNetworkSystemInterface>
+03p07 | OcaList<OcaONo> MediaPorts
+03p08 | OcaNetworkStatistics Statistics
 
 1. If the OcaNetwork is implemented, all methods (and events) MUST be implemented.
 
 ### OcaGrouper
-ID 1 2 2
+ID 1 2 2, Version 2
 
 ### OcaRamper
-ID 1 2 3
+ID 1 2 3, Version 2
 
 ### OcaNumericObserver
-ID 1 2 4
+ID 1 2 4, Version 2
 
 ### OcaLibrary
-ID 1 2 5
+ID 1 2 5, Version 2
 
 ### OcaMediaClock
+*DEPRECATED*
+
 ID 1 2 6
 
 ID | Declaration | Required
@@ -238,7 +265,7 @@ ID | Declaration | Required
 1. If OcaMediaClock is implemented, all methods (and events) must be implemented.
 
 ### OcaPowerSupply
-ID 1 2 7
+ID 1 2 7, Version 2
 
 ID | Declaration | Required
 --- | --- | ---
@@ -260,12 +287,14 @@ ID | Declaration | Required
 03p07 | OcaPowerSupplyLocation Location
 
 ### OcaEventHandler
-ID 1 2 8
+ID 1 2 8, Version 2
 
 ### OcaNumericObserverList
-ID 1 2 9
+ID 1 2 9, Version 2
 
 ### OcaStreamNetwork
+*DEPRECATED*
+
 ID 1 2 10
 
 ID | Declaration | Required
@@ -306,6 +335,8 @@ ID | Declaration | Required
 1. If the OcaStreamNetwork is implemented, all methods (and events) MUST be implemented.
 
 ### OcaStreamConnector
+*DEPRECATED*
+
 ID 1 2 11
 
 ID | Declaration | Required
@@ -331,12 +362,12 @@ ID | Declaration | Required
 
 
 ## OcaManager
-ID 1 3
+ID 1 3, Version 2
 
 No new methods, properties or events.
 
 ### OcaDeviceManager
-ID 1 3 1, ONo 1
+ID 1 3 1, Version 2, ONo 1
 
 ID | Declaration | Required
 --- | --- | ---
@@ -359,9 +390,10 @@ ID | Declaration | Required
 03m17 | GetMessage() -> OcaString
 03m18 | SetMessage(OcaString)
 03m19 | GetManagers() -> OcaList<OcaManagerDescriptor> | YES
+03m20 | GetDeviceRevisionID() -> OcaString
 | |
 03p01 | OcaModelGUID ModelGUID
-03p01 | OcaString SerialNumber
+03p02 | OcaString SerialNumber
 03p03 | OcaModelDescription
 03p04 | OcaString DeviceName
 03p05 | OcaUint16 OcaVersion
@@ -373,12 +405,13 @@ ID | Declaration | Required
 03p11 | OcaResetCause ResetCause
 03p12 | OcaString Message
 03p13 | OcaList<OcaManagerDescriptor> Managers
+03p14 | OcaString DeviceRevisionID
 
 1. It is somewhat unclear why the role was redefined? see 01p05
 
 
 ### OcaSecurityManager
-ID 1 3 2, ONo 2
+ID 1 3 2, Version 2, ONo 2
 
 ID | Declaration | Required
 --- | --- | ---
@@ -394,7 +427,7 @@ ID | Declaration | Required
 
 
 ### OcaFirmwareManager
-ID 1 3 3, ONo 3
+ID 1 3 3, Version 2, ONo 3
 
 ID | Declaration | Required
 --- | --- | ---
@@ -412,7 +445,7 @@ ID | Declaration | Required
 1. If firmware updates are supported the manager must implement all methods.
 
 ### OcaSubscriptionManager
-ID 1 3 4, ONo 4
+ID 1 3 4, Version 2, ONo 4
 
 ID | Declaration | Required
 --- | --- | ---
@@ -428,18 +461,16 @@ ID | Declaration | Required
 
 
 ### OcaPowerManager
-ID 1 3 5, ONo 5
-
-**NOTE** GetActivePowerSupplies() and ExchangePowerSupply(..) both have the ID 03m04 (obviously a mistake)
+ID 1 3 5, Version 2, ONo 5
 
 ID | Declaration | Required
 --- | --- | ---
 03m01 | GetState() -> OcaPowerState
 03m02 | SetState(OcaPowerState)
 03m03 | GetPowerSupplies() -> OcaList<OcaONo>
-03m0? | GetActivePowerSupplies() -> OcaList<OcaONo>
-03m0? | ExchangePowerSupply(OcaONo oldPsu, OcaONo newPsu, OcaBoolean powerOffOld)
-03m05 | GetAutoState() -> OcaBoolean
+03m04 | ExchangePowerSupply(OcaONo oldPsu, OcaONo newPsu, OcaBoolean powerOffOld)
+03m05 | GetActivePowerSupplies() -> OcaList<OcaONo>
+03m06 | GetAutoState() -> OcaBoolean
 | |
 03p01 | OcaPowerState State
 03p02 | OcaList<OcaONo> PowerSupplies
@@ -450,53 +481,192 @@ ID | Declaration | Required
 
 
 ### OcaNetworkManager
-ID 1 3 6, ONo 6
+ID 1 3 6, Version 2, ONo 6
 
 ID | Declaration | Required
 --- | --- | ---
-03m01 | GetNetworks() -> OcaList<OcaONo> | YES
-03m02 | GetStreamNetworks() -> OcaList<OcaONo> | YES
+03m01 | *DEPRECATED* GetNetworks() -> OcaList<OcaONo> | YES
+03m02 | *DEPRECATED* GetStreamNetworks() -> OcaList<OcaONo> | YES
+03m03 | GetControlNetworks() -> OcaList<OcaONo> | YES
+03m04 | GetMediaTransportNetworks() -> OcaList<OcaONo> | YES
 | |
-03p01 | Networks
-03p02 | StreamNetworks
+03p01 | *DEPRECATED* Networks
+03p02 | *DEPRECATED* StreamNetworks
+03p03 | OcaList<OcaONo> ControlNetworks
+03p04 | OcaList<OcaONo> MediaTransportNetworks
 
 
 ### OcaMediaClockManager
-ID 1 3 7, ONo 7
+ID 1 3 7, Version 2, ONo 7
 
 ID | Declaration | Required
 --- | --- | ---
-03m01 | GetClocks() -> OcaList<OcaONo> | YES [1]
-03m02 | GetMediaClockTypesSupported() -> OcaList<OcaMediaClockType> | YES [1]
+03m01 | *DEPRECATED* GetClocks() -> OcaList<OcaONo> | YES [1]
+03m02 | *DEPRECATED* GetMediaClockTypesSupported() -> OcaList<OcaMediaClockType> | YES [1]
+03m03 | GetClock3s() -> OcaList<OcaONo> | YES [1]
 | |
-03p01 | OcaList<OcaMediaClockType> ClockSourceTypesSupported
-03p02 | OcaList<OcaONo>
+03p01 | *DEPRECATED* OcaList<OcaMediaClockType> ClockSourceTypesSupported
+03p02 | *DEPRECATED* OcaList<OcaONo> Clocks
+03p03 | OcaList<OcaONo> Clock3s
 
 1. If class is implemented, all methods MUST be supported (well, makes sense).
 
 ### OcaLibraryManager
-ID 1 3 8, ONo 8
+ID 1 3 8, Version 2, ONo 8
 
 ID | Declaration | Required
 --- | --- | ---
-03m01 | AddLibrary(OcaLibraryType) -> OcaONo
-03m02 | DeleteLibrary(OcaONo)
+03m01 | AddLibrary(OcaLibraryType) -> OcaONo libraryIdentifier
+03m02 | DeleteLibrary(OcaONo libraryIdentifier)
 03m03 | GetLibraryCount(OcaLibraryType) -> OcaUint16
 03m04 | GetLibraryList(OcaLibraryType) -> OcaList<OcaONo>
 03m05 | GetCurrentPatch() -> OcaLibVolIdentifier
 03m06 | SetCurrentPatch(OcaLibVolIdentifier)
+| |
+03p01 | OcaList<OcaLibIdentifier>
+03p02 | OcaLibVolIdentifier CurrentPatch
 
 
 ### OcaAudioProcessingManager
-ID 1 3 9, ONo 9
+ID 1 3 9, Version 2, ONo 9
 
 No definitions
 
 
 ### OcaDeviceTimeManager
-ID 1 3 10, ONo 10
+ID 1 3 10, Version 2, ONo 10
 
 ID | Declaration | Required
 --- | --- | ---
-03m01 | GetDeviceTime() -> OcaTimeOfDay
-03m02 | SetDeviceTime(OcaTimeOfDay)
+03m01 | *DEPRECATED* GetDeviceTimeNTP() -> OcaTimeNTP
+03m02 | *DEPRECATED* SetDeviceTimeNTP(OcaTimeNTP)
+03m03 | GetTimeSources() -> OcaList<OcaONo>
+03m04 | GetCurrentDeviceTimeSource() -> OcaONo
+03m05 | GetDeviceTimePTP() -> OcaTimePTP
+03m06 | SetDeviceTimePTP(OcaTimePTP)
+| |
+03p01 | OcaList<OcaONo>TimeSources
+03p02 | OcaONo CurrentDeviceTimeSource
+
+### OcaTaskManager
+ID 1 3 11, Version 1, ONo 11
+
+ID | Declaration | Required
+--- | --- | ---
+03m01 | Enable(OcaBoolean)
+03m02 | ControlAllTasks(OcaTaskCommand, OcaBlob)
+03m03 | ControlTaskGroup(OcaTaskGroupID, OcaTaskCommand, OcaBlob)
+03m04 | ControlTask(OcaTaskID, OcaTaskCommand, OcaBlob)
+03m05 | GetState() -> OcaTaskManagerState
+03m06 | GetTaskStatus(OcaTaskID) -> OcaTaskStatus
+03m07 | GetTaskStatuses() ->OcaTaskStatus
+03m08 | AddTask(OcaTask)
+03m09 | GetTask(OcaTaskID) -> OcaTask
+03m10 | GetTasks() -> OcaMap<OcaTaskID, OcaTask>
+03m11 | SetTask(OcaTaskID, OcaTask)
+03m12 | DeleteTask(OcaTaskID)
+| |
+03p01 | OcaTaskManagerState State
+03p02 | OcaMap<OcaTaskID, OcaTask> Tasks
+| |
+03e01 | TaskStateChanged -> OcaTaskStateChangedEventData
+
+
+### OcaTaskManager
+ID 1 3 12, Version 1, ONo 12
+
+ID | Declaration | Required
+--- | --- | ---
+03m01 | GetAvailableEncodingSchemes() -> OcaMap<OcaMediaCodingSchemeID,OcaString>
+03m02 | GetAvailableDecodingSchemes() -> OcaMap<OcaMediaCodingSchemeID,OcaString>
+| |
+03p01 | OcaMap<OcaMediaCodingSchemeID,OcaString> AvailableEncodingSchemes
+03p02 | OcaMap<OcaMediaCodingSchemeID,OcaString> AvailableDecodingSchemes
+
+
+### OcaDiagnosticManager
+ID 1 3 13, Version 1, ONo 13
+
+ID | Declaration | Required
+--- | --- | ---
+03m01 | GetLockStatus(OcaONo) -> OcaString
+
+
+## OcaApplicationNetwork
+ID 1 4, Version 1
+
+ID | Declaration | Required
+--- | --- | ---
+02m01 | GetLabel() -> OcaString
+02m02 | SetLabel(OcaString)
+02m03 | GetOwner() -> OcaONo
+02m04 | GetServiceID() -> OcaApplicationNetworkServiceID
+02m05 | SetServiceID(OcaApplicationNetworkServiceID)
+02m06 | GetSystemInterfaces() -> OcaList<OcaNetworkSystemInterfaceDescriptor>
+02m07 | SetSystemInterfaces(OcaList<OcaNetworkSystemInterfaceDescriptor>)
+02m08 | GetState() -> OcaApplicationNetworkState
+02m09 | GetErrorCode() -> OcaUint16
+02m10 | Control(OcaApplicationNetworkCommand)
+02m11 | GetPath() -> OcaNamePath, OcaONoPath
+| |
+02p01 | OcaString Label
+02p02 | OcaONo Owner
+02p03 | OcaApplicationNetworkServiceID ServiceID
+02p04 | OcaList<OcaNetworkSystemInterfaceDescriptor> SystemInterfaces
+02p05 | OcaApplicationNetworkState State
+02p06 | OcaUint16 ErrorCode
+
+### OcaControlNetwork
+ID 1 4 1, Version 1
+
+ID | Declaration | Required
+--- | --- | ---
+03m01 | GetControlProtocol() -> OcaNetworkControlProtocol
+| |
+03p01 | OcaNetworkControlProtocol Protocol
+
+
+### OcaControlNetwork
+ID 1 4 1, Version 1
+
+ID | Declaration | Required
+--- | --- | ---
+03m01 | GetMediaProtocol) -> OcaNetworkMediaProtocol
+03m02 | GetPorts() -> OcaList<OcaPort>
+03m03 | GetPortName(OcaPortID) -> OcaString
+03m04 | SetPortName(OcaPortID, OcaString)
+03m05 | GetMaxSourceConnectors() -> OcaUint16
+03m06 | GetMaxSinkConnectors() -> OcaUint16
+03m07 | GetMaxPinsPerConnector() -> OcaUint16
+03m08 | GetMaxPortsPerPin() -> OcaUint16
+03m09 | GetSourceConnectors() -> OcaList<OcaMediaSourceConnector>
+03m10 | GetSourceConnector(OcaMediaConnectorID) -> OcaMediaSourceConnector
+03m11 | GetSinkConnectors() -> OcaList<OcaMediaSinkConnector>
+03m12 | GetSinkConnector(OcaMediaConnectorID) -> OcaMediaSinkConnector
+03m13 | GetConnectorsStatuses() -> OcaList<OcaMediaConnectorStatus>
+03m14 | GetConnectorStatus(OcaMediaConnectorID) -> OcaMediaConnectorStatus
+03m15 | AddSourceConnector(OcaMediaSourceConnector, OcaMediaConnectorState)
+03m16 | AddSinkConnector(OcaMediaConnectorStatus initial, OcaMediaSinkConnector)
+03m17 | ControlConnector(OcaMediaConnectorID, OcaMediaConnectorCommand)
+03m18 | SetSourceConnectorPinMap(OcaMediaConnectorID, OcaMultiMap<OcaUint16, OcaPortID>)
+03m19 | SetSinkConnectorPinMap(OcaMediaConnectorID, OcaMultiMap<OcaUint16, OcaPortID>)
+03m20 | SetConnectorConnection(OcaMediaConnectorID, OcaMediaConnection)
+03m21 | SetConnectorCoding(OcaMediaConnectorID, OcaMediaCoding)
+03m22 | SetConnectorAlignmentLevel(OcaMediaConnectorID, OcaDBFS)
+03m23 | SetConnectorAlignmentGain(OcaMediaConnectorID, OcaMediaCoding)
+03m24 | DeleteConnector(OcaMediaConnectorID)
+03m25 | GetAlignmentLevel) -> OcaDBFS level, OcaDBFS minLevel, OcaDBFS maxLevel
+03m26 | GetAlignmentGain() -> OcaDB gain, OcaDB minGain, OcaDB maxGain
+| |
+03p01 | OcaNetworkMediaProtocol Protocol
+03p02 | OcaList<OcaPort> Ports
+03p03 | OcaUint16 MaxSourceConnectors
+03p04 | OcaUint16 MaxSinkConnectors
+03p05 | OcaUint16 MaxPinsPerConnector
+03p06 | OcaUint16 MaxPortsPerPin
+03p07 | OcaDBFS AlignmentLevel
+03p08 | OcaDB AlignementGain
+| |
+03e01 | SourceConnectorChanged -> OcaMediaSourceConnectorChangedEventData
+03e02 | SinkConnectorChanged -> OcaMediaSinkConnectorChangedEventData
+03e03 | ConnectorStatusChanged -> OcaMediaConnectorStatusChangedEventData
