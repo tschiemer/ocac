@@ -61,7 +61,7 @@ Ver | ID | Class | ONo [1] | Required
 2. Object root is an instance of OcaBlock
 3. For secured devices
 4. For streaming devices
-5. 
+5.
 
 ## OcaRoot
 ID 1, Version 2
@@ -191,7 +191,7 @@ ID | Declaration | Required
 02m01 | GetLabel() -> OcaString
 02m02 | SetLabel(OcaString)
 02m03 | GetOwner() -> OcaONo
-2 | 02m04 | GetPath() -> OcaNamePath, OcaONoPath
+02m04 | GetPath() -> OcaNamePath, OcaONoPath
 | |
 02p01 | OcaString Label
 02p02 | OcaONo Owner
@@ -361,6 +361,63 @@ ID | Declaration | Required
 03p05 | OcaMap<OcaStreamConnectorPinIndex, OcaONo> Pins
 03p06 | OcaStreamConnectorStatus Status
 
+### OcaMediaClock3
+ID 1 2 15, Version 1
+
+ID | Declaration | Required
+--- | --- | ---
+03m01 | GetAvailability() -> OcaMediaClockAvailability
+03m02 | SetAvailability(OcaMediaClockAvailability)
+03m03 | GetCurrentRate() -> OcaMediaClockRate, OcaONo
+03m04 | SetCurrentRate(OcaMediaClockRate, OcaONo)
+03m05 | GetOffset() -> OcaTimePTP
+03m06 | SetOffset(OcaTimePTP)
+03m07 | GetSupportedRates() -> OcaMap<OcaONo, OcaList<OcaMediaClockRate>>
+| |
+03p01 | OcaMediaClockAvailability Availability
+03p02 | OcaONo TimeSourceONo
+03p03 | OcaTimePTP Offset
+03p04 | OcaMediaClockRate CurrentRate
+03p05 | OcaMap<OcaONo, OcaList<OcaMediaClockRate>> SupportedRates
+
+
+### OcaTimeSource
+ID 1 2 16, Version 1
+
+ID | Declaration | Required
+--- | --- | ---
+03m01 | GetAvailability() -> OcaTimeSourceAvailability
+03m02 | GetProtocol() -> OcaTimeProtocol
+03m03 | SetProtocol(OcaTimeProtocol)
+03m04 | GetParameters() -> OcaSDPString
+03m05 | SetParameters(OcaSDPString)
+03m06 | GetReferenceType() -> OcaTimeReferenceType
+03m07 | SetReferenceType(OcaTimeReferenceType)
+03m08 | GetReferenceID() -> OcaString
+03m09 | SetReferenceID(OcaString)
+03m10 | GetSyncStatus() -> OcaTimeSourceSyncStatus
+03m11 | Reset()
+| |
+03p01 | OcaTimeSourceAvailability Availability
+03p02 | OcaTimeProtocol Protocol
+03p03 | OcaSDPString Parameters
+03p04 | OcaTimeReferenceType ReferenceType
+03p05 | OcaString ReferenceID
+03p06 | OcaTimeSourceSyncStatus SyncStatus
+
+### OcaPhysicalPosition
+ID 1 2 17, Version 1
+
+ID | Declaration | Required
+--- | --- | ---
+03m01 | GetCoordinateSystem() -> OcaPositionCoordinateSystem
+03m02 | GetPositionDescriptorFieldFlags() -> OcaPositionDescriptorFieldFlags
+03m03 | GetPositionDescriptor() -> OcaPositionDescriptor pos, OcaPositionDescriptor minPos, OcaPositionDescriptor maxPos
+03m04 | SetPositionDescriptor(OcaPositionDescriptor)
+| |
+03p01 | OcaPositionCoordinateSystem CoordinateSystem
+03p02 | PositionDescriptorFieldFlags PositionDescriptorFieldFlags
+03p03 | OcaPositionDescriptor PositionDescriptor
 
 ## OcaManager
 ID 1 3, Version 2
