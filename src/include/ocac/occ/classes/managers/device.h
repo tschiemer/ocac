@@ -142,7 +142,7 @@ OCAC_CLASS_DEF_END(OcaDeviceManager)
 
 #define OCAC_OBJ_DEVICEMANAGER_DEF_MAX \
     OcaModelGUID model_guid; \
-    s8_t serial[OCAC_DEVICE_SERIAL_LEN]; \
+    u8_t serial[OCAC_DEVICE_SERIAL_LEN]; \
     OcaModelDescription model_desc; \
     OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_DEVICENAME_MAXLEN) device_name; \
     OcaUint16 oca_version; \

@@ -38,14 +38,14 @@ typedef struct {
 } PACK_STRUCT_STRUCT OcaManagerDefaultObjectNumber;
 
 
-
-typedef enum {
-    OcaDeviceState_Operational       = 0x0001,
-    OcaDeviceState_Error             = 0x0002,
-    OcaDeviceState_Disabled          = 0x0004,
-    OcaDeviceState_Initializing      = 0x0008,
-    OcaDeviceState_Updating          = 0x0010,
-} PACK_STRUCT_STRUCT OcaDeviceState;
+// TODO OcaDeviceState (unclear)
+//typedef enum {
+//    OcaDeviceState_Operational       = 0x0001,
+//    OcaDeviceState_Error             = 0x0002,
+//    OcaDeviceState_Disabled          = 0x0004,
+//    OcaDeviceState_Initializing      = 0x0008,
+//    OcaDeviceState_Updating          = 0x0010,
+//} PACK_STRUCT_STRUCT OcaDeviceState;
 
 #define OcaDeviceState_Operational  0b1000000000000000
 #define OcaDeviceState_Disabled     0b0100000000000000
@@ -80,11 +80,6 @@ typedef enum {
 
 
 
-typedef enum {
-    OcaComponent_BootLoader       = 0,
-
-    __OcaComponent__ = 0xFFFF
-} PACK_STRUCT_STRUCT OcaComponent;
 
 
 typedef enum {

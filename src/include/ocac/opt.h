@@ -17,6 +17,11 @@
 #include "ocacopts.h"
 #include "ocac/debug.h"
 
+#ifndef OCAC_CLASSID_SIZE
+/** The maximum depth of the class ID */
+#define OCAC_CLASSID_SIZE 8
+#endif //OCAC_CLASSID_SIZE
+
 
 
 #ifndef OCAC_OCC_MANAGEMENT_MODEL_MANUFACTURER_MAXLEN

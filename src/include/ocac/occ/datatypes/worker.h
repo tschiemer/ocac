@@ -32,8 +32,8 @@ typedef struct {
 } PACK_STRUCT_STRUCT OcaImpedance;
 
 typedef enum {
-    OcaMuteState_Muted   = 1;
-    OcaMuteState_Unmuted = 2;
+    OcaMuteState_Muted   = 1,
+    OcaMuteState_Unmuted = 2,
 } PACK_STRUCT_STRUCT OcaMuteState;
 
 
@@ -182,7 +182,7 @@ typedef enum {
     OcaSensorReadingState_Unknown    = 0,
     OcaSensorReadingState_Valid      = 1,
     OcaSensorReadingState_Underrange = 2,
-    OcaSensorReadingState_Overrange  = 3
+    OcaSensorReadingState_Overrange  = 3,
     OcaSensorReadingState_Error      = 4
 } PACK_STRUCT_STRUCT OcaSensorReadingState;
 

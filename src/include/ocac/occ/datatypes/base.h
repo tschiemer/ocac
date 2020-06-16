@@ -48,30 +48,37 @@ typedef s64_t OcaInt64;
 typedef float OcaFloat32;
 typedef double OcaFloat64;
 
-//typedef u8_t OcaChar;
-
-typedef struct {
-    PACK_STRUCT_FIELD(OcaUint16 Len);
-    PACK_STRUCT_FIELD(u8_t Value[]);
-} PACK_STRUCT_STRUCT OcaString;
 
 
-
-#define OCAC_STRING(maxlen) \
+#define OCAC_STRING(len) \
     struct { \
         PACK_STRUCT_FIELD(OcaUint16 Len); \
-        PACK_STRUCT_FIELD(u8_t Value[maxlen]); \
+        PACK_STRUCT_FIELD(u8_t Value[len]); \
     } PACK_STRUCT_STRUCT
+
+#define OCAC_STRING_INIT(str) {sizeof(str), str}
+
+typedef OCAC_STRING() OcaString;
+
+
+#define OCAC_STRINGFIXEDLEN(len) \
+    struct { \
+        u8_t string[len]; \
+    } PACK_STRUCT_STRUCT
+
+#define OCAC_STRINGFIXEDLEN_INIT(str) { str }
 
 
 typedef OCAC_STRING() OcaBitString;
 
 
-#define OCAC_BLOB(maxlen) \
+#define OCAC_BLOB(len) \
     struct { \
         OcaUint16 DataSize; \
-        u8_t Data[maxlen]; \
+        u8_t Data[len]; \
     } PACK_STRUCT_STRUCT
+
+#define OCAC_BLOB_INIT(data) {sizeof(data), data}
 
 typedef OCAC_BLOB() OcaBlob;
 
@@ -79,6 +86,8 @@ typedef OCAC_BLOB() OcaBlob;
     struct { \
         u8_t bytes[len]; \
     } PACK_STRUCT_STRUCT
+
+#define OCAC_BLOBFIXEDLEN_INIT(data) {data}
 
 typedef OCAC_BLOBFIXEDLEN(1) OcaBlobFixedLen1;
 typedef OCAC_BLOBFIXEDLEN(3) OcaBlobFixedLen3;
@@ -97,9 +106,12 @@ typedef OCAC_BLOBFIXEDLEN(16) OcaBlobFixedLen16;
 
 #define OCAC_LIST2D(type, xn, yn) \
     struct { \
-        OcaUint16 Count; \
+        OcaUint16 nX; \
+        OcaUint16 nY; \
         type Items[xn*yn]; \
     } PACK_STRUCT_STRUCT
+
+#define OCAC_LIST2D_ITEM(list_ptr, xN, yN) (list_ptr->Items[list_ptr->nX * ny + nx])
 
 
 #define OCAC_MAP_ITEM(keytype, valuetype) \
@@ -108,13 +120,13 @@ typedef OCAC_BLOBFIXEDLEN(16) OcaBlobFixedLen16;
         valuetype Value; \
     } PACK_STRUCT_STRUCT
 
+// Maps have unique keys
 #define OCAC_MAP(keytype, valuetype, len) \
     OCAC_LIST(OCAC_MAP_ITEM(keytype,valuetype), len)
 
-
+// MultiMaps can have multiple identical keys
 #define OCAC_MULTIMAP(keytype, valuetype, len) \
     OCAC_MAP(keytype, valuetype, len)
-
 
 
 /**

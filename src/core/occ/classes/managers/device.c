@@ -175,9 +175,9 @@ void ocac_dump_devicemanager(OCAC_OBJ_BASE * obj)
     printf("  Version = %s\n", dm->model_desc.Version);
 
     printf(" ModelGUID\n");
-    printf("  MfrCode = %02X%02X%02X\n", dm->model_guid.MfrCode[0], dm->model_guid.MfrCode[1], dm->model_guid.MfrCode[2]);
-    printf("  ModelCode = %02X%02X%02X%02X\n", dm->model_guid.ModelCode[0], dm->model_guid.ModelCode[1], dm->model_guid.ModelCode[2], dm->model_guid.ModelCode[3]);
-    printf("  Reserved = %02X\n", dm->model_guid.Reserved[0]);
+    printf("  MfrCode = %02X%02X%02X\n", dm->model_guid.MfrCode.bytes[0], dm->model_guid.MfrCode.bytes[1], dm->model_guid.MfrCode.bytes[2]);
+    printf("  ModelCode = %02X%02X%02X%02X\n", dm->model_guid.ModelCode.bytes[0], dm->model_guid.ModelCode.bytes[1], dm->model_guid.ModelCode.bytes[2], dm->model_guid.ModelCode.bytes[3]);
+    printf("  Reserved = %02X\n", dm->model_guid.Reserved.bytes[0]);
 
     printf(" Serial = %02X", dm->serial[0]);
     for(int i = 1; i < sizeof(dm->serial); i++){

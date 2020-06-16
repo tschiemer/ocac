@@ -13,6 +13,7 @@ void ocac_dump_string( OcaString * string )
     printf("OcaString (Len=%d)", string->Len);
 
     if (string->Len == 0){
+        printf("\n");
         return;
     }
 
@@ -27,6 +28,7 @@ void ocac_dump_blob( OcaBlob * blob )
     printf("OcaBlob (Len=%d)", blob->DataSize);
 
     if (blob->DataSize == 0){
+        printf("\n");
         return;
     }
 
@@ -38,9 +40,10 @@ void ocac_dump_blob( OcaBlob * blob )
 
 void ocac_dump_blobfixedlen( u8_t * blob, size_t len )
 {
-    printf("OcaBlobFixedLen%zu ", len);
+    printf("OcaBlobFixedLen%zu", len);
 
     if (len == 0){
+        printf("\n");
         return;
     }
 

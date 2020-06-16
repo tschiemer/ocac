@@ -5,9 +5,10 @@
 #ifndef OCAC_OCC_DATATYPES_FRAMEWORK_H
 #define OCAC_OCC_DATATYPES_FRAMEWORK_H
 
+#include "ocac/opt.h"
 #include "ocac/occ/datatypes/base.h"
-#include "ocac/occ/datatypes/network.h"
-#include "ocac/occ/datatypes/management.h"
+//#include "ocac/occ/datatypes/network.h"
+//#include "ocac/occ/datatypes/management.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,7 +26,18 @@ typedef struct {
 #define OcaClassAuthorityID_Sentinel 0xFFFF
 
 //TODO OcaCLassIDField
-typedef OcaUint16 OcaClassIDField;
+/** Either 16bit value or 48bit authority key
+ * The Setinel value of 0xFFFF makes the difference.
+ **/
+typedef OcaUint16 OcaClassIDField_16bit;
+typedef OcaClassAuthorityID OcaClassIDField_Authority;
+
+#if OCAC_CLASSIDFIELD_TYPE == OCAC_CLASSIDFIELD_TYPE_16BIT
+typedef OcaClassIDField_16bit OcaClassIDField;
+#else
+typedef OcaClassIDField_Authority OcaClassIDField;
+#endif
+
 
 /**
  * OCA Class ID
@@ -35,6 +47,12 @@ typedef struct {
     PACK_STRUCT_FIELD(OcaUint16 FieldCount);
     PACK_STRUCT_FIELD(OcaClassIDField Fields[OCAC_CLASSID_SIZE]);
 } PACK_STRUCT_STRUCT OcaClassID;
+
+typedef enum {
+    OcaComponent_BootLoader       = 0,
+
+    __OcaComponent__ = 0xFFFF
+} PACK_STRUCT_STRUCT OcaComponent;
 
 typedef struct {
     OcaUint32 Major;
@@ -61,11 +79,11 @@ typedef struct {
 // moved to base.h to resolve circular requirement
 //typedef OcaUint32 OcaONo;
 
-
-typedef struct {
-    OcaNetworkHostID HostID;
-    PACK_STRUCT_FIELD(OcaONo ONo);
-} PACK_STRUCT_STRUCT OcaOPath;
+//
+//typedef struct {
+//    OcaNetworkHostID HostID;
+//    PACK_STRUCT_FIELD(OcaONo ONo);
+//} PACK_STRUCT_STRUCT OcaOPath;
 
 
 typedef OCAC_LIST(OcaString,) OcaNamePath;
@@ -154,7 +172,7 @@ typedef enum {
     OcaPositionCoordinateSystem_ItuAudioSceneBasedPolar         = 4,
     OcaPositionCoordinateSystem_ItuAudioSceneBasedCartesian     = 5,
     OcaPositionCoordinateSystem_NAV                             = 6,
-    OcaPositionCoordinateSystem_PropriertaryBase                = 128
+    OcaPositionCoordinateSystem_ProprietaryBase                 = 128
 } PACK_STRUCT_STRUCT OcaPositionCoordinateSystem;
 
 typedef struct {

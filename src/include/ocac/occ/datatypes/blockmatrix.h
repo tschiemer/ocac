@@ -5,8 +5,10 @@
 #ifndef OCAC_OCC_DATATYPES_BLOCKMATRIX_H
 #define OCAC_OCC_DATATYPES_BLOCKMATRIX_H
 
-#include "ocac/occ/datatypes/base.h"
+
 #include "ocac/occ/datatypes/framework.h"
+#include "ocac/occ/datatypes/network.h"
+
 
 #ifdef __cplusplus
 extern "C" {
