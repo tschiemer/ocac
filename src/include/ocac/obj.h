@@ -48,6 +48,8 @@ OCAC_OBJ_DEF_END(base)
 //    OCAC_ASSERT("obj != NULL", obj != NULL); \
 //    OCAC_ASSERT("argvlen != 0", reqlen != 0); \
 
+#define OCAC_OBJ_EXEC_PARAMS
+
 OcaStatus ocac_obj_exec(OCAC_OBJ_BASE * obj, u16_t deflevel, u16_t index, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
 
 #ifdef DEBUG

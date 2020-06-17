@@ -6,10 +6,6 @@
 #define OCAC_OPT_H
 
 
-#define OCAC_CLASS_DEFINITION_CUSTOM    0
-#define OCAC_CLASS_DEFINITION_MIN       1
-#define OCAC_CLASS_DEFINITION_MAX       2
-
 /*
  * Include user defined options first. Anything not defined in these files
  * will be set to standard values. Override anything you don't like!
@@ -17,12 +13,41 @@
 #include "ocacopts.h"
 #include "ocac/debug.h"
 
-#ifndef OCAC_CLASSID_SIZE
-/** The maximum depth of the class ID */
-#define OCAC_CLASSID_SIZE 8
-#endif //OCAC_CLASSID_SIZE
+
+/**************************************************
+ * Required option check
+ **/
+
+#if !defined(OCAC_DEVICE_MANUFACTURER_NAME) || !defined(OCAC_DEVICE_MANUFACTURER_NAME_LEN)
+#error OCAC_DEVICE_MANUFACTURER_NAME and OCAC_DEVICE_MANUFACTURER_NAME_LEN are required
+#endif
+
+#if !defined(OCAC_DEVICE_MODEL_NAME) || !defined(OCAC_DEVICE_MODEL_NAME_LEN)
+#error OCAC_DEVICE_MODEL_NAME and OCAC_DEVICE_MODEL_NAME_LEN are required
+#endif
+
+#if !defined(OCAC_DEVICE_MODEL_VERSION) || !defined(OCAC_DEVICE_MODEL_VERSION_LEN)
+#error OCAC_DEVICE_MODEL_VERSION and OCAC_DEVICE_MODEL_VERSION_LEN are required
+#endif
+
+#if !defined(OCAC_DEVICE_MANUFACTURER_CODE) || !defined(OCAC_DEVICE_MODEL_CODE)
+#error OCAC_DEVICE_MANUFACTURER_CODE and OCAC_DEVICE_MODEL_CODE are required
+#endif
+
+#if !defined(OCAC_DEVICE_SERIAL_DEFAULT) || !defined(OCAC_DEVICE_SERIAL_LEN)
+#error OCAC_DEVICE_SERIAL_DEFAULT and OCAC_DEVICE_SERIAL_LEN are required
+#endif
 
 
+
+
+/**************************************************
+ * OCC Datatypes
+ **/
+
+#ifndef OCAC_OCC_FRAMEWORK_CLASSID_SIZE
+#define OCAC_OCC_FRAMEWORK_CLASSID_SIZE 8
+#endif
 
 #ifndef OCAC_OCC_MANAGEMENT_MODEL_MANUFACTURER_MAXLEN
 #define OCAC_OCC_MANAGEMENT_MODEL_MANUFACTURER_MAXLEN 32
@@ -35,7 +60,6 @@
 #ifndef OCAC_OCC_MANAGEMENT_MODEL_VERSION_MAXLEN
 #define OCAC_OCC_MANAGEMENT_MODEL_VERSION_MAXLEN 16
 #endif
-
 
 #ifndef OCAC_OCC_NETWORK_HOSTID_MAXLEN
 #define OCAC_OCC_NETWORK_HOSTID_MAXLEN 128
@@ -62,41 +86,13 @@
 #endif
 
 
-//#define OCAC_CLASS_NO_METHOD_OVERRIDE
+/**************************************************
+ * OCAC Class & Object Configuration
+ **/
 
+//#define OCAC_NO_PROPERTIES
 
-/**
- * If set does not define the standard class types in which case YOU MUST DO THIS YOURSELF.
- */
-//#define OCAC_CLASS_NO_DEFAULT_DEFINITION
-
-/**
- * If set does allocate/define the default class objects in which case YOU MUST DO THIS YOURSELF.
- */
-//#define OCAC_CLASS_NO_DEFAULT_ALLOCATION
-
-/**
- * If set inherited methods CANNOT be overriden and are only located in the original class.
- * If not set, child classes must include any methods even if they have been previously defined.
- */
-//#define OCAC_CLASS_NO_METHOD_OVERRIDE
-
-/**
- * If set does not define the standard object types in which case YOU MUST DO THIS YOURSELF.
- */
-//#define OCAC_OBJ_NO_DEFAULT_DEFINITION
-
-/**
- * If set does not allocate/define the standard class instance objects in which case YOU MUST DO THIS YOURSELF.
- */
-//#define OCAC_OBJ_NO_DEFAULT_ALLOCATION
-
-
-#ifndef OCAC_CLASS_DEFINITION
-#define OCAC_CLASS_DEFINITION OCAC_CLASS_DEFINITION_MAX
-#elif OCAC_CLASS_DEFINITION != OCAC_CLASS_DEFINITION_CUSTOM && OCAC_CLASS_DEFINITION != OCAC_CLASS_DEFINITION_MIN && OCAC_CLASS_DEFINITION != OCAC_CLASS_DEFINITION_MAX
-#error Invalid setting for OCAC_CLASS_DEFINITION
-#endif
+//#define OCAC_NO_EVENTS
 
 
 #ifndef OCAC_CLASS_NAME
@@ -108,6 +104,25 @@
 #endif
 
 
+#ifndef OCAC_OCA_VERSION
+#define OCAC_OCA_VERSION 2
+#endif
+
+
+
+/**************************************************
+ * OCAC Class implementation specific
+ **/
+
+#ifndef OCAC_CLASS_COMMON_ATTRIBUTES
+#define OCAC_CLASS_COMMON_ATTRIBUTES
+#endif
+
+/** OcaRoot **/
+
+#ifndef OCAC_CLASS_ROOT_ATTRIBUTES
+#define OCAC_CLASS_ROOT_ATTRIBUTES OCAC_CLASS_COMMON_ATTRIBUTES
+#endif
 
 #ifndef OCAC_OBJ_ROOT_ROLE_MAXLEN
 #define OCAC_OBJ_ROOT_ROLE_MAXLEN 10
@@ -117,16 +132,10 @@
 #define OCAC_OBJ_ROOT_DEF_CUSTOM
 #endif
 
-/**
- * Root class instance attributes
- * eg. you can define __attribute__((section ("asdfasdf")))
- */
-#ifndef OCAC_CLASS_ROOT_ATTRIBUTE
-#define OCAC_CLASS_ROOT_ATTRIBUTE
-#endif
+/** OcaManager **/
 
-#ifndef OCAC_OBJ_MANAGER_DEF_CUSTOM
-#define OCAC_OBJ_MANAGER_DEF_CUSTOM
+#ifndef OCAC_CLASS_MANAGER_ATTRIBUTES
+#define OCAC_CLASS_MANAGER_ATTRIBUTES OCAC_CLASS_COMMON_ATTRIBUTES
 #endif
 
 #ifndef OCAC_OBJ_MANAGER_NAME_MAXLEN
@@ -138,22 +147,30 @@
 #define OCAC_OBJ_DEVICEMANAGER_DEF_CUSTOM
 #endif
 
+/** OcaDeviceManager **/
+
+#ifndef OCAC_CLASS_DEVICEMANAGER_ATTRIBUTES
+#define OCAC_CLASS_DEVICEMANAGER_ATTRIBUTES OCAC_CLASS_COMMON_ATTRIBUTES
+#endif
+
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEVICENAME_MAXLEN
 #define OCAC_OBJ_DEVICEMANAGER_DEVICENAME_MAXLEN 32
 #endif
 
-#ifndef OCAC_OBJ_DEVICEMANAGER_INVENTORYCODE_MAXLEN
-#define OCAC_OBJ_DEVICEMANAGER_INVENTORYCODE_MAXLEN 32
-#endif
-#ifndef OCAC_DEVICE_INVENTORYCODE_DEFAULT
-#define OCAC_DEVICE_INVENTORYCODE_DEFAULT {0, ""}
+#ifndef OCAC_OBJ_DEVICEMANAGER_USERINVENTORYCODE_MAXLEN
+#define OCAC_OBJ_DEVICEMANAGER_USERINVENTORYCODE_MAXLEN 32
 #endif
 
-#ifndef OCAC_OBJ_DEVICEMANAGER_MSG_MAXLEN
-#define OCAC_OBJ_DEVICEMANAGER_MSG_MAXLEN 128
+#ifndef OCAC_OBJ_DEVICEMANAGER_USERINVENTORYCODE_DEFAULT
+#define OCAC_OBJ_DEVICEMANAGER_USERINVENTORYCODE_DEFAULT {0, ""}
 #endif
-#ifndef OCAC_DEVICE_MESSAGE_DEFAULT
-#define OCAC_DEVICE_MESSAGE_DEFAULT {8, "ILOVEYOU"}
+
+#ifndef OCAC_OBJ_DEVICEMANAGER_MESSAGE_MAXLEN
+#define OCAC_OBJ_DEVICEMANAGER_MESSAGE_MAXLEN 128
+#endif
+
+#ifndef OCAC_OBJ_DEVICEMANAGER_MESSAGE_DEFAULT
+#define OCAC_OBJ_DEVICEMANAGER_MESSAGE_DEFAULT {8, "ILOVEYOU"}
 #endif
 
 

@@ -2,36 +2,44 @@
 // Created by Philip Tschiemer on 13.06.20.
 //
 
-#include <ocac/occ/classes/root.h>
-#include "ocac/occ/classes/root.h"
+#include "occclasses/root.h"
 #include "ocac/def.h"
 
-#ifndef OCAC_CLASS_NO_DEFAULT_ALLOCATION
+
 OCAC_CLASS_TYPE(OcaRoot) OCAC_CLASS_NAME(OcaRoot) = {
+
     .class_identification = {
         .ClassID = OCAC_CLASS_ROOT_ID,
         .ClassVersion = OCAC_CLASS_ROOT_VERSION
     },
+
     .parent = NULL,
-    .property_count = OCAC_CLASS_ROOT_PROPERTIES,
-    .method_count = OCAC_CLASS_ROOT_METHODS,
-    .event_count = OCAC_CLASS_ROOT_EVENTS,
+
+    .method_count = OCAC_CLASS_ROOT_NMETHODS,
     .methods = {
         OCAC_CLASS_ROOT_01mXX
     },
+
+    #ifndef OCAC_NO_PROPERTIES
+    .property_count = OCAC_CLASS_ROOT_NPROPERTIES,
     .properties = {
-//        OCAC_CLASS_ROOT_01pXX
+        OCAC_CLASS_ROOT_01pXX
     },
+    #endif
+
+    #ifndef OCAC_NO_EVENTS
+    .event_count = OCAC_CLASS_ROOT_NEVENTS,
     .events = {
         OCAC_CLASS_ROOT_01eXX
     },
+    #endif
 
-#if DEBUG
+    #if DEBUG
     .dump = ocac_dump_root
-#endif
+    #endif
 
-} OCAC_CLASS_ROOT_ATTRIBUTE;
-#endif //OCAC_CLASS_NO_DEFAULT_ALLOCATION
+} OCAC_CLASS_ROOT_ATTRIBUTES;
+
 
 OcaStatus ocac_m_root_getClassIdentification(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen)
 {

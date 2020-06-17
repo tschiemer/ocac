@@ -2,26 +2,35 @@
 // Created by Philip Tschiemer on 14.06.20.
 //
 
-#include "ocac/occ/classes/managers/manager.h"
+#include "occclasses/managers/manager.h"
 
 
-#ifndef OCAC_CLASS_NO_DEFAULT_ALLOCATION
+
 OCAC_CLASS_TYPE(OcaManager) OCAC_CLASS_NAME(OcaManager) = {
+
     .class_identification = {
             .ClassID = OCAC_CLASS_MANAGER_ID,
             .ClassVersion = OCAC_CLASS_MANAGER_VERSION
     },
+
     .parent = (OCAC_CLASS_BASE *) &OCAC_CLASS_NAME(OcaRoot),
-    .property_count = OCAC_CLASS_MANAGER_PROPERTIES,
-    .method_count = OCAC_CLASS_MANAGER_METHODS,
-    .event_count = OCAC_CLASS_MANAGER_EVENTS,
 
-#if DEBUG
+    .method_count = OCAC_CLASS_MANAGER_NMETHODS_TOTAL,
+
+    #ifndef OCAC_NO_PROPERTIES
+    .property_count = OCAC_CLASS_MANAGER_NPROPERTIES_TOTAL,
+    #endif
+
+    #ifndef OCAC_NO_EVENTS
+    .event_count = OCAC_CLASS_MANAGER_NEVENTS_TOTAL,
+    #endif
+
+    #if DEBUG
     .dump = ocac_dump_manager
-#endif
+    #endif
 
-} OCAC_CLASS_ROOT_ATTRIBUTE;
-#endif //OCAC_CLASS_NO_DEFAULT_ALLOCATION
+} OCAC_CLASS_MANAGER_ATTRIBUTES;
+
 
 
 //#ifndef OCAC_OBJ_NO_DEFAULT_ALLOCATION

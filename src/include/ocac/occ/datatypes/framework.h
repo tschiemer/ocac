@@ -45,7 +45,7 @@ typedef OcaClassIDField_Authority OcaClassIDField;
  */
 typedef struct {
     PACK_STRUCT_FIELD(OcaUint16 FieldCount);
-    PACK_STRUCT_FIELD(OcaClassIDField Fields[OCAC_CLASSID_SIZE]);
+    PACK_STRUCT_FIELD(OcaClassIDField Fields[OCAC_OCC_FRAMEWORK_CLASSID_SIZE]);
 } PACK_STRUCT_STRUCT OcaClassID;
 
 typedef enum {
