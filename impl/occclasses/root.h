@@ -13,16 +13,29 @@ extern "C" {
 #endif
 
 /**
+ * CONSTANTS
+ * Don't change!
+ */
+
+#define OCAC_CLASS_ROOT_ID          {1, {1}}
+#define OCAC_CLASS_ROOT_VERSION     2
+//#define OCAC_OBJ_ROOT_ONO           100
+
+#define OCAC__Root__DefLevel                1
+
+#define OCAC__Root_getClassIdentification   1
+#define OCAC__Root_getLockable              2
+#define OCAC__Root_lock                     3
+#define OCAC__Root_unlock                   4
+#define OCAC__Root_getRole                  5
+
+/**
  * CONFIGURATION
  * Edit here if wanted.
  *
  * To enable/disable a method/property/event define/undefine given method/property/event AND set the number of
  * methods/properties/events accordingly
  */
-
-#define OCAC_CLASS_ROOT_ID          {1, {1}}
-#define OCAC_CLASS_ROOT_VERSION     2
-//#define OCAC_OBJ_ROOT_ONO           100
 
 
 #define OCAC_CLASS_ROOT_NMETHODS        5

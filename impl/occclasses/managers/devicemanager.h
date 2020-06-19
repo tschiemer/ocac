@@ -23,6 +23,27 @@ extern "C" {
 #define OCAC_CLASS_DEVICEMANAGER_VERSION     2
 #define OCAC_OBJ_DEVICEMANAGER_ONO           1
 
+#define OCAC__DeviceManager__DefLevel  3
+
+#define OCAC__DeviceManager_getOcaVersion        1
+#define OCAC__DeviceManager_getModelGUID         2
+#define OCAC__DeviceManager_getSerialNumber      3
+#define OCAC__DeviceManager_getDeviceName        4
+#define OCAC__DeviceManager_setDeviceName        5
+#define OCAC__DeviceManager_getModelDescription  6
+#define OCAC__DeviceManager_getRole              7
+#define OCAC__DeviceManager_setRole              8
+#define OCAC__DeviceManager_getUserInventoryCode 9
+#define OCAC__DeviceManager_setUserInventoryCode 10
+#define OCAC__DeviceManager_getEnabled           11
+#define OCAC__DeviceManager_setEnabled           12
+#define OCAC__DeviceManager_getState             13
+#define OCAC__DeviceManager_setResetKey          14
+#define OCAC__DeviceManager_getResetCause        15
+#define OCAC__DeviceManager_clearResetCause      16
+#define OCAC__DeviceManager_getMessage           17
+#define OCAC__DeviceManager_setMessage           18
+#define OCAC__DeviceManager_getManagers          19
 
 /**
  * CONFIGURATION

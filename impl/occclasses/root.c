@@ -4,6 +4,7 @@
 
 #include <ocac/occ/datatypes/base.h>
 #include "occclasses/root.h"
+#include "occclasses/managers/devicemanager.h"
 #include "ocac/utf8.h"
 #include "ocac/def.h"
 
@@ -80,11 +81,12 @@ OcaStatus ocac_m_root_getLockable(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen,
 //    }
 
     #ifdef OCAC_USE_LOCKS
-    *rsp = ((OCAC_OBJ_TYPE(OcaRoot)*)obj)->lockable;
+    *(OcaBoolean*)rsp = ((OCAC_OBJ_TYPE(OcaRoot)*)obj)->lockable;
     #else
     *rsp = false;
     #endif
-    *rsplen = 1;
+
+    *rsplen = sizeof(OcaBoolean);
 
     return OcaStatus_OK;
 }
@@ -95,6 +97,8 @@ OcaStatus ocac_m_root_lock(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t *
 
     #ifdef OCAC_USE_LOCKS
     OCAC_ASSERT("Root.lock() not implemented", 0);
+
+    //TODO lock()
 
     return OcaStatus_NotImplemented;
     #else
@@ -108,6 +112,8 @@ OcaStatus ocac_m_root_unlock(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t
 
     #ifdef OCAC_USE_LOCKS
     OCAC_ASSERT("Root.unlock() not implemented", 0);
+
+    //TODO unlock()
 
     return OcaStatus_NotImplemented;
     #else
@@ -151,7 +157,7 @@ void ocac_dump_root(OCAC_OBJ_BASE * obj)
     OCAC_CLASS_TYPE(OcaRoot) * root_class = OCAC_CLASS_CAST(OcaRoot, root_obj->class_ptr);
 
     #ifdef OCAC_OBJ_ROOT_DEF_ROLE_USE
-    printf(" Role = ");
+    printf(" Role (%lu) = ", sizeof(root_obj->role));
     ocac_dump_string((OcaString*)&root_obj->role);
     printf("\n");
     #endif

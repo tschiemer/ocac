@@ -39,22 +39,24 @@ typedef struct {
 
 
 // TODO OcaDeviceState (unclear)
-//typedef enum {
-//    OcaDeviceState_Operational       = 0x0001,
-//    OcaDeviceState_Error             = 0x0002,
-//    OcaDeviceState_Disabled          = 0x0004,
-//    OcaDeviceState_Initializing      = 0x0008,
-//    OcaDeviceState_Updating          = 0x0010,
-//} PACK_STRUCT_STRUCT OcaDeviceState;
+typedef enum {
+    OcaDeviceState_Operational       = 0x0001,
+    OcaDeviceState_Error             = 0x0002,
+    OcaDeviceState_Disabled          = 0x0004,
+    OcaDeviceState_Initializing      = 0x0008,
+    OcaDeviceState_Updating          = 0x0010,
 
-#define OcaDeviceState_Operational  0b1000000000000000
-#define OcaDeviceState_Disabled     0b0100000000000000
-#define OcaDeviceState_Error        0b0010000000000000
-#define OcaDeviceState_Initializing 0b0001000000000000
-#define OcaDeviceState_Updating     0b0000100000000000
-#define OcaDeviceState_Unused       0b0000011111111111
+    __OcaDeviceState__               = 0xFFFF
+} PACK_STRUCT_STRUCT OcaDeviceState;
 
-typedef OcaBitSet16 OcaDeviceState;
+//#define OcaDeviceState_Operational  0b1000000000000000
+//#define OcaDeviceState_Disabled     0b0100000000000000
+//#define OcaDeviceState_Error        0b0010000000000000
+//#define OcaDeviceState_Initializing 0b0001000000000000
+//#define OcaDeviceState_Updating     0b0000100000000000
+//#define OcaDeviceState_Unused       0b0000011111111111
+//
+//typedef OcaBitSet16 OcaDeviceState;
 
 
 typedef struct {
@@ -65,9 +67,9 @@ typedef struct {
 
 
 typedef struct {
-    PACK_STRUCT_FIELD(s8_t Manufacturer[sizeof(OCAC_DEVICE_MANUFACTURER_NAME)]);
-    PACK_STRUCT_FIELD(s8_t Name[sizeof(OCAC_DEVICE_MODEL_NAME)]);
-    PACK_STRUCT_FIELD(s8_t Version[sizeof(OCAC_DEVICE_MODEL_VERSION)]);
+    OCAC_STRING(OCAC_DEVICE_MANUFACTURER_NAME_LEN) Manufacturer;
+    OCAC_STRING(OCAC_DEVICE_MODEL_NAME_LEN) Name;
+    OCAC_STRING(OCAC_DEVICE_MODEL_VERSION_LEN) Version;
 } PACK_STRUCT_STRUCT OcaModelDescription;
 
 

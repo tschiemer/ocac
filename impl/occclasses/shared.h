@@ -24,10 +24,11 @@ extern "C" {
 //    OCAC_ASSERT("rsp != NULL", rsp != NULL); \
 //    OCAC_ASSERT("rsplen != NULL", rsplen != NULL);
 
+//OCAC_ASSERT("reqlen > 0", reqlen > 0); \
+
 #define OCAC_METHOD_ASSERT_PARAMS \
     OCAC_ASSERT("obj != NULL", obj != NULL); \
     OCAC_ASSERT("req != NULL", req != NULL); \
-    OCAC_ASSERT("reqlen > 0", reqlen > 0); \
     OCAC_ASSERT("rsp != NULL", rsp != NULL); \
     OCAC_ASSERT("rsplen != NULL", rsplen != NULL); \
     OCAC_ASSERT("OCAC_SESSIONREF_ISVALID(session_ref)", OCAC_SESSIONREF_ISVALID(session_ref));

@@ -2,6 +2,7 @@
 // Created by Philip Tschiemer on 13.06.20.
 //
 
+#include <ocac/occ/datatypes/management.h>
 #include "ocac/def.h"
 #include "ocac/occ/datatypes/management.h"
 #include "ocac/utf8.h"
@@ -69,9 +70,9 @@ OCAC_OBJ_TYPE(OcaDeviceManager) OCAC_OBJ_NAME(OcaDeviceManager) = {
 
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_MODELDESC_USE
     .model_desc = {
-        .Manufacturer = OCAC_DEVICE_MANUFACTURER_NAME,
-        .Name = OCAC_DEVICE_MODEL_NAME,
-        .Version = OCAC_DEVICE_MODEL_VERSION
+        .Manufacturer = {OCAC_DEVICE_MANUFACTURER_NAME_UTF8_LEN,OCAC_DEVICE_MANUFACTURER_NAME},
+        .Name = {OCAC_DEVICE_MODEL_NAME_UTF8_LEN,OCAC_DEVICE_MODEL_NAME},
+        .Version = {OCAC_DEVICE_MODEL_VERSION_UTF8_LEN,OCAC_DEVICE_MODEL_VERSION}
     },
     #endif
 
@@ -113,6 +114,8 @@ OcaStatus ocac_m_devicemanager_getOcaVersion(OCAC_OBJ_BASE * obj, u8_t * req, u1
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    
+
     if (0 < maxrsplen && maxrsplen < sizeof(OcaUint16)){
         return OcaStatus_BufferOverflow;
     }
@@ -131,6 +134,8 @@ OcaStatus ocac_m_devicemanager_getOcaVersion(OCAC_OBJ_BASE * obj, u8_t * req, u1
 OcaStatus ocac_m_devicemanager_getModelGUID(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
+
+    
 
     if (0 < maxrsplen && maxrsplen < sizeof(OcaModelGUID)){
         return OcaStatus_BufferOverflow;
@@ -152,6 +157,8 @@ OcaStatus ocac_m_devicemanager_getSerialNumber(OCAC_OBJ_BASE * obj, u8_t * req, 
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    
+
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_SERIAL_USE
     if (0 < maxrsplen && maxrsplen < sizeof(OcaUint16)){
         return OcaStatus_BufferOverflow;
@@ -160,7 +167,7 @@ OcaStatus ocac_m_devicemanager_getSerialNumber(OCAC_OBJ_BASE * obj, u8_t * req, 
     s32_t bytes = ocac_utf8_cpyn( &rsp[2], OCAC_OBJ_CAST(OcaDeviceManager,obj)->serial.Value, OCAC_OBJ_CAST(OcaDeviceManager,obj)->serial.Len, maxrsplen - sizeof(OcaUint16) );
 
     // should never occur (internal state should always be valid)
-    OCAC_ASSERT("bytes == OCAC_UTF8_INVALID", bytes == OCAC_UTF8_INVALID);
+    OCAC_ASSERT("bytes != OCAC_UTF8_INVALID", bytes != OCAC_UTF8_INVALID);
 
     if (bytes == OCAC_UTF8_TOO_LONG){
         return OcaStatus_BufferOverflow;
@@ -181,6 +188,8 @@ OcaStatus ocac_m_devicemanager_getDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u1
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    
+
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_DEVICENAME_USE
     if (0 < maxrsplen && maxrsplen < sizeof(OcaUint16)){
         return OcaStatus_BufferOverflow;
@@ -189,7 +198,7 @@ OcaStatus ocac_m_devicemanager_getDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u1
     s32_t bytes = ocac_utf8_cpyn( &rsp[2], OCAC_OBJ_CAST(OcaDeviceManager,obj)->device_name.Value, OCAC_OBJ_CAST(OcaDeviceManager,obj)->device_name.Len, maxrsplen - sizeof(OcaUint16) );
 
     // should never occur (internal state should always be valid)
-    OCAC_ASSERT("bytes == OCAC_UTF8_INVALID", bytes == OCAC_UTF8_INVALID);
+    OCAC_ASSERT("bytes != OCAC_UTF8_INVALID", bytes != OCAC_UTF8_INVALID);
 
     if (bytes == OCAC_UTF8_TOO_LONG){
         return OcaStatus_BufferOverflow;
@@ -209,6 +218,8 @@ OcaStatus ocac_m_devicemanager_getDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u1
 OcaStatus ocac_m_devicemanager_setDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
+
+    
 
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_DEVICENAME_USE
 
@@ -240,7 +251,67 @@ OcaStatus ocac_m_devicemanager_getModelDescription(OCAC_OBJ_BASE * obj, u8_t * r
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    
+
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_ROLE_USE
+
+
+    if (0 < maxrsplen && maxrsplen < 3*sizeof(OcaUint16)){
+        return OcaStatus_BufferOverflow;
+    }
+
+    // 1) manufacturer name
+    u32_t bytes = ocac_utf8_cpyn( &rsp[2], OCAC_OBJ_CAST(OcaDeviceManager,obj)->model_desc.Manufacturer.Value, OCAC_OBJ_CAST(OcaDeviceManager,obj)->model_desc.Manufacturer.Len, maxrsplen - sizeof(OcaUint16) );
+
+    // should never occur (internal state should always be valid)
+    OCAC_ASSERT("bytes != OCAC_UTF8_INVALID", bytes != OCAC_UTF8_INVALID);
+
+    if (bytes == OCAC_UTF8_TOO_LONG){
+        return OcaStatus_BufferOverflow;
+    }
+
+    *(OcaUint16 *)rsp = ocac_htons(OCAC_OBJ_CAST(OcaDeviceManager,obj)->model_desc.Manufacturer.Len);
+
+    s32_t size = sizeof(OcaUint16) + bytes;
+
+
+    // 2) model name
+    bytes = ocac_utf8_cpyn( &rsp[size+2], OCAC_OBJ_CAST(OcaDeviceManager,obj)->model_desc.Name.Value, OCAC_OBJ_CAST(OcaDeviceManager,obj)->model_desc.Name.Len, maxrsplen - size - sizeof(OcaUint16) );
+
+    // should never occur (internal state should always be valid)
+    OCAC_ASSERT("bytes != OCAC_UTF8_INVALID", bytes != OCAC_UTF8_INVALID);
+
+    if (bytes == OCAC_UTF8_TOO_LONG){
+        return OcaStatus_BufferOverflow;
+    }
+
+    *(OcaUint16 *)&rsp[size] = ocac_htons(OCAC_OBJ_CAST(OcaDeviceManager,obj)->model_desc.Name.Len);
+
+    size += sizeof(OcaUint16) + bytes;
+
+
+    // 3) version
+    bytes = ocac_utf8_cpyn( &rsp[size+2], OCAC_OBJ_CAST(OcaDeviceManager,obj)->model_desc.Version.Value, OCAC_OBJ_CAST(OcaDeviceManager,obj)->model_desc.Version.Len, maxrsplen - size - sizeof(OcaUint16) );
+
+    // should never occur (internal state should always be valid)
+    OCAC_ASSERT("bytes != OCAC_UTF8_INVALID", bytes != OCAC_UTF8_INVALID);
+
+    if (bytes == OCAC_UTF8_TOO_LONG){
+        return OcaStatus_BufferOverflow;
+    }
+
+    *(OcaUint16 *)&rsp[size] = ocac_htons(OCAC_OBJ_CAST(OcaDeviceManager,obj)->model_desc.Version.Len);
+
+    size += sizeof(OcaUint16) + bytes;
+
+    *rsplen = size;
+
+    return OcaStatus_OK;
+
+    #else
+    OCAC_ASSERT("Not implemented", false):
     return OcaStatus_NotImplemented;
+    #endif
 }
 
 OcaStatus ocac_m_devicemanager_getRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
@@ -282,7 +353,6 @@ OcaStatus ocac_m_devicemanager_setRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t re
 
     s32_t bytes = ocac_utf8_cpyn( OCAC_OBJ_CAST(OcaDeviceManager,obj)->dm_role.Value, &req[2], len, sizeof(OCAC_OBJ_CAST(OcaDeviceManager,obj)->dm_role.Value) );
 
-    // should never occur (internal state should always be valid)
     if (bytes == OCAC_UTF8_INVALID){
         return OcaStatus_BadFormat;
     }
@@ -296,6 +366,7 @@ OcaStatus ocac_m_devicemanager_setRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t re
     *rsplen = 0;
 
     return OcaStatus_OK;
+
     #else
     OCAC_ASSERT("Not implemented", false):
     return OcaStatus_NotImplemented;
@@ -306,40 +377,116 @@ OcaStatus ocac_m_devicemanager_getUserInventoryCode(OCAC_OBJ_BASE * obj, u8_t * 
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_USERINVENTORYCODE_USE
+    if (0 < maxrsplen && maxrsplen < sizeof(OcaUint16)){
+        return OcaStatus_BufferOverflow;
+    }
+
+    u32_t bytes = ocac_utf8_cpyn( &rsp[2], OCAC_OBJ_CAST(OcaDeviceManager,obj)->user_inventory_code.Value, OCAC_OBJ_CAST(OcaDeviceManager,obj)->user_inventory_code.Len, maxrsplen - sizeof(OcaUint16) );
+
+    // should never occur (internal state should always be valid)
+    OCAC_ASSERT("bytes != OCAC_UTF8_INVALID", bytes != OCAC_UTF8_INVALID);
+
+    if (bytes == OCAC_UTF8_TOO_LONG){
+        return OcaStatus_BufferOverflow;
+    }
+
+    *(OcaUint16 *)rsp = ocac_htons(OCAC_OBJ_CAST(OcaDeviceManager,obj)->user_inventory_code.Len);
+
+    *rsplen = sizeof(OcaUint16) + bytes;
+
+    return OcaStatus_OK;
+    #else
+    OCAC_ASSERT("Not implemented", false):
     return OcaStatus_NotImplemented;
+    #endif
 }
 
 OcaStatus ocac_m_devicemanager_setUserInventoryCode(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_USERINVENTORYCODE_USE
+
+    u16_t len = *(OcaUint16*)req;
+
+    s32_t bytes = ocac_utf8_cpyn( OCAC_OBJ_CAST(OcaDeviceManager,obj)->user_inventory_code.Value, &req[2], len, sizeof(OCAC_OBJ_CAST(OcaDeviceManager,obj)->user_inventory_code.Value) );
+
+    if (bytes == OCAC_UTF8_INVALID){
+        return OcaStatus_BadFormat;
+    }
+
+    if (bytes == OCAC_UTF8_TOO_LONG){
+        return OcaStatus_BufferOverflow;
+    }
+
+    OCAC_OBJ_CAST(OcaDeviceManager,obj)->user_inventory_code.Len = len;
+
+    *rsplen = 0;
+
+    return OcaStatus_OK;
+    #else
+    OCAC_ASSERT("Not implemented", false):
     return OcaStatus_NotImplemented;
+    #endif
 }
 
 OcaStatus ocac_m_devicemanager_getEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_ENABLED_USE
+
+    *(OcaBoolean*)rsp = ((OCAC_OBJ_TYPE(OcaDeviceManager)*)obj)->enabled;
+    *rsplen = sizeof(OcaBoolean);
+
+    return OcaStatus_OK;
+    #else
+    OCAC_ASSERT("Not implemented", false):
     return OcaStatus_NotImplemented;
+    #endif
 }
 
 OcaStatus ocac_m_devicemanager_setEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    if (reqlen != sizeof(OcaBoolean)){
+        return OcaStatus_InvalidRequest;
+    }
+
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_ENABLED_USE
+
+    ((OCAC_OBJ_TYPE(OcaDeviceManager)*)obj)->enabled = (*(OcaBoolean*)req) == false;
+
+    return OcaStatus_OK;
+    #else
+    OCAC_ASSERT("Not implemented", false):
     return OcaStatus_NotImplemented;
+    #endif
 }
 
 OcaStatus ocac_m_devicemanager_getState(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_STATE_USE
+
+    *(OcaDeviceState*)rsp = ((OCAC_OBJ_TYPE(OcaDeviceManager)*)obj)->state;
+    *rsplen = sizeof(OcaDeviceState);
+
+    return OcaStatus_OK;
+    #else
+    OCAC_ASSERT("Not implemented", false):
     return OcaStatus_NotImplemented;
+    #endif
 }
 
 OcaStatus ocac_m_devicemanager_setResetKey(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
+
+    // TODO
 
     return OcaStatus_NotImplemented;
 }
@@ -348,33 +495,100 @@ OcaStatus ocac_m_devicemanager_getResetCause(OCAC_OBJ_BASE * obj, u8_t * req, u1
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_ENABLED_USE
+
+    *(OcaResetCause*)rsp = ((OCAC_OBJ_TYPE(OcaDeviceManager)*)obj)->reset_cause;
+    *rsplen = sizeof(OcaResetCause);
+
+    return OcaStatus_OK;
+    #else
+    OCAC_ASSERT("Not implemented", false):
     return OcaStatus_NotImplemented;
+    #endif
 }
 
 OcaStatus ocac_m_devicemanager_clearResetCause(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    if (reqlen != 0){
+        return OcaStatus_InvalidRequest;
+    }
+
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_ENABLED_USE
+
+    ((OCAC_OBJ_TYPE(OcaDeviceManager)*)obj)->reset_cause = OcaResetCause_PowerOn;
+
+    return OcaStatus_OK;
+    #else
+    OCAC_ASSERT("Not implemented", false):
     return OcaStatus_NotImplemented;
+    #endif
 }
 
 OcaStatus ocac_m_devicemanager_getMessage(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_MESSAGE_USE
+    if (0 < maxrsplen && maxrsplen < sizeof(OcaUint16)){
+        return OcaStatus_BufferOverflow;
+    }
+
+    u32_t bytes = ocac_utf8_cpyn( &rsp[2], OCAC_OBJ_CAST(OcaDeviceManager,obj)->message.Value, OCAC_OBJ_CAST(OcaDeviceManager,obj)->message.Len, maxrsplen - sizeof(OcaUint16) );
+
+    // should never occur (internal state should always be valid)
+    OCAC_ASSERT("bytes != OCAC_UTF8_INVALID", bytes != OCAC_UTF8_INVALID);
+
+    if (bytes == OCAC_UTF8_TOO_LONG){
+        return OcaStatus_BufferOverflow;
+    }
+
+    *(OcaUint16 *)rsp = ocac_htons(OCAC_OBJ_CAST(OcaDeviceManager,obj)->message.Len);
+
+    *rsplen = sizeof(OcaUint16) + bytes;
+
+    return OcaStatus_OK;
+    #else
+    OCAC_ASSERT("Not implemented", false):
     return OcaStatus_NotImplemented;
+    #endif
 }
 
 OcaStatus ocac_m_devicemanager_setMessage(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_MESSAGE_USE
+
+    u16_t len = *(OcaUint16*)req;
+
+    s32_t bytes = ocac_utf8_cpyn( OCAC_OBJ_CAST(OcaDeviceManager,obj)->message.Value, &req[2], len, sizeof(OCAC_OBJ_CAST(OcaDeviceManager,obj)->message.Value) );
+
+    if (bytes == OCAC_UTF8_INVALID){
+        return OcaStatus_BadFormat;
+    }
+
+    if (bytes == OCAC_UTF8_TOO_LONG){
+        return OcaStatus_BufferOverflow;
+    }
+
+    OCAC_OBJ_CAST(OcaDeviceManager,obj)->message.Len = len;
+
+    *rsplen = 0;
+
+    return OcaStatus_OK;
+    #else
+    OCAC_ASSERT("Not implemented", false):
     return OcaStatus_NotImplemented;
+    #endif
 }
 
 OcaStatus ocac_m_devicemanager_getManagers(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
+
+    //TODO have managers list
 
     return OcaStatus_NotImplemented;
 }
@@ -392,9 +606,16 @@ void ocac_dump_devicemanager(OCAC_OBJ_BASE * obj)
 
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_MODELDESC_USE
     printf(" ModelDescription\n");
-    printf("  Manufacturer = %s\n", dm->model_desc.Manufacturer);
-    printf("  Name = %s\n", dm->model_desc.Name);
-    printf("  Version = %s\n", dm->model_desc.Version);
+
+    printf("  Manufacturer = ");
+    ocac_dump_string( (OcaString*)&dm->model_desc.Manufacturer );
+    printf("\n");
+    printf("  Name = ");
+    ocac_dump_string( (OcaString*)&dm->model_desc.Name );
+    printf("\n");
+    printf("  Version = ");
+    ocac_dump_string( (OcaString*)&dm->model_desc.Version );
+    printf("\n");
     #endif
 
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_MODELGUID_USE
@@ -412,6 +633,12 @@ void ocac_dump_devicemanager(OCAC_OBJ_BASE * obj)
 
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_OCAVERSION_USE
     printf(" OcaVersion = %d\n", dm->oca_version);
+    #endif
+
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_ROLE_USE
+    printf(" DM Role = ");
+    ocac_dump_string((OcaString*)&dm->dm_role);
+    printf("\n");
     #endif
 
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_DEVICENAME_USE

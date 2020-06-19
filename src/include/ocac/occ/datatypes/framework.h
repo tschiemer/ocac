@@ -101,6 +101,7 @@ typedef struct {
     PACK_STRUCT_FIELD(OcaUint16 MethodIndex);
 } PACK_STRUCT_STRUCT OcaMethodID;
 
+#define OCAC_IS_METHOD(methodid, level, index) (methodid.DefLevel == level && methodid.MethodIndex == index)
 
 typedef struct {
     PACK_STRUCT_FIELD(OcaUint16 DefLevel);
