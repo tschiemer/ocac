@@ -23,19 +23,22 @@ extern "C" {
 
 
 
+#ifndef ocac_utf8_bytelen
 /**
  * Simple utf8 string validation and byte length computation
  * On success, returns number of required bytes, otherwise error code (OCAC_UTF8_INVALID or OCAC_UTF8_TOO_LONG)
  */
 s32_t ocac_utf8_bytelen(const u8_t * str, u16_t nchars, u16_t maxbytes);
+#endif //ocac_utf8_bytelen
 
 
+#ifndef ocac_utf8_cpyn
 /**
  * Copies n UTF-8 characters (which can be more than n bytes)
  * On success, returns number of copied bytes, otherwise error code (OCAC_UTF8_INVALID or OCAC_UTF8_TOO_LONG)
  */
-s32_t ocac_utr8_cpyn(u8_t * dst, const u8_t * src, u16_t nchars, u16_t maxbytes);
-
+s32_t ocac_utf8_cpyn(u8_t * dst, const u8_t * src, u16_t nchars, u16_t maxbytes);
+#endif //ocac_utf8_cpyn
 
 #ifdef __cplusplus
 }

@@ -6,7 +6,7 @@
 #include "ocac/opt.h"
 #include "ocac/def.h"
 
-
+#ifndef ocac_utf8_bytelen
 s32_t ocac_utf8_bytelen(const u8_t * str, u16_t nchars, u16_t maxbytes)
 {
     u16_t len = 0;
@@ -41,9 +41,11 @@ s32_t ocac_utf8_bytelen(const u8_t * str, u16_t nchars, u16_t maxbytes)
 
     return len;
 }
+#endif //ocac_utf8_bytelen
 
 
-s32_t ocac_utr8_cpyn(u8_t * dst, const u8_t * src, u16_t nchars, u16_t maxbytes)
+#ifndef ocac_utf8_cpyn
+s32_t ocac_utf8_cpyn(u8_t * dst, const u8_t * src, u16_t nchars, u16_t maxbytes)
 {
     s32_t len = ocac_utf8_bytelen(src, nchars, maxbytes);
 
@@ -53,3 +55,4 @@ s32_t ocac_utr8_cpyn(u8_t * dst, const u8_t * src, u16_t nchars, u16_t maxbytes)
 
     return len;
 }
+#endif //ocac_utf8_cpyn
