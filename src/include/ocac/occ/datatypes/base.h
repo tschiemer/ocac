@@ -104,14 +104,18 @@ typedef OCAC_BLOBFIXEDLEN(16) OcaBlobFixedLen16;
     } PACK_STRUCT_STRUCT
 
 
-#define OCAC_LIST2D(type, xn, yn) \
+// nX: columns
+// nY: rows
+// marshaling: columns first
+#define OCAC_LIST2D(type, coln, rown) \
     struct { \
         OcaUint16 nX; \
         OcaUint16 nY; \
-        type Items[xn*yn]; \
+        type Items[coln*rown]; \
     } PACK_STRUCT_STRUCT
 
-#define OCAC_LIST2D_ITEM(list_ptr, xN, yN) (list_ptr->Items[list_ptr->nX * ny + nx])
+#define OCAC_LIST2D_ITEM(list_ptr, col, row) (list_ptr->Items[list_ptr->nY * row + col])
+#define OCAC_LIST2D_CELL_COUNT(list_ptr) (list_ptr->nY * list_ptr->nX)
 
 
 #define OCAC_MAP_ITEM(keytype, valuetype) \
@@ -139,7 +143,7 @@ typedef OcaUint32 OcaONo;
 
 void ocac_dump_string( OcaString * string );
 void ocac_dump_blob( OcaBlob * blob );
-void ocac_dump_blobfixedlen( u8_t * blob, size_t len );
+void ocac_dump_blobfixedlen( u8_t * blob, u16_t len );
 
 #endif
 

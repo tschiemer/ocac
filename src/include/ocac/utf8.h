@@ -22,7 +22,6 @@ extern "C" {
 #define OCAC_UTF8_LEN_FOUR( b )      ( ( (b) & 0b11111000) == 0b11110000 )
 
 
-
 #ifndef ocac_utf8_bytelen
 /**
  * Simple utf8 string validation and byte length computation
@@ -39,6 +38,11 @@ s32_t ocac_utf8_bytelen(const u8_t * str, u16_t nchars, u16_t maxbytes);
  */
 s32_t ocac_utf8_cpyn(u8_t * dst, const u8_t * src, u16_t nchars, u16_t maxbytes);
 #endif //ocac_utf8_cpyn
+
+#ifndef ocac_utf8_strlen
+s32_t ocac_utf8_strlen(const u8_t * str, u16_t slen);
+#endif //ocac_utf8_strlen
+
 
 #ifdef __cplusplus
 }

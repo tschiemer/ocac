@@ -4,41 +4,36 @@
 
 #include <ocac/occ/datatypes/base.h>
 #include "ocac/occ/datatypes/base.h"
+#include "ocac/utf8.h"
 
 #ifdef DEBUG
 
 
-void ocac_dump_string( OcaString * string )
+void ocac_dump_string( OcaString * str )
 {
-    printf("OcaString (Len=%d)", string->Len);
+    s32_t bytes = ocac_utf8_bytelen( str->Value, str->Len, 0 );
 
-    if (string->Len == 0){
-        printf("\n");
-        return;
+    if (bytes > 0) {
+        for (int i = 0; i < bytes; i++) {
+            printf("%c", str->Value[i]);
+        }
     }
 
-    for(int i = 0; i < string->Len; i++){
-        printf("%c", string->Value[i]);
-    }
-    printf("\n");
+    printf(" (Len=%d, bytes=%d)", str->Len, bytes);
 }
 
 void ocac_dump_blob( OcaBlob * blob )
 {
     printf("OcaBlob (Len=%d)", blob->DataSize);
 
-    if (blob->DataSize == 0){
-        printf("\n");
-        return;
+    if (blob->DataSize > 0){
+        for(int i = 0; i < blob->DataSize; i++){
+            printf(" %02X", blob->Data[i]);
+        }
     }
-
-    for(int i = 0; i < blob->DataSize; i++){
-        printf(" %02X", blob->Data[i]);
-    }
-    printf("\n");
 }
 
-void ocac_dump_blobfixedlen( u8_t * blob, size_t len )
+void ocac_dump_blobfixedlen( u8_t * blob, u16_t len )
 {
     printf("OcaBlobFixedLen%zu", len);
 
@@ -51,7 +46,6 @@ void ocac_dump_blobfixedlen( u8_t * blob, size_t len )
     for(int i = 1; i < len; i++){
         printf(" %02X", blob[i]);
     }
-    printf("\n");
 }
 
 #endif

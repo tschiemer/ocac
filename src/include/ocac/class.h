@@ -5,9 +5,10 @@
 #ifndef OCAC_OCAC_CLASS_H
 #define OCAC_OCAC_CLASS_H
 
-#include "arch.h"
-#include "occ/datatypes/base.h"
-#include "occ/datatypes/framework.h"
+#include "ocac/arch.h"
+#include "ocac/occ/datatypes/base.h"
+#include "ocac/occ/datatypes/framework.h"
+#include "ocac/session.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,7 +30,7 @@ struct ocac_class_event {
 };
 #endif
 
-typedef OcaStatus (*ocac_method_ptr)(struct ocac_obj_base * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
+typedef OcaStatus (*ocac_method_ptr)(struct ocac_obj_base * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
 
 struct ocac_class_method {
     OcaMethodID id;

@@ -2,8 +2,8 @@
 // Created by Philip Tschiemer on 13.06.20.
 //
 
-#ifndef OCAC_OCC_CLASSES_MANAGERS_ABSTRACT_H
-#define OCAC_OCC_CLASSES_MANAGERS_ABSTRACT_H
+#ifndef OCAC_IMPL_OCCCLASSES_MANAGERS_ABSTRACT_H
+#define OCAC_IMPL_OCCCLASSES_MANAGERS_ABSTRACT_H
 
 #include "occclasses/root.h"
 
@@ -33,7 +33,7 @@ extern "C" {
 #define OCAC_CLASS_MANAGER_NEVENTS         0
 
 
-#define OCAC_OBJ_MANAGER_DEF_NAME          const u8_t name[OCAC_OBJ_MANAGER_NAME_MAXLEN]; // Needed for manager descripter (see device manager)
+#define OCAC_OBJ_MANAGER_DEF_NAME          OCAC_STRING(OCAC_OBJ_MANAGER_NAME_MAXLEN) mngr_name; // Needed for manager descripter (see device manager)
 
 
 // Add your own definitions if desired
@@ -93,6 +93,8 @@ extern "C" {
 
 #ifndef OCAC_OBJ_MANAGER_DEF_NAME
 #define OCAC_OBJ_MANAGER_DEF_NAME
+#else
+#define OCAC_OBJ_MANAGER_DEF_NAME_USE
 #endif
 #ifndef OCAC_OBJ_MANAGER_DEF_CUSTOM
 #define OCAC_OBJ_MANAGER_DEF_CUSTOM
@@ -142,4 +144,4 @@ void ocac_dump_manager(OCAC_OBJ_BASE * obj);
 }
 #endif
 
-#endif //OCAC_OCC_CLASSES_MANAGERS_ABSTRACT_H
+#endif //OCAC_IMPL_OCCCLASSES_MANAGERS_ABSTRACT_H

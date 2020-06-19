@@ -72,12 +72,7 @@ u32_t ocac_htonl(u32_t x);
 
 
 #ifndef ocac_memcpy
-inline void ocac_memcpy( u8_t * dst, const u8_t * src, size_t len )
-{
-    for(size_t i = 0; i < len; i++){
-
-    }
-}
+void ocac_memcpy( void * dst, const void * src, size_t len );
 #endif
 
 #ifdef __cplusplus

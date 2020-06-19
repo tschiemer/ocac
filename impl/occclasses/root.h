@@ -2,10 +2,11 @@
 // Created by Philip Tschiemer on 13.06.20.
 //
 
-#ifndef OCAC_OCC_CLASSES_ROOT_H
-#define OCAC_OCC_CLASSES_ROOT_H
+#ifndef OCAC_IMPL_OCCCLASSES_CLASSES_ROOT_H
+#define OCAC_IMPL_OCCCLASSES_CLASSES_ROOT_H
 
 #include "ocac/obj.h"
+#include "occclasses/shared.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -44,8 +45,9 @@ extern "C" {
 
 #define OCAC_CLASS_ROOT_01e01
 
-
+#ifdef OCAC_USE_LOCKS
 #define OCAC_OBJ_ROOT_DEF_LOCKABLE      OcaBoolean lockable;
+#endif
 #define OCAC_OBJ_ROOT_DEF_ROLE          OCAC_STRING(OCAC_OBJ_ROOT_ROLE_MAXLEN) role;
 
 // Add your own definitions if desired
@@ -135,9 +137,13 @@ extern "C" {
 
 #ifndef OCAC_OBJ_ROOT_DEF_LOCKABLE
 #define OCAC_OBJ_ROOT_DEF_LOCKABLE
+#else
+#define OCAC_OBJ_ROOT_DEF_LOCKABLE_USE
 #endif
 #ifndef OCAC_OBJ_ROOT_DEF_ROLE
 #define OCAC_OBJ_ROOT_DEF_ROLE
+#else
+#define OCAC_OBJ_ROOT_DEF_ROLE_USE
 #endif
 #ifndef OCAC_OBJ_ROOT_DEF_CUSTOM
 #define OCAC_OBJ_ROOT_DEF_CUSTOM
@@ -176,11 +182,11 @@ OCAC_CLASS_TYPE(OcaRoot) OCAC_CLASS_NAME(OcaRoot);
 // none
 
 /** Class methods */
-OcaStatus ocac_m_root_getClassIdentification(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_root_getLockable(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_root_lock(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_root_unlock(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_root_getRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
+OcaStatus ocac_m_root_getClassIdentification(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_root_getLockable(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_root_lock(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_root_unlock(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_root_getRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
 
 
 /** /CLASS/OBJECT DECLARATION **/
@@ -193,4 +199,4 @@ void ocac_dump_root(OCAC_OBJ_BASE * obj);
 }
 #endif
 
-#endif //OCAC_OCC_CLASSES_ROOT_H
+#endif //OCAC_IMPL_OCCCLASSES_CLASSES_ROOT_H

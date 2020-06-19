@@ -2,8 +2,8 @@
 // Created by Philip Tschiemer on 13.06.20.
 //
 
-#ifndef OCAC_OCC_CLASSES_MANAGERS_DEVICE_H
-#define OCAC_OCC_CLASSES_MANAGERS_DEVICE_H
+#ifndef OCAC_IMPL_OCCCLASSES_MANAGERS_DEVICE_H
+#define OCAC_IMPL_OCCCLASSES_MANAGERS_DEVICE_H
 
 #include "ocac/occ/datatypes/management.h"
 #include "occclasses/managers/manager.h"
@@ -63,13 +63,20 @@ extern "C" {
 #define OCAC_CLASS_DEVICEMANAGER_03p04
 #define OCAC_CLASS_DEVICEMANAGER_03p05
 
+#ifdef OCAC_OVERRIDEABLE_METHODS
+#define OCAC_CLASS_DEVICEMANAGER_01m01       {{1,1}, ocac_m_root_getClassIdentification},
+#define OCAC_CLASS_DEVICEMANAGER_01m02       {{1,2}, ocac_m_root_getLockable},
+#define OCAC_CLASS_DEVICEMANAGER_01m03       {{1,3}, ocac_m_root_lock},
+#define OCAC_CLASS_DEVICEMANAGER_01m04       {{1,4}, ocac_m_root_unlock},
+#define OCAC_CLASS_DEVICEMANAGER_01m05       {{1,5}, ocac_m_root_getRole},
+#endif
 
 #define OCAC_OBJ_DEVICEMANAGER_DEF_MODELGUID            OcaModelGUID model_guid;
-#define OCAC_OBJ_DEVICEMANAGER_DEF_SERIAL               u8_t serial[OCAC_DEVICE_SERIAL_LEN];
+#define OCAC_OBJ_DEVICEMANAGER_DEF_SERIAL               OCAC_STRING(sizeof(OCAC_DEVICE_SERIAL_DEFAULT)) serial;
 #define OCAC_OBJ_DEVICEMANAGER_DEF_MODELDESC            OcaModelDescription model_desc;
 #define OCAC_OBJ_DEVICEMANAGER_DEF_DEVICENAME           OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_DEVICENAME_MAXLEN) device_name;
 #define OCAC_OBJ_DEVICEMANAGER_DEF_OCAVERSION           OcaUint16 oca_version; // if is static in firmware this can be set directly in the getter..
-#define OCAC_OBJ_DEVICEMANAGER_DEF_USERINVENTORYCODE    OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_USERINVENTORYCODE_MAXLEN) inventory_code;
+#define OCAC_OBJ_DEVICEMANAGER_DEF_USERINVENTORYCODE    OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_USERINVENTORYCODE_MAXLEN) user_inventory_code;
 #define OCAC_OBJ_DEVICEMANAGER_DEF_ENABLED              OcaBoolean enabled;
 #define OCAC_OBJ_DEVICEMANAGER_DEF_STATE                OcaDeviceState state;
 #define OCAC_OBJ_DEVICEMANAGER_DEF_BUSY                 OcaBoolean busy;
@@ -174,8 +181,13 @@ extern "C" {
 
 #ifdef OCAC_OVERRIDEABLE_METHODS
 
+
 #define OCAC_CLASS_DEVICEMANAGER_XXmXX \
-    OCAC_CLASS_MANAGER_XXmXX \
+    OCAC_CLASS_DEVICEMANAGER_01m01 \
+    OCAC_CLASS_DEVICEMANAGER_01m02 \
+    OCAC_CLASS_DEVICEMANAGER_01m03 \
+    OCAC_CLASS_DEVICEMANAGER_01m04 \
+    OCAC_CLASS_DEVICEMANAGER_01m05 \
     OCAC_CLASS_DEVICEMANAGER_03mXX
 
 #define OCAC_CLASS_DEVICEMANAGER_NMETHODS_TOTAL (OCAC_CLASS_DEVICEMANAGER_NMETHODS + OCAC_CLASS_MANAGER_NMETHODS_TOTAL)
@@ -228,42 +240,68 @@ extern "C" {
 
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_MODELGUID
 #define OCAC_OBJ_DEVICEMANAGER_DEF_MODELGUID
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_MODELGUID_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_SERIAL
 #define OCAC_OBJ_DEVICEMANAGER_DEF_SERIAL
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_SERIAL_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_MODELDESC
 #define OCAC_OBJ_DEVICEMANAGER_DEF_MODELDESC
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_MODELDESC_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_DEVICENAME
 #define OCAC_OBJ_DEVICEMANAGER_DEF_DEVICENAME
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_DEVICENAME_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_OCAVERSION
 #define OCAC_OBJ_DEVICEMANAGER_DEF_OCAVERSION
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_OCAVERSION_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_USERINVENTORYCODE
 #define OCAC_OBJ_DEVICEMANAGER_DEF_USERINVENTORYCODE
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_USERINVENTORYCODE_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_ENABLED
 #define OCAC_OBJ_DEVICEMANAGER_DEF_ENABLED
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_ENABLED_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_STATE
 #define OCAC_OBJ_DEVICEMANAGER_DEF_STATE
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_STATE_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_BUSY
 #define OCAC_OBJ_DEVICEMANAGER_DEF_BUSY
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_BUSY_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_RESETCAUSE
 #define OCAC_OBJ_DEVICEMANAGER_DEF_RESETCAUSE
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_RESETCAUSE_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_MESSAGE
 #define OCAC_OBJ_DEVICEMANAGER_DEF_MESSAGE
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_MESSAGE_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_ROLE
 #define OCAC_OBJ_DEVICEMANAGER_DEF_ROLE
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_ROLE_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_MANAGERS
 #define OCAC_OBJ_DEVICEMANAGER_DEF_MANAGERS
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_MANAGERS_USE
 #endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_CUSTOM
 #define OCAC_OBJ_DEVICEMANAGER_DEF_CUSTOM
@@ -317,25 +355,25 @@ OCAC_OBJ_TYPE(OcaDeviceManager) OCAC_OBJ_NAME(OcaDeviceManager);
 
 
 /** Class methods */
-OcaStatus ocac_m_devicemanager_getOcaVersion(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_getModelGUID(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_getSerialNumber(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_getDeviceName(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_setDeviceName(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_getModelDescription(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_getRole(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_setRole(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_getUserInventoryCode(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_setUserInventoryCode(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_getEnabled(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_setEnabled(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_getState(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_setResetKey(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_getResetCause(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_clearResetCause(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_getMessage(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_setMessage(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
-OcaStatus ocac_m_devicemanager_getManagers(OCAC_OBJ_BASE * obj, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
+OcaStatus ocac_m_devicemanager_getOcaVersion(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_getModelGUID(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_getSerialNumber(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_getDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_setDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_getModelDescription(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_getRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_setRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_getUserInventoryCode(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_setUserInventoryCode(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_getEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_setEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_getState(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_setResetKey(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_getResetCause(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_clearResetCause(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_getMessage(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_setMessage(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_getManagers(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
 
 
 /** /CLASS/OBJECT DECLARATION **/
@@ -349,4 +387,4 @@ void ocac_dump_devicemanager(OCAC_OBJ_BASE * obj);
 }
 #endif
 
-#endif //OCAC_OCC_CLASSES_MANAGERS_DEVICE_H
+#endif //OCAC_IMPL_OCCCLASSES_MANAGERS_DEVICE_H

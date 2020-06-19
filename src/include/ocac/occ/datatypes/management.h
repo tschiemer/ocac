@@ -59,15 +59,15 @@ typedef OcaBitSet16 OcaDeviceState;
 
 typedef struct {
     PACK_STRUCT_FIELD(OcaBlobFixedLen1 Reserved); // 0
-    PACK_STRUCT_FIELD(OcaBlobFixedLen3 MfrCode);
+    PACK_STRUCT_FIELD(OcaBlobFixedLen3 MfrCode); // According to AES70-2 Appendix A this is the IEEE manufacturer code for which you pay ~800$, for valid values see: http://standards-oui.ieee.org/manid/manid.txt
     PACK_STRUCT_FIELD(OcaBlobFixedLen4 ModelCode);
 } PACK_STRUCT_STRUCT OcaModelGUID;
 
 
 typedef struct {
-    PACK_STRUCT_FIELD(s8_t Manufacturer[OCAC_DEVICE_MANUFACTURER_NAME_LEN]);
-    PACK_STRUCT_FIELD(s8_t Name[OCAC_DEVICE_MODEL_NAME_LEN]);
-    PACK_STRUCT_FIELD(s8_t Version[OCAC_DEVICE_MODEL_VERSION_LEN]);
+    PACK_STRUCT_FIELD(s8_t Manufacturer[sizeof(OCAC_DEVICE_MANUFACTURER_NAME)]);
+    PACK_STRUCT_FIELD(s8_t Name[sizeof(OCAC_DEVICE_MODEL_NAME)]);
+    PACK_STRUCT_FIELD(s8_t Version[sizeof(OCAC_DEVICE_MODEL_VERSION)]);
 } PACK_STRUCT_STRUCT OcaModelDescription;
 
 

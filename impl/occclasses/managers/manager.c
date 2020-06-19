@@ -46,12 +46,10 @@ void ocac_dump_manager(OCAC_OBJ_BASE * obj){
 
     OCAC_OBJ_TYPE(OcaManager) * manager_obj = OCAC_OBJ_CAST(OcaManager,obj);
 
-    #if OCAC_CLASS_DEFINITION == OCAC_CLASS_DEFINITION_MIN || OCAC_CLASS_DEFINITION == OCAC_CLASS_DEFINITION_MAX
-    printf(" Name = %s\n", manager_obj->name);
-//    for(int i = 0; i < sizeof(manager_obj->name) && manager_obj->name[i] != '\0'; i++){
-//        printf("%c", manager_obj->name[i]);
-//    }
-//    printf("\n");
+    #ifdef OCAC_OBJ_MANAGER_DEF_NAME
+    printf(" Manager Name = ");
+    ocac_dump_string((OcaString*)&manager_obj->mngr_name);
+    printf("\n");
     #endif
 }
 #endif

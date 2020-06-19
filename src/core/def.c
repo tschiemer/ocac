@@ -33,4 +33,15 @@ u32_t ocac_htonl(u32_t n)
 }
 #endif /* ocac_htonl */
 
+
+
+#ifndef ocac_memcpy
+void ocac_memcpy( void * dst, const void * src, size_t len )
+{
+  for(size_t i = 0; i < len; i++){
+    ((u8_t*)dst)[i] = ((u8_t*)src)[i];
+  }
+}
+#endif
+
 #endif /* BYTE_ORDER == LITTLE_ENDIAN */
