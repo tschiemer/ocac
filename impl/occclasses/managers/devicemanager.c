@@ -2,13 +2,12 @@
 // Created by Philip Tschiemer on 13.06.20.
 //
 
-#include <ocac/occ/datatypes/management.h>
+#include "occclasses/managers/devicemanager.h"
+
 #include "ocac/def.h"
 #include "ocac/occ/datatypes/management.h"
 #include "ocac/utf8.h"
 
-#include "occclasses/managers/devicemanager.h"
-#include "devicemanager.h"
 
 
 OCAC_CLASS_TYPE(OcaDeviceManager) OCAC_CLASS_NAME(OcaDeviceManager) = {
@@ -114,8 +113,6 @@ OcaStatus ocac_m_devicemanager_getOcaVersion(OCAC_OBJ_BASE * obj, u8_t * req, u1
 {
     OCAC_METHOD_ASSERT_PARAMS
 
-    
-
     if (0 < maxrsplen && maxrsplen < sizeof(OcaUint16)){
         return OcaStatus_BufferOverflow;
     }
@@ -134,8 +131,6 @@ OcaStatus ocac_m_devicemanager_getOcaVersion(OCAC_OBJ_BASE * obj, u8_t * req, u1
 OcaStatus ocac_m_devicemanager_getModelGUID(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
-
-    
 
     if (0 < maxrsplen && maxrsplen < sizeof(OcaModelGUID)){
         return OcaStatus_BufferOverflow;
@@ -156,8 +151,6 @@ OcaStatus ocac_m_devicemanager_getModelGUID(OCAC_OBJ_BASE * obj, u8_t * req, u16
 OcaStatus ocac_m_devicemanager_getSerialNumber(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
-
-    
 
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_SERIAL_USE
     if (0 < maxrsplen && maxrsplen < sizeof(OcaUint16)){
@@ -188,8 +181,6 @@ OcaStatus ocac_m_devicemanager_getDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u1
 {
     OCAC_METHOD_ASSERT_PARAMS
 
-    
-
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_DEVICENAME_USE
     if (0 < maxrsplen && maxrsplen < sizeof(OcaUint16)){
         return OcaStatus_BufferOverflow;
@@ -218,8 +209,6 @@ OcaStatus ocac_m_devicemanager_getDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u1
 OcaStatus ocac_m_devicemanager_setDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
-
-    
 
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_DEVICENAME_USE
 
@@ -251,10 +240,7 @@ OcaStatus ocac_m_devicemanager_getModelDescription(OCAC_OBJ_BASE * obj, u8_t * r
 {
     OCAC_METHOD_ASSERT_PARAMS
 
-    
-
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_ROLE_USE
-
 
     if (0 < maxrsplen && maxrsplen < 3*sizeof(OcaUint16)){
         return OcaStatus_BufferOverflow;

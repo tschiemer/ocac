@@ -7,6 +7,7 @@
 
 #include "ocac/occ/datatypes/framework.h"
 #include "ocac/occ/datatypes/worker.h"
+#include "ocac/occ/datatypes/time.h"
 
 #ifdef __cplusplus
 extern "C" {

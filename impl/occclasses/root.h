@@ -21,13 +21,13 @@ extern "C" {
 #define OCAC_CLASS_ROOT_VERSION     2
 //#define OCAC_OBJ_ROOT_ONO           100
 
-#define OCAC__Root__DefLevel                1
+#define OCAC__Root_DefLevel                1
 
-#define OCAC__Root_getClassIdentification   1
-#define OCAC__Root_getLockable              2
-#define OCAC__Root_lock                     3
-#define OCAC__Root_unlock                   4
-#define OCAC__Root_getRole                  5
+#define OCAC__Root_m_getClassIdentification   1
+#define OCAC__Root_m_getLockable              2
+#define OCAC__Root_m_lock                     3
+#define OCAC__Root_m_unlock                   4
+#define OCAC__Root_m_getRole                  5
 
 /**
  * CONFIGURATION

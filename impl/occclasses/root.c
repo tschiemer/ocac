@@ -2,11 +2,13 @@
 // Created by Philip Tschiemer on 13.06.20.
 //
 
-#include <ocac/occ/datatypes/base.h>
 #include "occclasses/root.h"
-#include "occclasses/managers/devicemanager.h"
+
+#include "ocac/occ/datatypes/base.h"
 #include "ocac/utf8.h"
 #include "ocac/def.h"
+
+#include "occclasses/managers/devicemanager.h"
 
 
 OCAC_CLASS_TYPE(OcaRoot) OCAC_CLASS_NAME(OcaRoot) = {

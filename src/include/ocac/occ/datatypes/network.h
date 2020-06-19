@@ -117,6 +117,16 @@ typedef struct {
     OcaDB AlignmentGain;
 } PACK_STRUCT_STRUCT OcaMediaSinkConnector;
 
+typedef struct {
+    OcaMediaConnectorID IDInternal;
+    OcaString IDExternal;
+    OcaMediaConnection Connection;
+    OCAC_LIST(OcaMediaCoding,) AvailableCodings;
+    OcaMediaCoding CurrentCoding;
+    OcaUint16 PinCount;
+    OCAC_MULTIMAP(OcaUint16, OcaPortID,) ChannelPinMap;
+} PACK_STRUCT_STRUCT OcaMediaSourceConnector;
+
 typedef enum {
     OcaMediaConnectorState_Stopped      = 0,
     OcaMediaConnectorState_SettingUp    = 1,

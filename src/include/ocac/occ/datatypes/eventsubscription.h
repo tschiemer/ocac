@@ -7,6 +7,8 @@
 
 #include "ocac/occ/datatypes/framework.h"
 #include "ocac/occ/datatypes/library.h"
+#include "ocac/occ/datatypes/network.h"
+#include "ocac/occ/datatypes/task.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,8 +50,19 @@ typedef struct {
         OcaPropertyChangeType ChangeType; \
     } PACK_STRUCT_STRUCT
 
-// TODO OcaMediaConnectorElement
-//typedef OcaBitSet OcaMediaConnectorElement;
+typedef enum {
+    OcaMediaConnectorElement_Pinmap         = 1,
+    OcaMediaConnectorElement_Connection     = 2,
+    OcaMediaConnectorElement_Coding         = 4,
+    OcaMediaConnectorElement_AlignmentLevel = 8,
+    OcaMediaConnectorElement_AlignmentGain  = 16,
+
+//    OcaMediaConnectorElement_Added          = (OcaMediaConnectorElement_Pinmap | OcaMediaConnectorElement_Connection), // according to https://github.com/OCAAlliance/OcaToolsAndDemos/blob/master/OCAMicro/OCAMicro/Src/common/OCALite/OCC/ControlDataTypes/OcaLiteNetworkDataTypes.h
+//    OcaMediaConnectorElement_Deleted        = (OcaMediaConnectorElement_Pinmap | OcaMediaConnectorElement_Connection),
+
+    __OcaMediaConnectorElement__            = 0xFFFF
+} PACK_STRUCT_STRUCT OcaMediaConnectorElement;
+
 
 typedef struct {
     OcaMediaConnectorStatus ConnectorStatus;

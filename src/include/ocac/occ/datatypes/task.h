@@ -6,7 +6,7 @@
 #define OCAC_OCC_DATATYPES_TASK_H
 
 #include "ocac/occ/datatypes/framework.h"
-#include "library.h"
+#include "ocac/occ/datatypes/library.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -53,7 +53,7 @@ typedef enum {
     OcaTaskCommand_Start    = 3,
     OcaTaskCommand_Stop     = 4,
     OcaTaskCommand_Abort    = 5,
-    OcaTaskCommand_Disable  = 6
+    OcaTaskCommand_Disable  = 6,
     OcaTaskCommand_Clear    = 7
 } PACK_STRUCT_STRUCT OcaTaskCommand;
 
