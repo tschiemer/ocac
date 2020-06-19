@@ -70,6 +70,16 @@ u32_t ocac_htonl(u32_t x);
 //#define ntohl(x) ocac_ntohl(x)
 //#endif
 
+
+#ifndef ocac_memcpy
+inline void ocac_memcpy( u8_t * dst, const u8_t * src, size_t len )
+{
+    for(size_t i = 0; i < len; i++){
+
+    }
+}
+#endif
+
 #ifdef __cplusplus
 }
 #endif

@@ -8,7 +8,9 @@
 
 #include "ocac/occ/datatypes/framework.h"
 #include "ocac/class.h"
+#include "ocac/session.h"
 #include "ocac/opt.h"
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,19 +40,7 @@ extern "C" {
 OCAC_OBJ_DEF_BEGIN(base)
 OCAC_OBJ_DEF_END(base)
 
-//#define OCAC_ASSERT_GETTER_PARAMS \
-//    OCAC_ASSERT("obj != NULL", obj != NULL); \
-//    OCAC_ASSERT("argvlen != 0", reqlen != 0); \
-//    OCAC_ASSERT("rsp != NULL", rsp != NULL); \
-//    OCAC_ASSERT("rsplen != NULL", rsplen != NULL);
-//
-//#define OCAC_ASSERT_SETTER_PARAMS \
-//    OCAC_ASSERT("obj != NULL", obj != NULL); \
-//    OCAC_ASSERT("argvlen != 0", reqlen != 0); \
-
-#define OCAC_OBJ_EXEC_PARAMS
-
-OcaStatus ocac_obj_exec(OCAC_OBJ_BASE * obj, u16_t deflevel, u16_t index, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen);
+OcaStatus ocac_obj_exec(OCAC_OBJ_BASE * obj, u16_t deflevel, u16_t index, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
 
 #ifdef DEBUG
 
