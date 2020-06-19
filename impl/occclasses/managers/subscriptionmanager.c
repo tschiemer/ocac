@@ -34,7 +34,7 @@ OCAC_CLASS_TYPE(OcaSubscriptionManager) OCAC_CLASS_NAME(OcaSubscriptionManager) 
 #endif
 
 #if DEBUG
-        .dump = ocac_dump_devicemanager
+        .dump = ocac_dump_subscriptionmanager
 #endif
 
 } OCAC_CLASS_SUBSCRIPTIONMANAGER_ATTRIBUTES;
@@ -84,3 +84,17 @@ OcaStatus ocac_m_devicemanager_reenableNotifications(OCAC_OBJ_BASE * obj, u8_t *
 
     return OcaStatus_NotImplemented;
 }
+
+
+#ifdef DEBUG
+void ocac_dump_subscriptionmanager(OCAC_OBJ_BASE * obj){
+
+    ocac_dump_manager(obj);
+
+    OCAC_OBJ_TYPE(OcaSubscriptionManager) * mngr_obj = OCAC_OBJ_CAST(OcaSubscriptionManager,obj);
+
+    #ifdef OCAC_OBJ_MANAGER_DEF_STATE_USE
+    printf(" State = %d\n", mngr_obj->state);
+    #endif
+}
+#endif

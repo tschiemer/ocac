@@ -33,12 +33,6 @@ OCAC_CLASS_TYPE(OcaManager) OCAC_CLASS_NAME(OcaManager) = {
 
 
 
-//#ifndef OCAC_OBJ_NO_DEFAULT_ALLOCATION
-//OCAC_OBJ_TYPE(OcaManager) OCAC_OBJ_NAME(OcaManager) = {
-//        .class_ptr = (OCAC_CLASS_BASE *) &OCAC_CLASS_NAME(OcaManager)
-//};
-//#endif
-
 #ifdef DEBUG
 void ocac_dump_manager(OCAC_OBJ_BASE * obj){
 

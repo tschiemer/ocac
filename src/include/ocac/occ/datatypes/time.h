@@ -6,6 +6,7 @@
 #define OCAC_OCC_DATATYPES_TIME_H
 
 #include "ocac/occ/datatypes/framework.h"
+#include "ocac/occ/datatypes/worker.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -76,7 +77,7 @@ typedef struct {
     OcaUint32 Nanoseconds;
 } PACK_STRUCT_STRUCT OcaTimePTP;
 
-typedef OcaFloat32 OcaTimeInterval;
+typedef OcaFloat32 OcaTimeInterval; // in seconds
 
 #ifdef __cplusplus
 }
