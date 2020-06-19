@@ -15,10 +15,19 @@ s32_t ocac_utf8_bytelen(const u8_t * str, u16_t nchars, u16_t maxbytes)
         if (OCAC_UTF8_LEN_ONE(str[len])) {
             l = 1;
         } else if (OCAC_UTF8_LEN_TWO(str[len])) {
+            if (OCAC_UTF8_CONTINUATION_BYTE(str[len+1]) == false){
+                return OCAC_UTF8_INVALID;
+            }
             l = 2;
         } else if (OCAC_UTF8_LEN_THREE(str[len])) {
+            if (OCAC_UTF8_CONTINUATION_BYTE(str[len+1]) == false || OCAC_UTF8_CONTINUATION_BYTE(str[len+2]) == false){
+                return OCAC_UTF8_INVALID;
+            }
             l = 3;
-        } else if (OCAC_UTF8_LEN_TWO(str[len])) {
+        } else if (OCAC_UTF8_LEN_FOUR(str[len])) {
+            if (OCAC_UTF8_CONTINUATION_BYTE(str[len+1]) == false || OCAC_UTF8_CONTINUATION_BYTE(str[len+2]) == false || OCAC_UTF8_CONTINUATION_BYTE(str[len+3]) == false){
+                return OCAC_UTF8_INVALID;
+            }
             l = 4;
         } else {
             return OCAC_UTF8_INVALID;

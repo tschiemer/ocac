@@ -14,12 +14,13 @@ extern "C" {
 #define OCAC_UTF8_INVALID   (-1)
 #define OCAC_UTF8_TOO_LONG  (-2)
 
-#define OCAC_UTF8_VALID_BYTE1( b )   ( ( (b) & 0b11000000) != 0b10000000 )
+#define OCAC_UTF8_CONTINUATION_BYTE( b )     ( ( (b) & 0b11000000) == 0b10000000 )
 
 #define OCAC_UTF8_LEN_ONE( b )       ( ( (b) & 0b10000000) == 0 )
 #define OCAC_UTF8_LEN_TWO( b )       ( ( (b) & 0b11100000) == 0b11000000 )
 #define OCAC_UTF8_LEN_THREE( b )     ( ( (b) & 0b11110000) == 0b11100000 )
 #define OCAC_UTF8_LEN_FOUR( b )      ( ( (b) & 0b11111000) == 0b11110000 )
+
 
 
 /**
