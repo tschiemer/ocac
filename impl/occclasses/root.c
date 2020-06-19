@@ -150,6 +150,21 @@ OcaStatus ocac_m_root_getRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_
     #endif
 }
 
+OcaStatus ocac_m_root_lockReadonly(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+{
+    OCAC_METHOD_ASSERT_PARAMS
+
+    #ifdef OCAC_USE_LOCKS
+    OCAC_ASSERT("Root.lock() not implemented", 0);
+
+    //TODO lock()
+
+    return OcaStatus_NotImplemented;
+    #else
+    return OcaStatus_NotImplemented;
+    #endif
+}
+
 #ifdef DEBUG
 void ocac_dump_root(OCAC_OBJ_BASE * obj)
 {

@@ -38,7 +38,7 @@ extern "C" {
  */
 
 
-#define OCAC_CLASS_ROOT_NMETHODS        5
+#define OCAC_CLASS_ROOT_NMETHODS        6
 #define OCAC_CLASS_ROOT_NPROPERTIES     5
 #define OCAC_CLASS_ROOT_NEVENTS         1
 
@@ -48,6 +48,7 @@ extern "C" {
 #define OCAC_CLASS_ROOT_01m03       {{1,3}, ocac_m_root_lock},
 #define OCAC_CLASS_ROOT_01m04       {{1,4}, ocac_m_root_unlock},
 #define OCAC_CLASS_ROOT_01m05       {{1,5}, ocac_m_root_getRole},
+#define OCAC_CLASS_ROOT_01m06       {{1,5}, ocac_m_root_lockReadonly},
 
 #define OCAC_CLASS_ROOT_01p01
 #define OCAC_CLASS_ROOT_01p02
@@ -92,6 +93,10 @@ extern "C" {
 #ifndef OCAC_CLASS_ROOT_01m05
 #define OCAC_CLASS_ROOT_01m05
 #endif
+#ifndef OCAC_CLASS_ROOT_01m06
+#define OCAC_CLASS_ROOT_01m06
+#endif
+
 
 
 #define OCAC_CLASS_ROOT_01mXX \
@@ -99,7 +104,8 @@ extern "C" {
     OCAC_CLASS_ROOT_01m02 \
     OCAC_CLASS_ROOT_01m03 \
     OCAC_CLASS_ROOT_01m04 \
-    OCAC_CLASS_ROOT_01m05
+    OCAC_CLASS_ROOT_01m05 \
+    OCAC_CLASS_ROOT_01m06
 
 
 #ifdef OCAC_NO_PROPERTIES
@@ -200,6 +206,7 @@ OcaStatus ocac_m_root_getLockable(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen,
 OcaStatus ocac_m_root_lock(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
 OcaStatus ocac_m_root_unlock(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
 OcaStatus ocac_m_root_getRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_root_lockReadonly(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
 
 
 /** /CLASS/OBJECT DECLARATION **/
