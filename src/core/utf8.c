@@ -13,6 +13,10 @@ s32_t ocac_utf8_bytelen(const u8_t * str, u16_t nchars, u16_t maxbytes)
 
     for(u16_t c = 0, l = 0; c < nchars && (0 == maxbytes || len < maxbytes); c++, len += l){
         if (OCAC_UTF8_LEN_ONE(str[len])) {
+            // string termination can not be a character
+            if (str[len] == '\0'){
+                return OCAC_UTF8_INVALID;
+            }
             l = 1;
         } else if (OCAC_UTF8_LEN_TWO(str[len])) {
             if (OCAC_UTF8_CONTINUATION_BYTE(str[len+1]) == false){
@@ -69,6 +73,10 @@ s32_t ocac_utf8_strlen(const u8_t * str, u16_t slen){
 
     for(u16_t len = 0, l = 0; len < slen; u8chars++, len += l){
         if (OCAC_UTF8_LEN_ONE(str[len])) {
+            // maybe string is NUL-terminated?
+            if (str[len] == '\0'){
+                return u8chars;
+            }
             l = 1;
         } else if (OCAC_UTF8_LEN_TWO(str[len])) {
             if (OCAC_UTF8_CONTINUATION_BYTE(str[len+1]) == false){

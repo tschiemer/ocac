@@ -371,10 +371,10 @@ OCAC_OBJ_DEF_END(OcaDeviceManager)
 
 
 /** Class object (will be allocated) */
-OCAC_CLASS_TYPE(OcaDeviceManager) OCAC_CLASS_NAME(OcaDeviceManager);
+extern OCAC_CLASS_TYPE(OcaDeviceManager) OCAC_CLASS_NAME(OcaDeviceManager);
 
 /** Object instance (will be allocated) */
-OCAC_OBJ_TYPE(OcaDeviceManager) OCAC_OBJ_NAME(OcaDeviceManager);
+extern OCAC_OBJ_TYPE(OcaDeviceManager) OCAC_OBJ_NAME(OcaDeviceManager);
 
 
 /** Class methods */

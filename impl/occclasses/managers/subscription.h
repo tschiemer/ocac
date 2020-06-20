@@ -184,10 +184,10 @@ OCAC_OBJ_DEF_END(OcaSubscriptionManager)
 
 
 /** Class object (will be allocated) */
-OCAC_CLASS_TYPE(OcaSubscriptionManager) OCAC_CLASS_NAME(OcaSubscriptionManager);
+extern OCAC_CLASS_TYPE(OcaSubscriptionManager) OCAC_CLASS_NAME(OcaSubscriptionManager);
 
 /** Object instance (will be allocated) */
-OCAC_OBJ_TYPE(OcaSubscriptionManager) OCAC_OBJ_NAME(OcaSubscriptionManager);
+extern OCAC_OBJ_TYPE(OcaSubscriptionManager) OCAC_OBJ_NAME(OcaSubscriptionManager);
 
 
 

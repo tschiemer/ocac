@@ -2,7 +2,7 @@
 // Created by Philip Tschiemer on 13.06.20.
 //
 
-#include "occclasses/managers/devicemanager.h"
+#include "occclasses/managers/device.h"
 
 #include "ocac/def.h"
 #include "ocac/occ/datatypes/management.h"

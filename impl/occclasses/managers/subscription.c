@@ -2,7 +2,7 @@
 // Created by Philip Tschiemer on 19.06.20.
 //
 
-#include "occclasses/managers/subscriptionmanager.h"
+#include "occclasses/managers/subscription.h"
 
 
 OCAC_CLASS_TYPE(OcaSubscriptionManager) OCAC_CLASS_NAME(OcaSubscriptionManager) = {

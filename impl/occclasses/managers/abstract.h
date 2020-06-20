@@ -126,7 +126,7 @@ OCAC_OBJ_DEF_END(OcaManager)
 
 /** Class object (will be allocated) */
 // in principle not needed as there ares methods/properties/events
-OCAC_CLASS_TYPE(OcaManager) OCAC_CLASS_NAME(OcaManager);
+extern OCAC_CLASS_TYPE(OcaManager) OCAC_CLASS_NAME(OcaManager);
 
 /** Object instance (will be allocated) */
 // none

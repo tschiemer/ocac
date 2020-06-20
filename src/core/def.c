@@ -44,4 +44,18 @@ void ocac_memcpy( void * dst, const void * src, size_t len )
 }
 #endif
 
+#ifndef ocac_strcpy
+u16_t ocac_strcpy( u8_t * dst, const u8_t * src, u8_t bterminate  )
+{
+  u16_t i;
+  for(i = 0; src[i] != '\0'; i++){
+    dst[i] = src[i];
+  }
+  if (bterminate){
+    dst[i++] = '\0';
+  }
+  return i;
+}
+#endif
+
 #endif /* BYTE_ORDER == LITTLE_ENDIAN */
