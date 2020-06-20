@@ -174,7 +174,7 @@ OcaStatus ocac_m_devicemanager_getSerialNumber(OCAC_OBJ_BASE * obj, u8_t * req, 
         return OcaStatus_BufferOverflow;
     }
 
-    *(OcaUint16*)rsp =  OCAC_OBJ_CAST(OcaDeviceManager,obj)->serial.Len;
+    *(OcaUint16*)rsp =  ocac_htons(OCAC_OBJ_CAST(OcaDeviceManager,obj)->serial.Len);
 
     *rsplen = sizeof(OcaUint16) + bytes;
 
@@ -203,7 +203,7 @@ OcaStatus ocac_m_devicemanager_getDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u1
         return OcaStatus_BufferOverflow;
     }
 
-    *(OcaUint16*)rsp =  OCAC_OBJ_CAST(OcaDeviceManager,obj)->device_name.Len;
+    *(OcaUint16*)rsp =  ocac_htons(OCAC_OBJ_CAST(OcaDeviceManager,obj)->device_name.Len);
 
     *rsplen = sizeof(OcaUint16) + bytes;
 
