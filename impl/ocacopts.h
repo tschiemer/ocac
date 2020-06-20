@@ -28,5 +28,18 @@
 //#define OCAC_DEVICE_SERIAL_LEN 11
 
 
+#define OCAC_USE_MANAGER_SECURITY           0
+#define OCAC_USE_MANAGER_FIRMWARE           0
+#define OCAC_USE_MANAGER_SUBSCRIPTION       1
+#define OCAC_USE_MANAGER_POWER              0
+#define OCAC_USE_MANAGER_NETWORK            0
+#define OCAC_USE_MANAGER_MEDIACLOCK         0
+#define OCAC_USE_MANAGER_LIBRARY            0
+#define OCAC_USE_MANAGER_AUDIOPROCESSING    0
+#define OCAC_USE_MANAGER_DEVICETIME         0
+#define OCAC_USE_MANAGER_TASK               0
+#define OCAC_USE_MANAGER_CODING             0
+#define OCAC_USE_MANAGER_DIAGNOSTIC         0
+
 
 #endif //OCAC_OCACOPTS_H

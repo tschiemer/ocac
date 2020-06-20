@@ -277,10 +277,10 @@ OCAC_OBJ_DEF_END(OcaWorker)
 
 
 /** Class object (will be allocated) */
-OCAC_CLASS_TYPE(OcaWorker) OCAC_CLASS_NAME(OcaWorker);
+extern OCAC_CLASS_TYPE(OcaWorker) OCAC_CLASS_NAME(OcaWorker);
 
 /** Object instance (will be allocated) */
-OCAC_OBJ_TYPE(OcaWorker) OCAC_OBJ_NAME(OcaWorker);
+// none
 
 
 /** Class methods */

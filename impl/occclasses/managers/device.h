@@ -6,7 +6,7 @@
 #define OCAC_IMPL_OCCCLASSES_MANAGERS_DEVICE_H
 
 #include "ocac/occ/datatypes/management.h"
-#include "occclasses/managers/manager.h"
+#include "occclasses/managers/abstract.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -44,6 +44,23 @@ extern "C" {
 #define OCAC__DeviceManager_m_getMessage           17
 #define OCAC__DeviceManager_m_setMessage           18
 #define OCAC__DeviceManager_m_getManagers          19
+#define OCAC__DeviceManager_m_getRevisionID        20
+
+#define OCAC__DeviceManager_p_ModelGUID             1
+#define OCAC__DeviceManager_p_SerialNumber          2
+#define OCAC__DeviceManager_p_ModelDescription      3
+#define OCAC__DeviceManager_p_DeviceName            4
+#define OCAC__DeviceManager_p_OcaVersion            5
+#define OCAC__DeviceManager_p_Role                  6
+#define OCAC__DeviceManager_p_UserInventoryCode     7
+#define OCAC__DeviceManager_p_Enabled               8
+#define OCAC__DeviceManager_p_State                 9
+#define OCAC__DeviceManager_p_Busy                  10
+#define OCAC__DeviceManager_p_ResetCause            11
+#define OCAC__DeviceManager_p_Message               12
+#define OCAC__DeviceManager_p_Managers              13
+#define OCAC__DeviceManager_p_DeviceRevisionID      14
+
 
 /**
  * CONFIGURATION
@@ -53,8 +70,8 @@ extern "C" {
  * methods/properties/events accordingly
  */
 
-#define OCAC_CLASS_DEVICEMANAGER_NMETHODS     19
-#define OCAC_CLASS_DEVICEMANAGER_NPROPERTIES  12
+#define OCAC_CLASS_DEVICEMANAGER_NMETHODS     20
+#define OCAC_CLASS_DEVICEMANAGER_NPROPERTIES  13
 #define OCAC_CLASS_DEVICEMANAGER_NEVENTS      0
 
 
@@ -77,12 +94,21 @@ extern "C" {
 #define OCAC_CLASS_DEVICEMANAGER_03m17       {{3,17}, ocac_m_devicemanager_getMessage},
 #define OCAC_CLASS_DEVICEMANAGER_03m18       {{3,18}, ocac_m_devicemanager_setMessage},
 #define OCAC_CLASS_DEVICEMANAGER_03m19       {{3,19}, ocac_m_devicemanager_getManagers},
+#define OCAC_CLASS_DEVICEMANAGER_03m20       {{3,19}, ocac_m_devicemanager_getRevisionID},
 
 #define OCAC_CLASS_DEVICEMANAGER_03p01
 #define OCAC_CLASS_DEVICEMANAGER_03p02
 #define OCAC_CLASS_DEVICEMANAGER_03p03
 #define OCAC_CLASS_DEVICEMANAGER_03p04
 #define OCAC_CLASS_DEVICEMANAGER_03p05
+#define OCAC_CLASS_DEVICEMANAGER_03p06
+#define OCAC_CLASS_DEVICEMANAGER_03p07
+#define OCAC_CLASS_DEVICEMANAGER_03p08
+#define OCAC_CLASS_DEVICEMANAGER_03p09
+#define OCAC_CLASS_DEVICEMANAGER_03p10
+#define OCAC_CLASS_DEVICEMANAGER_03p11
+#define OCAC_CLASS_DEVICEMANAGER_03p12
+#define OCAC_CLASS_DEVICEMANAGER_03p13
 
 #ifdef OCAC_OVERRIDEABLE_METHODS
 #define OCAC_CLASS_DEVICEMANAGER_01m01       {{1,1}, ocac_m_root_getClassIdentification},
@@ -106,6 +132,7 @@ extern "C" {
 #define OCAC_OBJ_DEVICEMANAGER_DEF_MESSAGE              OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_MESSAGE_MAXLEN) message;
 #define OCAC_OBJ_DEVICEMANAGER_DEF_ROLE                 OCAC_STRING(OCAC_OBJ_ROOT_ROLE_MAXLEN) dm_role; // NOTE: root has role already...
 //#define OCAC_OBJ_DEVICEMANAGER_DEF_MANAGERS             OcaList<OcaManagerDescriptor> Managers;  // 03p13 (does not make so much sense to use this)
+#define OCAC_OBJ_DEVICEMANAGER_DEF_REVISIONID           OCAC_STRING(OCAC_OBJ_DEVICEMANAGER_REVISIONID_MAXLEN) revision_id;
 
 // Add your own definitions if desired
 #define OCAC_OBJ_DEVICEMANAGER_DEF_CUSTOM
@@ -226,20 +253,47 @@ extern "C" {
 
 
 
-#ifndef OCAC_CLASS_DEVICEMANAGER_01p01
-#define OCAC_CLASS_DEVICEMANAGER_01p01
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p01
+#define OCAC_CLASS_DEVICEMANAGER_03p01
 #endif
-#ifndef OCAC_CLASS_DEVICEMANAGER_01p02
-#define OCAC_CLASS_DEVICEMANAGER_01p02
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p02
+#define OCAC_CLASS_DEVICEMANAGER_03p02
 #endif
-#ifndef OCAC_CLASS_DEVICEMANAGER_01p03
-#define OCAC_CLASS_DEVICEMANAGER_01p03
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p03
+#define OCAC_CLASS_DEVICEMANAGER_03p03
 #endif
-#ifndef OCAC_CLASS_DEVICEMANAGER_01p04
-#define OCAC_CLASS_DEVICEMANAGER_01p04
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p04
+#define OCAC_CLASS_DEVICEMANAGER_03p04
 #endif
-#ifndef OCAC_CLASS_DEVICEMANAGER_01p05
-#define OCAC_CLASS_DEVICEMANAGER_01p05
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p05
+#define OCAC_CLASS_DEVICEMANAGER_03p05
+#endif
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p06
+#define OCAC_CLASS_DEVICEMANAGER_03p06
+#endif
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p07
+#define OCAC_CLASS_DEVICEMANAGER_03p07
+#endif
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p08
+#define OCAC_CLASS_DEVICEMANAGER_03p08
+#endif
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p09
+#define OCAC_CLASS_DEVICEMANAGER_03p09
+#endif
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p10
+#define OCAC_CLASS_DEVICEMANAGER_03p10
+#endif
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p11
+#define OCAC_CLASS_DEVICEMANAGER_03p11
+#endif
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p12
+#define OCAC_CLASS_DEVICEMANAGER_03p12
+#endif
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p13
+#define OCAC_CLASS_DEVICEMANAGER_03p13
+#endif
+#ifndef OCAC_CLASS_DEVICEMANAGER_03p14
+#define OCAC_CLASS_DEVICEMANAGER_03p14
 #endif
 
 
@@ -248,7 +302,16 @@ extern "C" {
     OCAC_CLASS_DEVICEMANAGER_03p02 \
     OCAC_CLASS_DEVICEMANAGER_03p03 \
     OCAC_CLASS_DEVICEMANAGER_03p04 \
-    OCAC_CLASS_DEVICEMANAGER_03p05
+    OCAC_CLASS_DEVICEMANAGER_03p05 \
+    OCAC_CLASS_DEVICEMANAGER_03p06 \
+    OCAC_CLASS_DEVICEMANAGER_03p07 \
+    OCAC_CLASS_DEVICEMANAGER_03p08 \
+    OCAC_CLASS_DEVICEMANAGER_03p09 \
+    OCAC_CLASS_DEVICEMANAGER_03p10 \
+    OCAC_CLASS_DEVICEMANAGER_03p11 \
+    OCAC_CLASS_DEVICEMANAGER_03p12 \
+    OCAC_CLASS_DEVICEMANAGER_03p13 \
+    OCAC_CLASS_DEVICEMANAGER_03p14
 
 
 //#define OCAC_CLASS_DEVICEMANAGER_NPROPERTIES_TOTAL (OCAC_CLASS_DEVICEMANAGER_NPROPERTIES + OCAC_CLASS_MANAGER_NPROPERTIES_TOTAL)
@@ -326,6 +389,11 @@ extern "C" {
 #else
 #define OCAC_OBJ_DEVICEMANAGER_DEF_MANAGERS_USE
 #endif
+#ifndef OCAC_OBJ_DEVICEMANAGER_DEF_REVISIONID
+#define OCAC_OBJ_DEVICEMANAGER_DEF_REVISIONID
+#else
+#define OCAC_OBJ_DEVICEMANAGER_DEF_REVISIONID_USE
+#endif
 #ifndef OCAC_OBJ_DEVICEMANAGER_DEF_CUSTOM
 #define OCAC_OBJ_DEVICEMANAGER_DEF_CUSTOM
 #endif
@@ -344,6 +412,7 @@ extern "C" {
     OCAC_OBJ_DEVICEMANAGER_DEF_MESSAGE \
     OCAC_OBJ_DEVICEMANAGER_DEF_ROLE \
     OCAC_OBJ_DEVICEMANAGER_DEF_MANAGERS \
+    OCAC_OBJ_DEVICEMANAGER_DEF_REVISIONID \
     OCAC_OBJ_DEVICEMANAGER_DEF_CUSTOM
 
 
@@ -397,6 +466,8 @@ OcaStatus ocac_m_devicemanager_clearResetCause(OCAC_OBJ_BASE * obj, u8_t * req, 
 OcaStatus ocac_m_devicemanager_getMessage(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
 OcaStatus ocac_m_devicemanager_setMessage(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
 OcaStatus ocac_m_devicemanager_getManagers(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_getRevisionID(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+
 
 
 /** /CLASS/OBJECT DECLARATION **/

@@ -28,6 +28,16 @@ extern "C" {
 #define OCAC__Root_m_lock                     3
 #define OCAC__Root_m_unlock                   4
 #define OCAC__Root_m_getRole                  5
+#define OCAC__Root_m_lockReadonly             6
+
+#define OCAC__Root_p_ClassID                    1
+#define OCAC__Root_p_ClassVersion               2
+#define OCAC__Root_p_ObjectNumber               3
+#define OCAC__Root_p_Lockable                   4
+#define OCAC__Root_p_Role                       5
+
+#define OCAC__Root_e_PropertyChanged           1
+
 
 /**
  * CONFIGURATION
@@ -195,7 +205,7 @@ OCAC_OBJ_DEF_BEGIN(OcaRoot)
 OCAC_OBJ_DEF_END(OcaRoot)
 
 /** Class object (will be allocated) */
-OCAC_CLASS_TYPE(OcaRoot) OCAC_CLASS_NAME(OcaRoot);
+extern OCAC_CLASS_TYPE(OcaRoot) OCAC_CLASS_NAME(OcaRoot);
 
 /** Object instance (will be allocated) */
 // none

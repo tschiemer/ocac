@@ -8,7 +8,7 @@
 #include "ocac/utf8.h"
 #include "ocac/def.h"
 
-#include "occclasses/managers/devicemanager.h"
+#include "occclasses/managers/device.h"
 
 
 OCAC_CLASS_TYPE(OcaRoot) OCAC_CLASS_NAME(OcaRoot) = {

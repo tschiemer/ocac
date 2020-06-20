@@ -16,7 +16,10 @@
 extern "C" {
 #endif
 
-// forward declaration
+/**
+ * Any ONo below this number are reserved for standard use
+ */
+#define OCAC_RESERVED_ONOS 4096
 
 
 #define OCAC_OBJ_DEF_BEGIN(name) \

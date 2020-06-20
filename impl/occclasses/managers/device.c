@@ -2,13 +2,17 @@
 // Created by Philip Tschiemer on 13.06.20.
 //
 
+#include <obj_registry.h>
+#include <ocac/occ/datatypes/framework.h>
 #include "occclasses/managers/device.h"
 
 #include "ocac/def.h"
 #include "ocac/occ/datatypes/management.h"
 #include "ocac/utf8.h"
+#include "abstract.h"
 
 
+static OcaStatus marshall_ManagerDescriptor(OCAC_OBJ_TYPE(OcaManager) * mngr, u8_t * dst, u16_t * len, u16_t maxlen);
 
 OCAC_CLASS_TYPE(OcaDeviceManager) OCAC_CLASS_NAME(OcaDeviceManager) = {
 
@@ -104,7 +108,11 @@ OCAC_OBJ_TYPE(OcaDeviceManager) OCAC_OBJ_NAME(OcaDeviceManager) = {
     #endif
 
     #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_MESSAGE_USE
-    .message = OCAC_OBJ_DEVICEMANAGER_MESSAGE_DEFAULT
+    .message = OCAC_OBJ_DEVICEMANAGER_MESSAGE_DEFAULT,
+    #endif
+
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_REVISIONID_USE
+    .revision_id = {sizeof(OCAC_OBJ_DEVICEMANAGER_REVISIONID_DEFAULT)-1, OCAC_OBJ_DEVICEMANAGER_REVISIONID_DEFAULT},
     #endif
 };
 
@@ -570,16 +578,123 @@ OcaStatus ocac_m_devicemanager_setMessage(OCAC_OBJ_BASE * obj, u8_t * req, u16_t
     #endif
 }
 
+OcaStatus marshall_ManagerDescriptor(OCAC_OBJ_TYPE(OcaManager) * mngr, u8_t * dst, u16_t * len, u16_t maxlen)
+{
+    OCAC_ASSERT("mngr != NULL", mngr != NULL);
+    OCAC_ASSERT("dst != NULL", dst != NULL);
+    OCAC_ASSERT("dst != NULL", dst != NULL);
+    OCAC_ASSERT("dst != NULL", dst != NULL);
+
+    // name: 1 (len) OcaUint16 + var string
+    // classid : 1 (len) + 3 (id) OcaUint16
+    if (0 < maxlen && maxlen < (sizeof(OcaONo) + 5*sizeof(OcaUint16) + sizeof(OcaClassVersionNumber))){
+        return OcaStatus_BufferOverflow;
+    }
+
+
+    *(OcaONo*)dst = ocac_htonl(mngr->ono);
+
+    u16_t size = sizeof(OcaONo) + sizeof(OcaUint16);
+
+    u32_t bytes = ocac_utf8_cpyn( &dst[size], mngr->mngr_name.Value, mngr->mngr_name.Len, maxlen - size);
+
+    // should ever occur
+    OCAC_ASSERT("bytes != OCAC_UTF8_INVALID", bytes != OCAC_UTF8_INVALID);
+
+    if (bytes == OCAC_UTF8_TOO_LONG){
+        return OcaStatus_BufferOverflow;
+    }
+
+    *(OcaUint16 *)&dst[sizeof(OcaONo)] = ocac_htons(mngr->mngr_name.Len);
+
+    size += bytes;
+
+    OCAC_ASSERT("mngr->class_ptr != NULL", mngr->class_ptr != NULL);
+
+    if  (0 < maxlen && size < maxlen && maxlen - size < sizeof(OcaUint16) * (mngr->class_ptr->class_identification.ClassID.FieldCount + 2)){
+        return OcaStatus_BufferOverflow;
+    }
+
+    // TODO
+    // should always be 3 unless you are using a custom manager..
+    u16_t f = mngr->class_ptr->class_identification.ClassID.FieldCount;
+
+    OCAC_ASSERT("f != OcaClassAuthorityID_Sentinel", f != OcaClassAuthorityID_Sentinel);
+
+    *(OcaUint16*)&dst[size] = ocac_htons(f);
+    size += sizeof(OcaUint16);
+
+    for (u16_t i = 0; i < f; i++){
+        *(OcaUint16*)&dst[size] = ocac_htons(mngr->class_ptr->class_identification.ClassID.Fields[i]);
+        size += sizeof(OcaUint16);
+    }
+
+
+    *(OcaUint16*)&dst[size] = ocac_htons(mngr->class_ptr->class_identification.ClassVersion);
+    size += sizeof(OcaUint16);
+
+    *len = size;
+
+    return OcaStatus_OK;
+}
+
 OcaStatus ocac_m_devicemanager_getManagers(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
-    //TODO have managers list
+    if (0 < maxrsplen && maxrsplen < sizeof(OcaUint16)){
+        return OcaStatus_BufferOverflow;
+    }
 
-    return OcaStatus_NotImplemented;
+
+    *(OcaUint16*)rsp = ocac_htons(OCAC_MANAGER_COUNT);
+
+    u16_t tsize = sizeof(OcaUint16);
+
+    for(u8_t i = 0; i < OCAC_MANAGER_COUNT; i++){
+        u16_t size = 0;
+        OcaStatus status = marshall_ManagerDescriptor( (OCAC_OBJ_TYPE(OcaManager)*)ocac_managers[i], &rsp[tsize], &size, maxrsplen - tsize);
+
+        if (status != OcaStatus_OK){
+            return status;
+        }
+
+        tsize += size;
+    }
+
+    *rsplen = tsize;
+
+    return OcaStatus_OK;
 }
 
+OcaStatus ocac_m_devicemanager_getRevisionID(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+{
+    OCAC_METHOD_ASSERT_PARAMS
 
+    #ifdef OCAC_OBJ_DEVICEMANAGER_DEF_REVISIONID_USE
+    if (0 < maxrsplen && maxrsplen < sizeof(OcaUint16)){
+        return OcaStatus_BufferOverflow;
+    }
+
+    u32_t bytes = ocac_utf8_cpyn( &rsp[2], OCAC_OBJ_CAST(OcaDeviceManager,obj)->revision_id.Value, OCAC_OBJ_CAST(OcaDeviceManager,obj)->revision_id.Len, maxrsplen - sizeof(OcaUint16) );
+
+    // should never occur (internal state should always be valid)
+    OCAC_ASSERT("bytes != OCAC_UTF8_INVALID", bytes != OCAC_UTF8_INVALID);
+
+    if (bytes == OCAC_UTF8_TOO_LONG){
+        return OcaStatus_BufferOverflow;
+    }
+
+    *(OcaUint16 *)rsp = ocac_htons(OCAC_OBJ_CAST(OcaDeviceManager,obj)->revision_id.Len);
+
+    *rsplen = sizeof(OcaUint16) + bytes;
+
+    return OcaStatus_OK;
+    #else
+    OCAC_ASSERT("Not implemented", false):
+    return OcaStatus_NotImplemented;
+    #endif
+}
 
 #ifdef DEBUG
 void ocac_dump_devicemanager(OCAC_OBJ_BASE * obj)

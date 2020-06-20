@@ -35,7 +35,7 @@ void ocac_dump_blob( OcaBlob * blob )
 
 void ocac_dump_blobfixedlen( u8_t * blob, u16_t len )
 {
-    printf("OcaBlobFixedLen%zu", len);
+    printf("OcaBlobFixedLen%hu", len);
 
     if (len == 0){
         printf("\n");

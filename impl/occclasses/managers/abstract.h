@@ -33,7 +33,7 @@ extern "C" {
 #define OCAC_CLASS_MANAGER_NEVENTS         0
 
 
-#define OCAC_OBJ_MANAGER_DEF_NAME          OCAC_STRING(OCAC_OBJ_MANAGER_NAME_MAXLEN) mngr_name; // Needed for manager descripter (see device manager)
+#define OCAC_OBJ_MANAGER_DEF_NAME          const OCAC_STRING(OCAC_OBJ_MANAGER_NAME_MAXLEN) mngr_name; // Needed for manager descripter (see device manager)
 
 
 // Add your own definitions if desired
