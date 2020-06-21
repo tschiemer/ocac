@@ -16,10 +16,6 @@ extern "C" {
 
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     OcaMessageType_CommandNR    = 0, // Command - no response required
     OcaMessageType_Command      = 1, // Command - response required
@@ -27,188 +23,91 @@ typedef enum {
     OcaMessageType_Response     = 3, // Response
     OcaMessageType_KeepAlive    = 4  //
 } PACK_STRUCT_STRUCT OcaMessageType;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
 
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef enum {
     Ocp1HeartBeatTimeType_Seconds       = sizeof(OcaUint16),
     Ocp1HeartBeatTimeType_Milliseconds  = sizeof(OcaUint32),
-} Ocp1HeartBeatTimeType;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+} PACK_STRUCT_STRUCT Ocp1HeartBeatTimeType;
 
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     OcaUint16       protocolVersion;
     OcaUint32       pduSize;
     OcaMessageType  pduType;
     OcaUint16       messageCount;
-} Ocp1Header;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+} PACK_STRUCT_STRUCT Ocp1Header;
 
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     OcaUint8    syncVal;
     Ocp1Header  header;
     OcaUint8    data[];
-} Ocp1MessagePdu;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+} PACK_STRUCT_STRUCT Ocp1MessagePdu;
 
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     OcaUint8    parameterCount;
     OcaUint8    parameters[];
-} Ocp1Parameters;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+} PACK_STRUCT_STRUCT Ocp1Parameters;
 
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     OcaUint32       commandSize;    // size (in bytes) of complete command segment (incl. commandSize)
     OcaUint32       handle;         // random command id used for responses
     OcaONo          targetONo;
     OcaMethodID     methodID;
     Ocp1Parameters  parameters;
-} Ocp1Command;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+} PACK_STRUCT_STRUCT Ocp1Command;
 
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     OcaUint32       responseSize;
     OcaUint32       handle;
     OcaStatus       statusCode;
     Ocp1Parameters  parameters;
-} Ocp1Response;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+} PACK_STRUCT_STRUCT Ocp1Response;
 
 
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     OcaEvent    event;
     OcaUint8    eventParameters[];
-} Ocp1EventData;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+} PACK_STRUCT_STRUCT Ocp1EventData;
 
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
+/**
+ * For reference only
+ */
 typedef struct {
     OcaUint8        parameterCount;
-    OcaBlob         context;
+    OCAC_BLOB(0)         context;
     Ocp1EventData   eventData;
-} Ocp1NtfParams;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+} PACK_STRUCT_STRUCT Ocp1NtfParams;
 
 
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     OcaUint32       notificationSize;
     OcaONo          targetONo;
     OcaMethodID     methodID;
     Ocp1NtfParams   parameters;
-} Ocp1Notification;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+} PACK_STRUCT_STRUCT Ocp1Notification;
 
 
 
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef union {
     OcaUint16 heartbeatTimeSeconds;
     OcaUint32 heartbeatTimeMilliseconds;
-} Ocp1KeepAlive;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+} PACK_STRUCT_STRUCT Ocp1KeepAlive;
 
 
-
-
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/bpstruct.h"
-#endif
-PACK_STRUCT_BEGIN
 typedef struct {
     OcaBlobFixedLen16 sentinel;
     OcaBlobFixedLen8 key;
-} Ocp1DeviceResetPdu;
-PACK_STRUCT_END
-#ifdef PACK_STRUCT_USE_INCLUDES
-#  include "arch/epstruct.h"
-#endif
+} PACK_STRUCT_STRUCT Ocp1DeviceResetPdu;
 
 
 #ifdef __cplusplus

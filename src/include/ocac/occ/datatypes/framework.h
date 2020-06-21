@@ -86,9 +86,15 @@ typedef struct {
 //} PACK_STRUCT_STRUCT OcaOPath;
 
 
-typedef OCAC_LIST(OcaString,) OcaNamePath;
+/**
+ * For reference only
+ */
+typedef OCAC_LIST(OcaString,0) OcaNamePath;
 
-typedef OCAC_LIST(OcaONo,) OcaONoPath;
+/**
+ * For reference only
+ */
+typedef OCAC_LIST(OcaONo,0) OcaONoPath;
 
 typedef struct {
     PACK_STRUCT_FIELD(OcaONo ONo);

@@ -43,7 +43,7 @@ extern "C" {
 OCAC_OBJ_DEF_BEGIN(base)
 OCAC_OBJ_DEF_END(base)
 
-OcaStatus ocac_obj_exec(OCAC_OBJ_BASE * obj, u16_t deflevel, u16_t index, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_obj_exec(OCAC_OBJ_BASE * obj, u16_t deflevel, u16_t index, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
 
 #ifdef DEBUG
 

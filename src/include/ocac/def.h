@@ -71,12 +71,21 @@ u32_t ocac_htonl(u32_t x);
 //#endif
 
 
-#ifndef ocac_memcpy
-void ocac_memcpy( void * dst, const void * src, size_t len );
+#ifndef ocac_memcmp
+int ocac_memcmp( const void * lhs, const void * rhs, size_t count );
 #endif
 
+#ifndef ocac_memset
+void* ocac_memset( void * dst, int ch, size_t count );
+#endif
+
+#ifndef ocac_memcpy
+void ocac_memcpy( void * dst, const void * src, size_t count );
+#endif
+
+
 #ifndef ocac_strcpy
-u16_t ocac_strcpy( u8_t * dst, const u8_t * src, u8_t bterminate  );
+//u16_t ocac_strcpy( u8_t * dst, const u8_t * src, u8_t bterminate  );
 #endif
 
 #ifdef __cplusplus

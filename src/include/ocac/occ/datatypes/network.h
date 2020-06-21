@@ -30,7 +30,7 @@ typedef OcaBlob OcaApplicationNetworkServiceID;
 
 
 typedef struct {
-    OcaBlob SystemInterfaceParameters;
+    OCAC_BLOB(OCAC_OCC_NETWORK_SYSTEMINTERFACEPARAMETERS_MAXLEN) SystemInterfaceParameters;
     OcaNetworkAddress MyNetworkAddress;
 } PACK_STRUCT_STRUCT OcaNetworkSystemInterfaceDescriptor;
 
@@ -80,7 +80,7 @@ typedef OcaUint16 OcaMediaCodingSchemeID;
 
 typedef struct {
     OcaMediaCodingSchemeID CodingSchemeID;
-    OcaString CodecParameters;
+    OCAC_STRING(OCAC_OCC_NETWORK_CODECPARAMETERS_MAXLEN) CodecParameters;
     OcaONo ClockONo;
 } PACK_STRUCT_STRUCT OcaMediaCoding;
 
@@ -92,7 +92,7 @@ typedef enum {
     OcaMediaStreamCastMode_Multicast    = 2
 } PACK_STRUCT_STRUCT OcaMediaStreamCastMode;
 
-typedef OcaBlob OcaMediaStreamParameters;
+typedef OCAC_BLOB(OCAC_OCC_NETWORK_MEDIASTREAMPARAMETERS_MAXLEN) OcaMediaStreamParameters;
 
 typedef struct {
     OcaBoolean Secure;
@@ -105,26 +105,32 @@ typedef struct {
     OcaUint16 Index;
 } PACK_STRUCT_STRUCT OcaMediaConnectorID;
 
+/**
+ * For reference only
+ */
 typedef struct {
     OcaMediaConnectorID IDInternal;
-    OcaString IDExternal;
+    OCAC_STRING(0) IDExternal;
     OcaMediaConnection Connection;
-    OCAC_LIST(OcaMediaCoding,) AvailableCodings;
+    OCAC_LIST(OcaMediaCoding,0) AvailableCodings;
     OcaMediaCoding CurrentCoding;
     OcaUint16 PinCount;
-    OCAC_MULTIMAP(OcaUint16, OcaPortID,) ChannelPinMap;
+    OCAC_MULTIMAP(OcaUint16, OcaPortID, 0) ChannelPinMap;
     OcaDBFS AlignmentLevel;
     OcaDB AlignmentGain;
 } PACK_STRUCT_STRUCT OcaMediaSinkConnector;
 
+/**
+ * For reference only
+ */
 typedef struct {
     OcaMediaConnectorID IDInternal;
-    OcaString IDExternal;
+    OCAC_STRING(0) IDExternal;
     OcaMediaConnection Connection;
-    OCAC_LIST(OcaMediaCoding,) AvailableCodings;
+    OCAC_LIST(OcaMediaCoding,0) AvailableCodings;
     OcaMediaCoding CurrentCoding;
     OcaUint16 PinCount;
-    OCAC_MULTIMAP(OcaUint16, OcaPortID,) ChannelPinMap;
+    OCAC_MULTIMAP(OcaUint16, OcaPortID,0) ChannelPinMap;
 } PACK_STRUCT_STRUCT OcaMediaSourceConnector;
 
 typedef enum {

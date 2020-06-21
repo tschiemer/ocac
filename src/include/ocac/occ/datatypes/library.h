@@ -51,11 +51,11 @@ typedef enum {
 
 // TODO OcaLibVolMetadata (multiple strings...)
 typedef struct {
-    OcaString Name;
+    OCAC_STRING(OCAC_OCC_LIBRARY_LIBVOLMETADATA_NAME_MAXLEN) Name;
     OcaLibVolType Type;
     OcaLibAccess Access;
     OcaUint32 Version;
-    OcaString Creator;
+    OCAC_STRING(OCAC_OCC_LIBRARY_LIBVOLMETADATA_CREATOR_MAXLEN) Creator;
     OcaTimePTP UpDate;
 } PACK_STRUCT_STRUCT OcaLibVolMetadata;
 

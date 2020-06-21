@@ -19,8 +19,12 @@ struct ocac_obj_base;
 
 
 #ifndef OCAC_NO_PROPERTIES
+
+#define OCAC_PROPERTY_STATUS_SUBSCRIBABLE 1
+
 struct ocac_class_property {
     OcaPropertyID id;
+    u8_t status;
 };
 #endif
 
@@ -30,7 +34,7 @@ struct ocac_class_event {
 };
 #endif
 
-typedef OcaStatus (*ocac_method_ptr)(struct ocac_obj_base * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+typedef OcaStatus (*ocac_method_ptr)(struct ocac_obj_base * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
 
 struct ocac_class_method {
     OcaMethodID id;

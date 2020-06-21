@@ -12,9 +12,12 @@ extern "C" {
 #endif
 
 
+/**
+ * For reference only.
+ */
 typedef struct {
     OcaONo ObjectNumber;
-    OcaString Name;
+    OCAC_STRING(0) Name; // dynamic
     OcaClassID ClassID;
     OcaClassVersionNumber ClassVersion;
 } PACK_STRUCT_STRUCT OcaManagerDescriptor;

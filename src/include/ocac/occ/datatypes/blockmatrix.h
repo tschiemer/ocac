@@ -32,11 +32,23 @@ typedef struct {
 } PACK_STRUCT_STRUCT OcaPortID;
 
 
-typedef struct {
-    OcaONo Owner;
-    OcaPortID ID;
-    OcaString Name;
-} PACK_STRUCT_STRUCT OcaPort;
+//typedef struct {
+//    OcaONo Owner;
+//    OcaPortID ID;
+//    OcaString Name;
+//} PACK_STRUCT_STRUCT OcaPort;
+
+#define OCAC_PORT(len) \
+     struct { \
+        OcaONo Owner; \
+        OcaPortID ID; \
+        OCAC_STRING(len) Name; \
+    } PACK_STRUCT_STRUCT
+
+/**
+ * For reference only
+ */
+typedef OCAC_PORT(0) OcaPort;
 
 typedef struct {
     OcaPort SourcePort;
@@ -63,10 +75,13 @@ typedef struct {
     OcaUint16 Index;
 } PACK_STRUCT_STRUCT OcaProtoPortID;
 
+/**
+ * For reference only
+ */
 typedef struct {
     OcaProtoONo Owner;
     OcaProtoPortID ProtoID;
-    OcaString Name;
+    OCAC_STRING(0) Name;
 } PACK_STRUCT_STRUCT OcaProtoPort;
 
 typedef struct {
@@ -76,12 +91,15 @@ typedef struct {
 
 typedef OcaUint16 OcaMatrixCoordinate;
 
+/**
+ * For reference only
+ */
 typedef struct {
     OcaONo ONo;
     OcaClassIdentification ClassIdentification;
     OcaONoPath ContainerPath;
-    OcaString Role;
-    OcaString Label;
+    OCAC_STRING(0) Role;
+    OCAC_STRING(0) Label;
 } OcaObjectSearchResult;
 
 // TODO OcaObjectSearchResultFlags

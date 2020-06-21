@@ -33,9 +33,12 @@ typedef struct {
     OcaUint16 ErrorCode;
 } PACK_STRUCT_STRUCT OcaTaskStatus;
 
+/**
+ * For reference only
+ */
 typedef struct {
     OcaTaskID ID;
-    OcaString Label;
+    OCAC_STRING(0) Label;
     OcaLibVolIdentifier OcaProgramID;
     OcaTaskGroupID GroupID;
     OcaTimeMode TimeMode;
