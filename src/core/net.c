@@ -14,18 +14,19 @@ s32_t ocac_net_str2addr(struct ocac_net_addr * addr, OcaString * str)
     OCAC_ASSERT("addr != NULL", addr != NULL);
 
     u16_t ncolons = 0;
-    s32_t last = -1;
+    s32_t last = -2;
     u32_t doublecolon = -1;
     for(s32_t i = 0; i < str->Len; i++){
         if (str->Value[i] == ':'){
-            ncolons++;
             if (last == i-1){
                 // can not have more than one doublecolon
                 if (doublecolon != -1){
-                    return false;
+                    return 999;
                 }
                 doublecolon = ncolons;
             }
+            ncolons++;
+            last = i;
         }
     }
 
@@ -33,24 +34,55 @@ s32_t ocac_net_str2addr(struct ocac_net_addr * addr, OcaString * str)
     if (ncolons > 1){
         #ifdef OCAC_USE_IPv6
 
-        u16_t len = 0, l;
+        u16_t len = 0, end = str->Len, l;
         s32_t a;
 
         if (str->Value[0] == '['){
             len++;
+
+            if (str->Value[end-1] != ']'){
+                // assume port is given
+                ncolons--;
+            }
         }
 
-        if (str->Len < len + 1) return 10;
+        if (str->Len < len + 1) return false;
         a = ocac_atoi(&str->Value[len], str->Len - len, 16, &l);
-        if (l == 0 || l > 4 || (a & 0xffff0000)) return 20;
-        addr->addr[0] = a >> 8;
-        addr->addr[1] = a & 0xff;
-        len += l;
+        if (l == 0 && str->Value[len] == ':' && doublecolon == 1){
+            addr->addr[0] = 0;
+            addr->addr[1] = 0;
+        }
+        else if (l == 0 || l > 4 || (a & 0xffff0000)) return false;
+        else {
+            addr->addr[0] = a >> 8;
+            addr->addr[1] = a & 0xff;
+            len += l;
+        }
 
         for (int i = 1; i < 8; i++){
-            if (str->Len < len + 1 || str->Value[len++] != ':') return 30 + i;
+
+            if (str->Len < len + 1 || str->Value[len++] != ':') return false;
+
+            if (i == doublecolon) {
+                for (int j = 0; j < 8 - ncolons && i < 8; j++, i++){
+                    addr->addr[2*i] = 0;
+                    addr->addr[2*i+1] = 0;
+                }
+                if (str->Len <= len + 1 || str->Value[len+1] == ']') {
+                    addr->addr[14] = 0;
+                    addr->addr[15] = 0;
+                    if (str->Len >= len + 2){
+
+                        len++;
+                    }
+                } else {
+                    i--;
+                }
+                continue;
+            }
+
             a = ocac_atoi(&str->Value[len], str->Len - len, 16, &l);
-            if (l == 0 || l > 4 || (a & 0xffff0000)) return 40 + i;
+            if (l == 0 || l > 4 || (a & 0xffff0000)) return false;
             addr->addr[2*i] = a >> 8;
             addr->addr[2*i+1] = a & 0xff;
             len += l;
@@ -135,10 +167,13 @@ s32_t ocac_net_addr2str(OcaString * str, struct ocac_net_addr * addr)
             str->Value[len++] = '[';
         }
 
-        for(int i = 0; i < 8; i++){
+        u16_t val = (addr->addr[0] << 8) | (addr->addr[1]);
+        len += ocac_itoa(val, &str->Value[len], 16);
+
+        for(int i = 1; i < 8; i++){
+            str->Value[len++] = ':';
             u16_t val = (addr->addr[2*i] << 8) | (addr->addr[2*i+1]);
             len += ocac_itoa(val, &str->Value[len], 16);
-            str->Value[len++] = ':';
         }
 
         if (addr->port > 0){
