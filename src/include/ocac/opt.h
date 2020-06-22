@@ -70,6 +70,8 @@
 #define OCAC_USE_SESSION_POOL 1
 #endif
 
+#define OCAC_USE_IPv6
+
 
 #ifndef OCAC_NETADDR_EQUAL
 #define OCAC_NETADDR_EQUAL(lhs, rhs) (ocac_memcmp(lhs, rhs, lhs->ver == 4 ? 5 : 16))

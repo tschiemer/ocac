@@ -84,9 +84,12 @@ void ocac_memcpy( void * dst, const void * src, size_t count );
 #endif
 
 
-#ifndef ocac_strcpy
+u16_t ocac_itoa(s32_t value, u8_t * str, s32_t base);
+s32_t ocac_atoi(u8_t * str, size_t len, s32_t base, u16_t * readlen);
+
+//#ifndef ocac_strcpy
 //u16_t ocac_strcpy( u8_t * dst, const u8_t * src, u8_t bterminate  );
-#endif
+//#endif
 
 #ifdef __cplusplus
 }

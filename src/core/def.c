@@ -50,6 +50,7 @@ void* ocac_memset( void * dst, int ch, size_t count )
     for(size_t i = 0; i < count; i++){
         *(u8_t*)dst = (u8_t)ch;
     }
+    return dst;
 }
 #endif
 
@@ -63,6 +64,89 @@ int ocac_memcmp( const void * lhs, const void * rhs, size_t count )
     return 0;
 }
 #endif
+
+
+
+/**
+ * Inspired by v0.3 from http://www.strudel.org.uk/itoa/
+ * Returns length and does not null-terminate
+ */
+u16_t ocac_itoa(s32_t value, u8_t * str, s32_t base)
+{
+    u8_t *front = str;
+    u8_t * back = str;
+    s32_t sign, len;
+
+    // Validate base
+    if (base < 2 || base > 35){
+//        *back = '\0';
+        return 0;
+    }
+
+    // Take care of sign
+    if ((sign=value) < 0) {
+        value = -value;
+    }
+
+    // Conversion. Number is reversed.
+    do {
+        *back++ = "0123456789abcdefghijklmnopqrstuvwxyz"[value % base];
+    } while(value /= base);
+
+    if(sign < 0) {
+        *back ++= '-';
+    }
+    len = back - front;
+//    *back-- = '\0';
+    back--;
+
+    // reverse
+    u8_t swap;
+    while( back > front) {
+        swap = *back;
+        *back --= *front;
+        *front++ = swap;
+    }
+
+    return len;
+}
+
+s32_t ocac_atoi(u8_t * str, size_t len, s32_t base, u16_t * readlen)
+{
+    if (base < 2 || 35 < base){
+        if (readlen != NULL){
+            *readlen = 0;
+        }
+        return 0;
+    }
+
+    s32_t result = 0;
+    s32_t sign = str[0] == '-' ? -1 : 1;
+    u16_t i;
+
+    for(i = sign == -1 ? 1 : 0; i < len; i++){
+        s32_t m;
+        if ('0' <= str[i] && str[i] <= '9') m = str[i] - '0';
+        else if ('a' <= str[i] && str[i] <= 'z') m = str[i] - 'a' + 10;
+        else if ('A' <= str[i] && str[i] <= 'Z') m = str[i] - 'A' + 10;
+        else break;
+
+        // validate
+        if (m >= base){
+//            *readlen = 100;
+//            exit(m);
+            break;
+        }
+
+        result = result * base + m;
+    }
+
+    if (readlen != NULL){
+        *readlen = i;
+    }
+
+    return  sign * result;
+}
 
 //#ifndef ocac_strcpy
 //u16_t ocac_strcpy( u8_t * dst, const u8_t * src, u8_t bterminate  )

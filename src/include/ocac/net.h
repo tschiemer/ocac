@@ -20,7 +20,7 @@ extern "C" {
 #endif
 
 enum ocac_net_ipver {
-  ocac_net_ipver_4  = 4,
+    ocac_net_ipver_4  = 4,
     ocac_net_ipver_6 = 6
 } PACK_STRUCT_STRUCT;
 
@@ -33,7 +33,7 @@ enum ocac_net_type {
 
 struct ocac_net_addr {
     enum ocac_net_ipver ipver;
-    enum ocac_net_type type;
+//    enum ocac_net_type type;
     u16_t port;
     u8_t addr[OCAC_NET_ADDR_SIZE];
 } PACK_STRUCT_STRUCT;
@@ -48,9 +48,12 @@ inline uint8_t ocac_net_addreq(struct ocac_net_addr * dst, struct ocac_net_addr 
     #endif
 }
 
-void ocac_net_str2addr(struct ocac_net_addr * addr, OcaString * str);
-void ocac_net_addr2str(OcaString * str, struct ocac_net_addr * addr);
+s32_t ocac_net_str2addr(struct ocac_net_addr * addr, OcaString * str);
+s32_t ocac_net_addr2str(OcaString * str, struct ocac_net_addr * addr);
 
+#ifdef DEBUG
+void ocac_dump_net_addr(struct ocac_net_addr * addr);
+#endif
 
 
 #ifdef __cplusplus
