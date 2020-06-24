@@ -32,7 +32,7 @@ u8_t ocac_reset_add_key(struct ocac_session * session, struct ocac_net_addr * ad
     return OCAC_RESET_NO_MEM;
 }
 
-void ocac_reset_clear_addr(struct ocac_net_addr * addr)
+void ocac_reset_clear_by_addr(struct ocac_net_addr * addr)
 {
     OCAC_ASSERT("addr != NULL", addr != NULL);
 
@@ -44,7 +44,7 @@ void ocac_reset_clear_addr(struct ocac_net_addr * addr)
     }
 }
 
-void ocac_reset_clear_session(struct ocac_session * session)
+void ocac_reset_clear_by_session(struct ocac_session * session)
 {
     OCAC_ASSERT("session != NULL", session != NULL);
 
@@ -52,6 +52,19 @@ void ocac_reset_clear_session(struct ocac_session * session)
         if (reset_cfgs[i].status == OCAC_RESET_STATUS_SET && reset_cfgs[i].session == session){
 
             reset_cfgs[i].status = OCAC_RESET_STATUS_UNSET;
+        }
+    }
+}
+
+
+void ocac_reset_invalidate_session(struct ocac_session * session)
+{
+    OCAC_ASSERT("session != NULL", session != NULL);
+
+    for(int i = 0; i < OCAC_RESET_CFG_MAX_COUNT; i++){
+        if (reset_cfgs[i].status == OCAC_RESET_STATUS_SET && reset_cfgs[i].session == session){
+
+            reset_cfgs[i].session = session;
         }
     }
 }

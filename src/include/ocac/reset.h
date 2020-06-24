@@ -29,8 +29,14 @@ struct ocac_reset_cfg {
 
 
 u8_t ocac_reset_add_key(struct ocac_session * session, struct ocac_net_addr * addr, OcaBlobFixedLen16 * key);
-void ocac_reset_clear_addr(struct ocac_net_addr * addr);
-void ocac_reset_clear_session(struct ocac_session * session);
+void ocac_reset_clear_by_addr(struct ocac_net_addr * addr);
+void ocac_reset_clear_by_session(struct ocac_session * session);
+
+void ocac_reset_invalidate_session(struct ocac_session * session);
+inline void ocac_reset_clear_sessionless()
+{
+    ocac_reset_clear_by_session(NULL);
+}
 
 u8_t ocac_reset_check(struct ocac_net_addr * addr, OcaBlobFixedLen16 * key);
 
