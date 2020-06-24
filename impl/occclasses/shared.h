@@ -31,10 +31,10 @@ extern "C" {
     OCAC_ASSERT("req != NULL", req != NULL); \
     OCAC_ASSERT("rsp != NULL", rsp != NULL); \
     OCAC_ASSERT("rsplen != NULL", rsplen != NULL); \
-    OCAC_ASSERT("OCAC_SESSIONREF_ISVALID(session_ref)", OCAC_SESSIONREF_ISVALID(session_ref));
+    OCAC_ASSERT("session != NULL", session != NULL);
 
 
-//#define OCAC_CLASS_METHOD_DEF(method) OcaStatus method(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+//#define OCAC_CLASS_METHOD_DEF(method) OcaStatus method(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 
 #ifdef __cplusplus
 }

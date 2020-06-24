@@ -41,7 +41,7 @@ OCAC_CLASS_TYPE(OcaWorker) OCAC_CLASS_NAME(OcaWorker) = {
 } OCAC_CLASS_WORKER_ATTRIBUTES;
 
 
-OcaStatus ocac_m_devicemanager_getEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -57,7 +57,7 @@ OcaStatus ocac_m_devicemanager_getEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_setEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_setEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -77,42 +77,42 @@ OcaStatus ocac_m_devicemanager_setEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_addPort(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_addPort(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_devicemanager_deletePort(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_deletePort(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_devicemanager_getPorts(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getPorts(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_devicemanager_getPortName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getPortName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_devicemanager_setPortName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_setPortName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_devicemanager_getLabel(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getLabel(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -141,7 +141,7 @@ OcaStatus ocac_m_devicemanager_getLabel(OCAC_OBJ_BASE * obj, u8_t * req, u16_t r
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_setLabel(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_setLabel(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -171,7 +171,7 @@ OcaStatus ocac_m_devicemanager_setLabel(OCAC_OBJ_BASE * obj, u8_t * req, u16_t r
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_getOwner(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getOwner(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -191,7 +191,7 @@ OcaStatus ocac_m_devicemanager_getOwner(OCAC_OBJ_BASE * obj, u8_t * req, u16_t r
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_getLatency(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getLatency(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -211,7 +211,7 @@ OcaStatus ocac_m_devicemanager_getLatency(OCAC_OBJ_BASE * obj, u8_t * req, u16_t
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_setLatency(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_setLatency(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -231,7 +231,7 @@ OcaStatus ocac_m_devicemanager_setLatency(OCAC_OBJ_BASE * obj, u8_t * req, u16_t
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_getPath(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getPath(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 

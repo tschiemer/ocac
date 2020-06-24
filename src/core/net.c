@@ -32,7 +32,7 @@ s32_t ocac_net_str2addr(struct ocac_net_addr * addr, OcaString * str)
 
     // if more than one colon must be ipv6
     if (ncolons > 1){
-        #ifdef OCAC_USE_IPv6
+        #if OCAC_USE_IPv6
 
         u16_t len = 0, end = str->Len, l;
         s32_t a;
@@ -151,7 +151,7 @@ s32_t ocac_net_addr2str(OcaString * str, struct ocac_net_addr * addr)
     OCAC_ASSERT("str != NULL", str != NULL);
     OCAC_ASSERT("addr != NULL", addr != NULL);
 
-    #ifdef OCAC_USE_IPv6
+    #if OCAC_USE_IPv6
     OCAC_ASSERT("addr->ipver == ocac_net_ipver_4 || addr->ipver == ocac_net_ipver_6", addr->ipver == ocac_net_ipver_4 || addr->ipver == ocac_net_ipver_6);
     #else
     OCAC_ASSERT("addr->ipver == ocac_net_ipver_4", addr->ipver == ocac_net_ipver_4);
@@ -160,7 +160,7 @@ s32_t ocac_net_addr2str(OcaString * str, struct ocac_net_addr * addr)
     u16_t len = 0;
 
 
-    #ifdef OCAC_USE_IPv6
+    #if OCAC_USE_IPv6
     if (addr->ipver == ocac_net_ipver_6){
 
         if (addr->port > 0){
@@ -198,7 +198,7 @@ s32_t ocac_net_addr2str(OcaString * str, struct ocac_net_addr * addr)
             len += ocac_itoa(addr->port, &str->Value[len], 10);
         }
 
-    #ifdef OCAC_USE_IPv6
+    #if OCAC_USE_IPv6
     }
     #endif
 
@@ -208,6 +208,20 @@ s32_t ocac_net_addr2str(OcaString * str, struct ocac_net_addr * addr)
     return true;
 }
 
+u8_t ocac_net_ipeq(const struct ocac_net_addr * lhs, const struct ocac_net_addr * rhs)
+{
+    OCAC_ASSERT("lhs != NULL", lhs != NULL);
+    OCAC_ASSERT("rhs != NULL", rhs != NULL);
+
+    // valid ip version?
+    if (lhs->ipver != ocac_net_ipver_4 && lhs->ipver != ocac_net_ipver_6) return false;
+
+    if (lhs->ipver != rhs->ipver) return false;
+
+    u16_t l = lhs->ipver == ocac_net_ipver_4 ? 4 : 16;
+
+    return ocac_memcmp(lhs->addr, rhs->addr, l) == 0;
+}
 
 #ifdef DEBUG
 void ocac_dump_net_addr(struct ocac_net_addr * addr)

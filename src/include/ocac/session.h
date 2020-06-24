@@ -17,7 +17,6 @@ extern "C" {
 
 #define OCAC_SESSION_STATUS_USED    1
 
-
 struct ocac_session {
     u8_t status;
 

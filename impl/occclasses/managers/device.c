@@ -2,14 +2,15 @@
 // Created by Philip Tschiemer on 13.06.20.
 //
 
-#include <obj_registry.h>
-#include <ocac/occ/datatypes/framework.h>
 #include "occclasses/managers/device.h"
 
 #include "ocac/def.h"
 #include "ocac/occ/datatypes/management.h"
 #include "ocac/utf8.h"
-#include "abstract.h"
+#include "ocac/reset.h"
+
+#include "obj_registry.h"
+
 
 
 static OcaStatus marshall_ManagerDescriptor(OCAC_OBJ_TYPE(OcaManager) * mngr, u8_t * dst, u16_t * len, u16_t maxlen);
@@ -117,7 +118,7 @@ OCAC_OBJ_TYPE(OcaDeviceManager) OCAC_OBJ_NAME(OcaDeviceManager) = {
 };
 
 
-OcaStatus ocac_m_devicemanager_getOcaVersion(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getOcaVersion(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -136,7 +137,7 @@ OcaStatus ocac_m_devicemanager_getOcaVersion(OCAC_OBJ_BASE * obj, u8_t * req, u1
 	return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_devicemanager_getModelGUID(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getModelGUID(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -156,7 +157,7 @@ OcaStatus ocac_m_devicemanager_getModelGUID(OCAC_OBJ_BASE * obj, u8_t * req, u16
     return OcaStatus_OK;
 }
 
-OcaStatus ocac_m_devicemanager_getSerialNumber(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getSerialNumber(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -185,7 +186,7 @@ OcaStatus ocac_m_devicemanager_getSerialNumber(OCAC_OBJ_BASE * obj, u8_t * req, 
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_getDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -214,7 +215,7 @@ OcaStatus ocac_m_devicemanager_getDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u1
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_setDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_setDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -244,7 +245,7 @@ OcaStatus ocac_m_devicemanager_setDeviceName(OCAC_OBJ_BASE * obj, u8_t * req, u1
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_getModelDescription(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getModelDescription(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -308,7 +309,7 @@ OcaStatus ocac_m_devicemanager_getModelDescription(OCAC_OBJ_BASE * obj, u8_t * r
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_getRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -337,7 +338,7 @@ OcaStatus ocac_m_devicemanager_getRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t re
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_setRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_setRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -367,7 +368,7 @@ OcaStatus ocac_m_devicemanager_setRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t re
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_getUserInventoryCode(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getUserInventoryCode(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -396,7 +397,7 @@ OcaStatus ocac_m_devicemanager_getUserInventoryCode(OCAC_OBJ_BASE * obj, u8_t * 
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_setUserInventoryCode(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_setUserInventoryCode(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -425,7 +426,7 @@ OcaStatus ocac_m_devicemanager_setUserInventoryCode(OCAC_OBJ_BASE * obj, u8_t * 
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_getEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -441,7 +442,7 @@ OcaStatus ocac_m_devicemanager_getEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_setEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_setEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -460,7 +461,7 @@ OcaStatus ocac_m_devicemanager_setEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_getState(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getState(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -476,16 +477,41 @@ OcaStatus ocac_m_devicemanager_getState(OCAC_OBJ_BASE * obj, u8_t * req, u16_t r
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_setResetKey(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_setResetKey(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
-    // TODO
+    // minimal required length command payload
+    if (reqlen < sizeof(OcaBlobFixedLen16) + sizeof(OcaUint16) + 7){
+        return OcaStatus_InvalidRequest;
+    }
 
-    return OcaStatus_NotImplemented;
+    struct ocac_net_addr addr;
+
+    // validate string...
+    u16_t l = ocac_utf8_strlen(&req[sizeof(OcaBlobFixedLen16) + sizeof(OcaUint16)], reqlen - sizeof(OcaBlobFixedLen16) + sizeof(OcaUint16));
+
+    if (l != *(u16_t*)&req[sizeof(OcaBlobFixedLen16)]){
+        return OcaStatus_BadFormat;
+    }
+
+    if (ocac_net_str2addr(&addr, (OcaString*)&req[sizeof(OcaBlobFixedLen16)]) == false){
+        return OcaStatus_BadFormat;
+    }
+
+    u8_t result = ocac_reset_add_key(session, &addr, (OcaBlobFixedLen16*)req);
+
+    if (result == OCAC_RESET_NO_MEM){
+        return OcaStatus_BufferOverflow;
+    }
+    if (result != OCAC_RESET_OK){
+        return OcaStatus_DeviceError;
+    }
+
+    return OcaStatus_OK;
 }
 
-OcaStatus ocac_m_devicemanager_getResetCause(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getResetCause(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -501,7 +527,7 @@ OcaStatus ocac_m_devicemanager_getResetCause(OCAC_OBJ_BASE * obj, u8_t * req, u1
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_clearResetCause(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_clearResetCause(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -520,7 +546,7 @@ OcaStatus ocac_m_devicemanager_clearResetCause(OCAC_OBJ_BASE * obj, u8_t * req, 
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_getMessage(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getMessage(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -549,7 +575,7 @@ OcaStatus ocac_m_devicemanager_getMessage(OCAC_OBJ_BASE * obj, u8_t * req, u16_t
     #endif
 }
 
-OcaStatus ocac_m_devicemanager_setMessage(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_setMessage(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -638,7 +664,7 @@ OcaStatus marshall_ManagerDescriptor(OCAC_OBJ_TYPE(OcaManager) * mngr, u8_t * ds
     return OcaStatus_OK;
 }
 
-OcaStatus ocac_m_devicemanager_getManagers(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getManagers(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -667,7 +693,7 @@ OcaStatus ocac_m_devicemanager_getManagers(OCAC_OBJ_BASE * obj, u8_t * req, u16_
     return OcaStatus_OK;
 }
 
-OcaStatus ocac_m_devicemanager_getRevisionID(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_getRevisionID(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 

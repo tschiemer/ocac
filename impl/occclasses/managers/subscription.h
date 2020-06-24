@@ -192,10 +192,10 @@ extern OCAC_OBJ_TYPE(OcaSubscriptionManager) OCAC_OBJ_NAME(OcaSubscriptionManage
 
 
 /** Class methods */
-OcaStatus ocac_m_devicemanager_addSubscription(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
-OcaStatus ocac_m_devicemanager_removeSubscription(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
-OcaStatus ocac_m_devicemanager_disableNotifications(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
-OcaStatus ocac_m_devicemanager_reenableNotifications(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref);
+OcaStatus ocac_m_devicemanager_addSubscription(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_devicemanager_removeSubscription(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_devicemanager_disableNotifications(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_devicemanager_reenableNotifications(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
 
 /** /CLASS/OBJECT DECLARATION **/
 

@@ -13,7 +13,7 @@
 extern "C" {
 #endif
 
-#ifdef OCAC_USE_IPv6
+#if OCAC_USE_IPv6
 #define OCAC_NET_ADDR_SIZE 16
 #else
 #define OCAC_NET_ADDR_SIZE 4
@@ -39,17 +39,20 @@ struct ocac_net_addr {
 } PACK_STRUCT_STRUCT;
 
 
-inline uint8_t ocac_net_addreq(struct ocac_net_addr * dst, struct ocac_net_addr * src)
-{
-    #ifdef OCAC_USE_IPv6
-    return ocac_memcmp(dst, src, dst->ipver == ocac_net_ipver_4 ? 8 : sizeof(struct ocac_net_addr)) == 0;
-    #else
-    return ocac_memcmp(dst, src, sizeof(struct ocac_net_addr)) == 0;
-    #endif
-}
+
 
 s32_t ocac_net_str2addr(struct ocac_net_addr * addr, OcaString * str);
 s32_t ocac_net_addr2str(OcaString * str, struct ocac_net_addr * addr);
+
+u8_t ocac_net_ipeq(const struct ocac_net_addr * lhs, const struct ocac_net_addr * rhs);
+
+inline u8_t ocac_net_addreq(const struct ocac_net_addr * lhs, const struct ocac_net_addr * rhs)
+{
+    if (ocac_net_ipeq(lhs, rhs) == false) return false;
+    if (lhs->port != rhs->port) return false;
+
+    return true;
+}
 
 #ifdef DEBUG
 void ocac_dump_net_addr(struct ocac_net_addr * addr);

@@ -56,7 +56,7 @@ OCAC_OBJ_TYPE(OcaSubscriptionManager) OCAC_OBJ_NAME(OcaSubscriptionManager) = {
 };
 
 
-OcaStatus ocac_m_devicemanager_addSubscription(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_addSubscription(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -64,21 +64,21 @@ OcaStatus ocac_m_devicemanager_addSubscription(OCAC_OBJ_BASE * obj, u8_t * req, 
 }
 
 
-OcaStatus ocac_m_devicemanager_removeSubscription(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_removeSubscription(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_devicemanager_disableNotifications(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_disableNotifications(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_devicemanager_reenableNotifications(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, ocac_session_ref session_ref)
+OcaStatus ocac_m_devicemanager_reenableNotifications(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
