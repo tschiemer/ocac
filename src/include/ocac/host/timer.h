@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef OCAC_TIMER_H
-#define OCAC_TIMER_H
+#ifndef OCAC_HOST_TIMER_H
+#define OCAC_HOST_TIMER_H
 
 #include "ocac/arch.h"
 
@@ -33,7 +33,7 @@ struct ocac_timer {
     u8_t expired;
     u8_t running;
 
-    void * impl;
+    void * impl; // host implementation reference
 } PACK_STRUCT_STRUCT;
 
 extern void ocac_timer_init(struct ocac_timer * timer);
@@ -46,4 +46,4 @@ extern void ocac_timer_deinit(struct ocac_timer * timer);
 
 
 
-#endif //OCAC_TIMER_H
+#endif //OCAC_HOST_TIMER_H

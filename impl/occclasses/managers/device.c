@@ -30,14 +30,14 @@ OCAC_CLASS_TYPE(OcaDeviceManager) OCAC_CLASS_NAME(OcaDeviceManager) = {
         OCAC_CLASS_DEVICEMANAGER_XXmXX
     },
 
-    #ifndef OCAC_NO_PROPERTIES
+    #if OCAC_USE_PROPERTIES == 1
     .property_count = OCAC_CLASS_DEVICEMANAGER_NPROPERTIES_TOTAL,
     .properties = {
             OCAC_CLASS_DEVICEMANAGER_03pXX
     },
     #endif
 
-    #ifndef OCAC_NO_EVENTS
+    #if OCAC_USE_EVENTS == 1
     .event_count = OCAC_CLASS_DEVICEMANAGER_NEVENTS_TOTAL,
     .events = {
             OCAC_CLASS_ROOT_01eXX

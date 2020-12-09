@@ -19,23 +19,23 @@ OCAC_CLASS_TYPE(OcaSubscriptionManager) OCAC_CLASS_NAME(OcaSubscriptionManager) 
         OCAC_CLASS_SUBSCRIPTIONMANAGER_XXmXX
     },
 
-#ifndef OCAC_NO_PROPERTIES
+    #if OCAC_USE_PROPERTIES == 1
     .property_count = OCAC_CLASS_SUBSCRIPTIONMANAGER_NPROPERTIES_TOTAL,
     .properties = {
         OCAC_CLASS_SUBSCRIPTIONMANAGER_03pXX
     },
-#endif
+    #endif
 
-#ifndef OCAC_NO_EVENTS
+    #if OCAC_USE_EVENTS == 1
     .event_count = OCAC_CLASS_SUBSCRIPTIONMANAGER_NEVENTS_TOTAL,
     .events = {
         OCAC_CLASS_SUBSCRIPTIONMANAGER_03eXX
     },
-#endif
+    #endif
 
-#if DEBUG
+    #if DEBUG
         .dump = ocac_dump_subscriptionmanager
-#endif
+    #endif
 
 } OCAC_CLASS_SUBSCRIPTIONMANAGER_ATTRIBUTES;
 

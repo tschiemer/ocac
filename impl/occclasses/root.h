@@ -117,7 +117,7 @@ extern "C" {
     OCAC_CLASS_ROOT_01m06
 
 
-#ifdef OCAC_NO_PROPERTIES
+#if OCAC_USE_PROPERTIES == 0
 #define OCAC_CLASS_ROOT_01pXX
 #else
 
@@ -143,12 +143,13 @@ extern "C" {
     OCAC_CLASS_ROOT_01p03 \
     OCAC_CLASS_ROOT_01p04 \
     OCAC_CLASS_ROOT_01p05
-#endif // OCAC_NO_PROPERTIES
+
+#endif // OCAC_USE_PROPERTIES == 0
 
 
 
 
-#ifdef OCAC_NO_EVENTS
+#if OCAC_USE_EVENTS == 0
 #define OCAC_CLASS_ROOT_01eXX
 #else
 
@@ -159,7 +160,7 @@ extern "C" {
 #define OCAC_CLASS_ROOT_01eXX \
     OCAC_CLASS_ROOT_01e01
 
-#endif // OCAC_NO_EVENTS
+#endif // OCAC_USE_EVENTS == 0
 
 
 

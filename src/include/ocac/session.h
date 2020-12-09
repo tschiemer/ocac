@@ -30,6 +30,7 @@
 #include "ocac/ocp/ocp1.h"
 #include "ocac/net.h"
 #include "ocac/host/timer.h"
+#include "ocac/host/sock.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -41,19 +42,23 @@ extern "C" {
 struct ocac_session {
     u8_t status;
 
-    struct ocac_net_addr addr;
+//    struct ocac_net_addr addr;
 
-    OcaNetworkControlProtocol ocp; // well, as long there is only ocp1 this is somewhat unnecessary..
+    struct ocac_sock sock;
+
+//    OcaNetworkControlProtocol ocp; // well, as long there is only ocp1 this is somewhat unnecessary..
 
     Ocp1HeartBeatTimeType heartbeat_type;
     Ocp1KeepAlive heartbeat_interval;
 
     struct ocac_timer timeout;
 
-    #ifndef OCAC_NO_EVENTS
+    #if OCAC_USE_EVENTS == 1
     u16_t subscription_count;
-    struct ocac_net_addr subscription_addr;
+    struct ocac_net_addr subscription_addr; // fast subscriptions only
     #endif
+
+//    void * user_data; // any custom data linked to a session
 
     #if OCAC_USE_SESSION_POOL == 0
     struct ocac_session * next;
@@ -74,6 +79,8 @@ struct ocac_session * ocac_session_new(struct ocac_net_addr * addr);
 void ocac_session_delete(struct ocac_session * session);
 
 struct ocac_session * ocac_session_get_timedout(void);
+
+
 
 #ifdef __cplusplus
 }

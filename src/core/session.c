@@ -29,11 +29,11 @@
 static struct ocac_session pool[OCAC_SESSION_MAX_COUNT];
 #else // OCAC_USE_SESSION_POOL == 0
 
-#if !defined(OCAC_SESSION_MALLOC)
-#error OCAC_SESSION_MALLOC not defined
+#if !defined(OCAC_SESSION_NEW)
+#error OCAC_SESSION_NEW not defined
 #endif
-#if !defined(OCAC_SESSION_FREE)
-#error OCAC_SESSION_FREE not defined
+#if !defined(OCAC_SESSION_DELETE)
+#error OCAC_SESSION_DELETE not defined
 #endif
 
 static struct ocac_session * first;
@@ -83,7 +83,7 @@ struct ocac_session * ocac_session_get_by_address(struct ocac_net_addr * addr)
 
     #if OCAC_USE_SESSION_POOL == 1
     for(int i = 0; i < OCAC_SESSION_MAX_COUNT; i++){
-        if ( (pool[i].status & OCAC_SESSION_STATUS_USED) == OCAC_SESSION_STATUS_USED && ocac_net_addreq(&pool[i].addr, addr)){
+        if ( (pool[i].status & OCAC_SESSION_STATUS_USED) == OCAC_SESSION_STATUS_USED && ocac_net_addreq(&pool[i].sock.addr, addr)){
             ocac_session_delete(&pool[i]);
         }
     }
@@ -116,14 +116,14 @@ struct ocac_session * ocac_session_new_from_address(struct ocac_net_addr * addr)
         }
     }
     #else
-    session = OCAC_SESSION_MALLOC(sizeof(struct ocac_session));
+    session = OCAC_SESSION_NEW();
     #endif
 
     OCAC_ASSERT("session != NULL", session != NULL);
 
     session->status = OCAC_SESSION_STATUS_USED;
 
-    ocac_memcpy(&session->addr, addr, sizeof(struct ocac_net_addr));
+    ocac_memcpy(&session->sock.addr, addr, sizeof(struct ocac_net_addr));
 
     ocac_timer_init( &session->timeout );
 
@@ -131,6 +131,8 @@ struct ocac_session * ocac_session_new_from_address(struct ocac_net_addr * addr)
     session->next = first;
     first = session;
     #endif
+
+//    session->sock.impl = sock_impl;
 
     return session;
 }
@@ -167,7 +169,7 @@ void ocac_session_delete(struct ocac_session * session)
         before->next = session->next;
     }
 
-    OCAC_SESSION_FREE(session);
+    OCAC_SESSION_DELETE(session);
 
     #endif
 

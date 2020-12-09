@@ -39,7 +39,7 @@ extern "C" {
 struct ocac_obj_base;
 
 
-#ifndef OCAC_NO_PROPERTIES
+#if OCAC_USE_PROPERTIES == 1
 
 #define OCAC_PROPERTY_STATUS_SUBSCRIBABLE 1
 
@@ -49,7 +49,7 @@ struct ocac_class_property {
 };
 #endif
 
-#ifndef OCAC_NO_EVENTS
+#if OCAC_USE_EVENTS == 1
 struct ocac_class_event {
     OcaEventID id;
 };
@@ -63,7 +63,7 @@ struct ocac_class_method {
 };
 
 
-#ifdef OCAC_NO_PROPERTIES
+#if OCAC_USE_PROPERTIES == 0
 #define OCAC_CLASS_DEF_PROPERTIES
 #define OCAC_CLASS_DEF_DATA_PROPERTIES(nproperties)
 #else
@@ -72,7 +72,7 @@ struct ocac_class_method {
 #endif
 
 
-#ifdef OCAC_NO_EVENTS
+#if OCAC_USE_EVENTS == 0
 #define OCAC_CLASS_DEF_EVENTS
 #define OCAC_CLASS_DEF_DATA_EVENTS(nevents)
 #else
@@ -135,11 +135,11 @@ OCAC_CLASS_DEF_END(base)
 
 struct ocac_class_method * ocac_class_get_method(OCAC_CLASS_BASE * class_ptr, u16_t deflevel, u16_t index );
 
-#ifdef OCAC_NO_PROPERTIES
+#if OCAC_USE_PROPERTIES == 1
 struct ocac_class_property * ocac_class_get_property(OCAC_CLASS_BASE * class_ptr, u16_t deflevel, u16_t index );
 #endif
 
-#ifdef OCAC_NO_EVENTS
+#if OCAC_USE_EVENTS == 1
 struct ocac_class_event * ocac_class_get_event(OCAC_CLASS_BASE * class_ptr, u16_t deflevel, u16_t index );
 #endif
 

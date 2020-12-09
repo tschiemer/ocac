@@ -41,15 +41,30 @@ extern "C" {
 #endif
 
 enum ocac_net_ipver {
-    ocac_net_ipver_4  = 4,
-    ocac_net_ipver_6 = 6
+    ocac_net_ipver_4    = 4,
+    ocac_net_ipver_6    = 6
 } PACK_STRUCT_STRUCT;
 
+#define OCAC_NET_IPVER_ISVALID( __ip__ ) ( \
+    (__ip__) == ocac_net_ipver_4 ||\
+    (__ip__) == ocac_net_ipver_6 \
+    )
+
 enum ocac_net_type {
-    ocac_net_type_tcp = 1,
-    ocac_net_type_udp = 2,
-    ocac_net_type_websocket = 3
+    ocac_net_type_none      = 0,
+    ocac_net_type_tcp       = 1,
+    ocac_net_type_tcpsec    = 2,
+    ocac_net_type_udp       = 3,
+    ocac_net_type_websocket = 4
 } PACK_STRUCT_STRUCT;
+
+#define OCAC_NET_TYPE_ISVALID(__type__) (\
+    (__type__) == ocac_net_type_none || \
+    (__type__) == ocac_net_type_tcp || \
+    (__type__) == ocac_net_type_tcpsec || \
+    (__type__) == ocac_net_type_udp || \
+    (__type__) == ocac_net_type_websocket \
+    )
 
 
 struct ocac_net_addr {

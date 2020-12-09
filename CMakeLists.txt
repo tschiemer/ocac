@@ -43,6 +43,9 @@ set(OCAC_CORE_INCLUDES
         src/include/ocac/net.h
         src/include/ocac/reset.h
         src/include/ocac/api.h
+
+        src/include/ocac/host/timer.h
+        src/include/ocac/host/sock.h
 )
 
 set(OCAC_CORE_SOURCE_FILES

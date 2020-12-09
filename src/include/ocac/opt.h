@@ -181,9 +181,9 @@
  * OCAC Class & Object Configuration
  **/
 
-//#define OCAC_NO_PROPERTIES
+#define OCAC_USE_PROPERTIES 1
 
-//#define OCAC_NO_EVENTS
+#define OCAC_USE_EVENTS 1
 
 
 #ifndef OCAC_CLASS_NAME

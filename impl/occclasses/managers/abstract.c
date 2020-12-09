@@ -17,11 +17,11 @@ OCAC_CLASS_TYPE(OcaManager) OCAC_CLASS_NAME(OcaManager) = {
 
     .method_count = OCAC_CLASS_MANAGER_NMETHODS_TOTAL,
 
-    #ifndef OCAC_NO_PROPERTIES
+    #if OCAC_USE_PROPERTIES == 1
     .property_count = OCAC_CLASS_MANAGER_NPROPERTIES_TOTAL,
     #endif
 
-    #ifndef OCAC_NO_EVENTS
+    #if OCAC_USE_EVENTS == 1
     .event_count = OCAC_CLASS_MANAGER_NEVENTS_TOTAL,
     #endif
 
