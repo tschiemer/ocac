@@ -23,89 +23,37 @@
  *
  */
 
+#include <ocac/occ/datatypes/base.h>
 #include "ocac/reset.h"
 
-#define OCAC_RESET_STATUS_SET       1
-#define OCAC_RESET_STATUS_UNSET     0
 
-static struct ocac_reset_cfg reset_cfgs[OCAC_RESET_CFG_MAX_COUNT];
+struct ocac_reset_cfg ocac_reset = {
+    .status = OCAC_RESET_STATUS_UNSET,
+    .sentinel.bytes = OCAC_RESET_SENTINEL
+};
 
-u8_t ocac_reset_add_key(struct ocac_session * session, struct ocac_net_addr * addr, OcaBlobFixedLen16 * key)
+
+u8_t ocac_reset_set(OcaBlobFixedLen16 * key)
 {
-    OCAC_ASSERT("session != NULL", session != NULL);
-    OCAC_ASSERT("addr != NULL", addr != NULL);
-    OCAC_ASSERT("key != NULL", key != NULL);
+    ocac_memcpy(ocac_reset.key.bytes, key->bytes, sizeof(OcaBlobFixedLen16));
 
-    // TODO allow only 1 key per session?
-
-    for(int i = 0; i < OCAC_RESET_CFG_MAX_COUNT; i++){
-        if (reset_cfgs[i].status == OCAC_RESET_STATUS_UNSET){
-
-            reset_cfgs[i].status = OCAC_RESET_STATUS_SET;
-
-            reset_cfgs[i].session = session;
-
-            ocac_memcpy(&reset_cfgs[i].addr, addr, sizeof(struct ocac_net_addr));
-            ocac_memcpy(&reset_cfgs[i].key, key, sizeof(OcaBlobFixedLen16));
-        }
-    }
-
-    return OCAC_RESET_NO_MEM;
+    ocac_reset.status = OCAC_RESET_STATUS_SET;
 }
 
-void ocac_reset_clear_by_addr(struct ocac_net_addr * addr)
+u8_t ocac_reset_check(u8_t * bytes, u16_t length)
 {
-    OCAC_ASSERT("addr != NULL", addr != NULL);
-
-    for(int i = 0; i < OCAC_RESET_CFG_MAX_COUNT; i++){
-        if (reset_cfgs[i].status == OCAC_RESET_STATUS_SET && ocac_net_ipeq(&reset_cfgs[i].addr, addr)){
-
-            reset_cfgs[i].status = OCAC_RESET_STATUS_UNSET;
-        }
-    }
-}
-
-void ocac_reset_clear_by_session(struct ocac_session * session)
-{
-    OCAC_ASSERT("session != NULL", session != NULL);
-
-    for(int i = 0; i < OCAC_RESET_CFG_MAX_COUNT; i++){
-        if (reset_cfgs[i].status == OCAC_RESET_STATUS_SET && reset_cfgs[i].session == session){
-
-            reset_cfgs[i].status = OCAC_RESET_STATUS_UNSET;
-        }
-    }
-}
-
-
-void ocac_reset_invalidate_session(struct ocac_session * session)
-{
-    OCAC_ASSERT("session != NULL", session != NULL);
-
-    for(int i = 0; i < OCAC_RESET_CFG_MAX_COUNT; i++){
-        if (reset_cfgs[i].status == OCAC_RESET_STATUS_SET && reset_cfgs[i].session == session){
-
-            reset_cfgs[i].session = session;
-        }
-    }
-}
-
-u8_t ocac_reset_check(struct ocac_net_addr * addr, OcaBlobFixedLen16 * key)
-{
-    OCAC_ASSERT("addr != NULL", addr != NULL);
-    OCAC_ASSERT("key != NULL", key != NULL);
-
-
-    for(int i = 0; i < OCAC_RESET_CFG_MAX_COUNT; i++){
-        if (reset_cfgs[i].status == OCAC_RESET_STATUS_SET && ocac_net_ipeq(&reset_cfgs[i].addr, addr)){
-
-            if (ocac_memcmp(&reset_cfgs[i].key, key, sizeof(OcaBlobFixedLen16)) == 0){
-                return OCAC_RESET_OK;
-            } else {
-                return OCAC_RESET_WRONG_KEY;
-            }
-        }
+    if (ocac_reset.status == OCAC_RESET_STATUS_UNSET || length != 24){
+        return OCAC_RESET_NOK;
     }
 
-    return OCAC_RESET_UNKNOWN_ADDR;
+
+    if ( ocac_memcmp(ocac_reset.sentinel.bytes, bytes, sizeof(OcaBlobFixedLen8)) != 0 ){
+        return OCAC_RESET_NOK;
+    }
+
+    if ( ocac_memcmp(ocac_reset.key.bytes, &bytes[sizeof(OcaBlobFixedLen8)], sizeof(OcaBlobFixedLen16)) != 0 ){
+        return OCAC_RESET_NOK;
+    }
+
+    return OCAC_RESET_OK;
 }
