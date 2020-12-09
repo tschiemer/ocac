@@ -34,32 +34,27 @@
 extern "C" {
 #endif
 
+// 0x DEAF DADA CAFE BABE
+#define OCAC_RESET_SENTINEL     {0xDE, 0xAF, 0xDA, 0xDA, 0xCA, 0xFE, 0xBA, 0xBE}
+
 #define OCAC_RESET_OK           0
 #define OCAC_RESET_NOK          1
 
-#define OCAC_RESET_NO_MEM       2
-#define OCAC_RESET_UNKNOWN_ADDR 3
-#define OCAC_RESET_WRONG_KEY    4
+#define OCAC_RESET_STATUS_SET       1
+#define OCAC_RESET_STATUS_UNSET     0
 
 struct ocac_reset_cfg {
     u8_t status;
-    struct ocac_session * session;
-    struct ocac_net_addr addr;
+    OcaBlobFixedLen8 sentinel;
     OcaBlobFixedLen16 key;
 } PACK_STRUCT_STRUCT;
 
+extern struct ocac_reset_cfg ocac_reset;
 
-u8_t ocac_reset_add_key(struct ocac_session * session, struct ocac_net_addr * addr, OcaBlobFixedLen16 * key);
-void ocac_reset_clear_by_addr(struct ocac_net_addr * addr);
-void ocac_reset_clear_by_session(struct ocac_session * session);
 
-void ocac_reset_invalidate_session(struct ocac_session * session);
-inline void ocac_reset_clear_sessionless()
-{
-    ocac_reset_clear_by_session(NULL);
-}
+u8_t ocac_reset_set(OcaBlobFixedLen16 * key);
 
-u8_t ocac_reset_check(struct ocac_net_addr * addr, OcaBlobFixedLen16 * key);
+u8_t ocac_reset_check(u8_t * bytes, u16_t length);
 
 #ifdef __cplusplus
 }

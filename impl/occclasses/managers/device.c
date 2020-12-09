@@ -8,6 +8,7 @@
 #include "ocac/occ/datatypes/management.h"
 #include "ocac/utf8.h"
 #include "ocac/reset.h"
+#include "ocac/host/sock.h"
 
 #include "obj_registry.h"
 
@@ -499,19 +500,14 @@ OcaStatus ocac_m_devicemanager_setResetKey(OCAC_OBJ_BASE * obj, u8_t * req, u16_
         return OcaStatus_BadFormat;
     }
 
+    OcaStatus status = ocac_sock_open_resetport(&addr);
+
+    if (status != OcaStatus_OK){
+        return status;
+    }
+
     // allow only one reset key per session?
-    #if OCAC_RESET_ONE_PER_SESSION
-    ocac_reset_clear_by_session(session);
-    #endif
-
-    u8_t result = ocac_reset_add_key(session, &addr, (OcaBlobFixedLen16*)req);
-
-    if (result == OCAC_RESET_NO_MEM){
-        return OcaStatus_BufferOverflow;
-    }
-    if (result != OCAC_RESET_OK){
-        return OcaStatus_DeviceError;
-    }
+    ocac_reset_set((OcaBlobFixedLen16*)req);
 
     return OcaStatus_OK;
 }
