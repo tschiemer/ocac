@@ -31,4 +31,21 @@
 #define OCAC_MDNS_SRV_UDP       "_oca._udp"
 #define OCAC_MDNS_SRV_WEBSOCK   "_ocaws._tcp"
 
+
+/**
+ * Generic macro for service txt entry data
+ */
+#define OCAC_MDNS_TXT( __txtverslen__, __txtvers__, __protoverslen__, __protovers__)                            #__txtverslen__ "txtvers=" #__txtvers__ #__protoverslen__ "protovers=" #__protovers__
+
+/**
+ * Typical format and version length fields
+ */
+#define OCAC_MDNS_TXT_TYPICAL(__txtvers__, __protovers__)                                                       OCAC_MDNS_TXT("\x09", __txtvers__, "\x0B", __protovers__)
+
+#define OCAC_MDNS_TXT_WS( __txtverslen__, __txtvers__, __protoverslen__, __protovers__, __pathlen__, __path__ ) OCAC_MDNS_TXT( __txtverslen__, __txtvers__, __protoverslen__, __protovers__ ) #__pathlen__ "path" = #__path__
+
+#define OCAC_MDNS_TXT_WS_TYPICAL(__txtvers__, __protovers__, __pathlen__, __path__)                             OCAC_MDNS_TXT_WS( "\x09", __txtvers__, "\x0B", __protovers__, __pathlen__, __path__ )
+
+
+
 #endif //OCAC_MDNS_H
