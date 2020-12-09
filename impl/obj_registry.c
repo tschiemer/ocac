@@ -1,10 +1,32 @@
-//
-// Created by Philip Tschiemer on 20.06.20.
-//
+/**
+ * MIT License
+ *
+ * Copyright (c) 2020 Philip Tschiemer, https://github.com/tschiemer/ocac
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ */
 
 #include "obj_registry.h"
 
 #include "occclasses/managers/device.h"
+#include "occclasses/workers/block.h"
 
 #ifdef OCAC_MANAGER_SECURITY
 #include "occclasses/managers/security.h"
@@ -96,6 +118,9 @@ OCAC_OBJ_BASE * ocac_managers[OCAC_MANAGER_COUNT] = {
 };
 
 
+// linked chain of objects
+extern struct ocac_obj_registry_entry * ocac_obj_registry_firstobj;
+
 OCAC_OBJ_BASE * ocac_obj_registry_get_by_id(OcaONo ono)
 {
     if (ono < OCAC_RESERVED_ONOS){
@@ -165,13 +190,15 @@ OCAC_OBJ_BASE * ocac_obj_registry_get_by_id(OcaONo ono)
                 return (OCAC_OBJ_BASE*) &OCAC_OBJ_NAME(OcaDiagnosticManager);
             #endif
 
-//            case OCAC_OBJ_ROOTBLOCK_ONO:
-//                return (OCAC_OBJ_BASE*) *OCAC_OBJ_NAME(OcaRootBlock)
+            case OCAC_OBJ_ROOTBLOCK_ONO:
+                return (OCAC_OBJ_BASE*) &OCAC_OBJ_NAME(RootBlock);
 
             default:
                 return NULL;
         }
     }
+
+
 
     return NULL;
 }

@@ -31,23 +31,31 @@ set(OCAC_CORE_INCLUDES
         src/include/ocac/occ/datatypes/worker.h
         src/include/ocac/ocp/ocp1.h
 
-        src/include/ocac/def.h
         src/include/ocac/opt.h
         src/include/ocac/arch.h
         src/include/ocac/debug.h
 
         src/include/ocac/class.h
+        src/include/ocac/def.h
         src/include/ocac/obj.h
         src/include/ocac/utf8.h
+        src/include/ocac/session.h
+        src/include/ocac/net.h
+        src/include/ocac/reset.h
+        src/include/ocac/api.h
 )
 
 set(OCAC_CORE_SOURCE_FILES
+        src/core/occ/datatypes.c
+
         src/core/class.c
         src/core/def.c
         src/core/obj.c
         src/core/utf8.c
-
-        src/core/occ/datatypes.c
+        src/core/session.c
+        src/core/net.c
+        src/core/reset.c
+        src/core/api.c
 )
 
 
@@ -74,6 +82,7 @@ set(OCAC_IMPL_INCLUDES
         "${OCAC_IMPL_DIR}/obj_registry.h"
         "${OCAC_IMPL_DIR}/occclasses/root.h"
         "${OCAC_IMPL_DIR}/occclasses/workers/worker.h"
+        "${OCAC_IMPL_DIR}/occclasses/workers/block.h"
         "${OCAC_IMPL_DIR}/occclasses/managers/abstract.h"
         "${OCAC_IMPL_DIR}/occclasses/managers/device.h"
         "${OCAC_IMPL_DIR}/occclasses/managers/subscription.h"
@@ -83,6 +92,7 @@ set(OCAC_IMPL_SOURCE_FILES
         "${OCAC_IMPL_DIR}/obj_registry.c"
         "${OCAC_IMPL_DIR}/occclasses/root.c"
         "${OCAC_IMPL_DIR}/occclasses/workers/worker.c"
+        "${OCAC_IMPL_DIR}/occclasses/workers/block.c"
         "${OCAC_IMPL_DIR}/occclasses/managers/abstract.c"
         "${OCAC_IMPL_DIR}/occclasses/managers/device.c"
         "${OCAC_IMPL_DIR}/occclasses/managers/subscription.c"
@@ -106,45 +116,47 @@ set_property(TARGET ocacimpl PROPERTY LINKER_LANGUAGE C)
 target_link_libraries(ocacimpl ocaccore)
 
 
-if (${OCAC_DEV_UTILS})
-    list(APPEND OCAC_TARGET_LIST ocacmethod)
-    add_executable(ocacmethod EXCLUDE_FROM_ALL contrib/dev/method.c)
-    target_include_directories(ocacmethod PUBLIC
-            src/include
-            src/third_party
-            "${OCAC_IMPL_DIR}"
-            ${USER_INCLUDE_DIRS}
-            )
-    target_link_libraries(ocacmethod ocaccore ocacimpl)
-    set_property(TARGET ocacmethod PROPERTY C_STANDARD 99)
-    set_property(TARGET ocacmethod PROPERTY LINKER_LANGUAGE C)
+### DEV UTILS
+list(APPEND OCAC_TARGET_LIST ocacmethod)
+add_executable(ocacmethod EXCLUDE_FROM_ALL contrib/dev/method.c)
+target_include_directories(ocacmethod PUBLIC
+        src/include
+        src/third_party
+        "${OCAC_IMPL_DIR}"
+        ${USER_INCLUDE_DIRS}
+        )
+target_link_libraries(ocacmethod ocaccore ocacimpl)
+set_property(TARGET ocacmethod PROPERTY C_STANDARD 99)
+set_property(TARGET ocacmethod PROPERTY LINKER_LANGUAGE C)
 
 
-    list(APPEND OCAC_TARGET_LIST ocacparamg)
-    add_executable(ocacparamg EXCLUDE_FROM_ALL contrib/dev/genparam.c)
-    target_include_directories(ocacparamg PUBLIC
-            src/include
-            src/third_party
-            "${OCAC_IMPL_DIR}"
-            ${USER_INCLUDE_DIRS}
-            )
-    target_link_libraries(ocacparamg ocaccore ocacimpl)
-    set_property(TARGET ocacparamg PROPERTY C_STANDARD 99)
-    set_property(TARGET ocacparamg PROPERTY LINKER_LANGUAGE C)
+list(APPEND OCAC_TARGET_LIST ocacparamg)
+add_executable(ocacparamg EXCLUDE_FROM_ALL contrib/dev/genparam.c)
+target_include_directories(ocacparamg PUBLIC
+        src/include
+        src/third_party
+        "${OCAC_IMPL_DIR}"
+        ${USER_INCLUDE_DIRS}
+        )
+target_link_libraries(ocacparamg ocaccore ocacimpl)
+set_property(TARGET ocacparamg PROPERTY C_STANDARD 99)
+set_property(TARGET ocacparamg PROPERTY LINKER_LANGUAGE C)
 
 
-    list(APPEND OCAC_TARGET_LIST ocacparamp)
-    add_executable(ocacparamp EXCLUDE_FROM_ALL contrib/dev/parseparam.c)
-    target_include_directories(ocacparamp PUBLIC
-            src/include
-            src/third_party
-            "${OCAC_IMPL_DIR}"
-            ${USER_INCLUDE_DIRS}
-            )
-    target_link_libraries(ocacparamp ocaccore ocacimpl)
-    set_property(TARGET ocacparamp PROPERTY C_STANDARD 99)
-    set_property(TARGET ocacparamp PROPERTY LINKER_LANGUAGE C)
-endif()
+list(APPEND OCAC_TARGET_LIST ocacparamp)
+add_executable(ocacparamp EXCLUDE_FROM_ALL contrib/dev/parseparam.c)
+target_include_directories(ocacparamp PUBLIC
+        src/include
+        src/third_party
+        "${OCAC_IMPL_DIR}"
+        ${USER_INCLUDE_DIRS}
+        )
+target_link_libraries(ocacparamp ocaccore ocacimpl)
+set_property(TARGET ocacparamp PROPERTY C_STANDARD 99)
+set_property(TARGET ocacparamp PROPERTY LINKER_LANGUAGE C)
+
+
+add_custom_target(dev-utils DEPENDS ocacmethod ocacparamg ocacparamp)
 
 
 
@@ -160,13 +172,13 @@ endif()
 
 
 
-#add_executable(testc test.c src/core/utf8.c src/include/ocac/def.h)
-#
-#target_include_directories(testc PUBLIC
-#        src/include
-#        src/third_party
-#        "${OCAC_IMPL_DIR}"
-#        ${USER_INCLUDE_DIRS}
-#)
-#set_property(TARGET testc PROPERTY C_STANDARD 99)
-#set_property(TARGET testc PROPERTY LINKER_LANGUAGE C)
+add_executable(testcc test.c )
+target_link_libraries(testcc ocaccore)
+target_include_directories(testcc PUBLIC
+        src/include
+        src/third_party
+        "${OCAC_IMPL_DIR}"
+        ${USER_INCLUDE_DIRS}
+)
+set_property(TARGET testcc PROPERTY C_STANDARD 99)
+set_property(TARGET testcc PROPERTY LINKER_LANGUAGE C)

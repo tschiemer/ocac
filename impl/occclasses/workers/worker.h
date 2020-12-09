@@ -56,19 +56,19 @@ extern "C" {
 #define OCAC_CLASS_WORKER_NPROPERTIES  5
 #define OCAC_CLASS_WORKER_NEVENTS      0
 
-#define OCAC_CLASS_WORKER_02m01       {{3,1}, ocac_m_devicemanager_getEnabled},
-#define OCAC_CLASS_WORKER_02m02       {{3,2}, ocac_m_devicemanager_setEnabled},
-#define OCAC_CLASS_WORKER_02m03       {{3,3}, ocac_m_devicemanager_addPort},
-#define OCAC_CLASS_WORKER_02m04       {{3,4}, ocac_m_devicemanager_deletePort},
-#define OCAC_CLASS_WORKER_02m05       {{3,5}, ocac_m_devicemanager_getPorts},
-#define OCAC_CLASS_WORKER_02m06       {{3,6}, ocac_m_devicemanager_getPortName},
-#define OCAC_CLASS_WORKER_02m07       {{3,7}, ocac_m_devicemanager_setPortName},
-#define OCAC_CLASS_WORKER_02m08       {{3,8}, ocac_m_devicemanager_getLabel},
-#define OCAC_CLASS_WORKER_02m09       {{3,9}, ocac_m_devicemanager_setLabel},
-#define OCAC_CLASS_WORKER_02m10       {{3,10}, ocac_m_devicemanager_getOwner},
-#define OCAC_CLASS_WORKER_02m11       {{3,11}, ocac_m_devicemanager_getLatency},
-#define OCAC_CLASS_WORKER_02m12       {{3,12}, ocac_m_devicemanager_setLatency},
-#define OCAC_CLASS_WORKER_02m13       {{3,13}, ocac_m_devicemanager_getPath},
+#define OCAC_CLASS_WORKER_02m01       {{2,1}, ocac_m_worker_getEnabled},
+#define OCAC_CLASS_WORKER_02m02       {{2,2}, ocac_m_worker_setEnabled},
+#define OCAC_CLASS_WORKER_02m03       {{2,3}, ocac_m_worker_addPort},
+#define OCAC_CLASS_WORKER_02m04       {{2,4}, ocac_m_worker_deletePort},
+#define OCAC_CLASS_WORKER_02m05       {{2,5}, ocac_m_worker_getPorts},
+#define OCAC_CLASS_WORKER_02m06       {{2,6}, ocac_m_worker_getPortName},
+#define OCAC_CLASS_WORKER_02m07       {{2,7}, ocac_m_worker_setPortName},
+#define OCAC_CLASS_WORKER_02m08       {{2,8}, ocac_m_worker_getLabel},
+#define OCAC_CLASS_WORKER_02m09       {{2,9}, ocac_m_worker_setLabel},
+#define OCAC_CLASS_WORKER_02m10       {{2,10}, ocac_m_worker_getOwner},
+#define OCAC_CLASS_WORKER_02m11       {{2,11}, ocac_m_worker_getLatency},
+#define OCAC_CLASS_WORKER_02m12       {{2,12}, ocac_m_worker_setLatency},
+#define OCAC_CLASS_WORKER_02m13       {{2,13}, ocac_m_worker_getPath},
 
 #define OCAC_CLASS_WORKER_02p01
 #define OCAC_CLASS_WORKER_02p02
@@ -93,8 +93,12 @@ extern "C" {
 #define OCAC_OBJ_WORKER_DEF_LATENCY     OcaTimeInterval latency;
 
 // Add your own definitions if desired
-#define OCAC_OBJ_WORKER_DEF_CUSTOM
-
+/**
+ * The next_sibling reference is used in combination with OcaBlock's first_child data member to allow for membership
+ * handling.
+ * This assumes only workers can be part of objects enumerated through the system's RootBlock
+ */
+#define OCAC_OBJ_WORKER_DEF_CUSTOM      OCAC_OBJ_BASE * next_sibling;
 
 
 /** /CONFIGURATION **/
@@ -284,19 +288,19 @@ extern OCAC_CLASS_TYPE(OcaWorker) OCAC_CLASS_NAME(OcaWorker);
 
 
 /** Class methods */
-OcaStatus ocac_m_devicemanager_getEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_devicemanager_setEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_devicemanager_addPort(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_devicemanager_deletePort(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_devicemanager_getPorts(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_devicemanager_getPortName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_devicemanager_setPortName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_devicemanager_getLabel(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_devicemanager_setLabel(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_devicemanager_getOwner(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_devicemanager_getLatency(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_devicemanager_setLatency(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_devicemanager_getPath(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_getEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_setEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_addPort(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_deletePort(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_getPorts(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_getPortName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_setPortName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_getLabel(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_setLabel(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_getOwner(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_getLatency(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_setLatency(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OcaStatus ocac_m_worker_getPath(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
 
 /** /CLASS/OBJECT DECLARATION **/
 

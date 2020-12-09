@@ -19,7 +19,6 @@ extern "C" {
 
 #define OCAC_CLASS_ROOT_ID          {1, {1}}
 #define OCAC_CLASS_ROOT_VERSION     2
-//#define OCAC_OBJ_ROOT_ONO           100
 
 #define OCAC__Root_DefLevel                1
 

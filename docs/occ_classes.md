@@ -511,6 +511,9 @@ ID | Declaration | Required
 03m02 | RemoveSubsription(OcaEvent, OcaMethod) | YES
 03m03 | DisableNotifications()
 03m04 | ReEnableNotifications()
+03m05 | AddPropertyChangeSubscription(OcaONo, OcaPropertyID, OcaMethod, OcaBlob subscriberContext, OcaNotificationDeliveryMode, OcaNetworkAddress)
+03m06 | RemovePropertyChangeSubscription(OcaONo, OcaPropertyID, OcaMethod)
+03m07 | GetMaximumSubscriberContextLenth() -> OcaUint16
 | |
 01p01 | OcaSubscriptionmanagerState State
 | |

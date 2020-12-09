@@ -47,6 +47,10 @@ OcaStatus ocac_m_devicemanager_getEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t
 
     #ifdef OCAC_OBJ_WORKER_DEF_ENABLED_USE
 
+    if (*rsplen + sizeof(OcaBoolean) > maxrsplen){
+        return OcaStatus_BufferOverflow;
+    }
+
     *(OcaBoolean*)rsp = ((OCAC_OBJ_TYPE(OcaWorker)*)obj)->enabled;
     *rsplen = sizeof(OcaBoolean);
 

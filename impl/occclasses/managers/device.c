@@ -499,6 +499,11 @@ OcaStatus ocac_m_devicemanager_setResetKey(OCAC_OBJ_BASE * obj, u8_t * req, u16_
         return OcaStatus_BadFormat;
     }
 
+    // allow only one reset key per session?
+    #if OCAC_RESET_ONE_PER_SESSION
+    ocac_reset_clear_by_session(session);
+    #endif
+
     u8_t result = ocac_reset_add_key(session, &addr, (OcaBlobFixedLen16*)req);
 
     if (result == OCAC_RESET_NO_MEM){
