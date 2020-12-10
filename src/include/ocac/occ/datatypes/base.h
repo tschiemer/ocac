@@ -103,6 +103,7 @@ typedef OCAC_STRING() OcaBitString;
 
 typedef OCAC_BLOB() OcaBlob;
 
+
 #define OCAC_BLOBFIXEDLEN(len) \
     struct { \
         u8_t bytes[len]; \
@@ -116,6 +117,12 @@ typedef OCAC_BLOBFIXEDLEN(4) OcaBlobFixedLen4;
 typedef OCAC_BLOBFIXEDLEN(8) OcaBlobFixedLen8;
 typedef OCAC_BLOBFIXEDLEN(16) OcaBlobFixedLen16;
 
+
+#define OCAC_BLOB_REFTYPE \
+    struct { \
+        OcaUint16 DataSize; \
+        u8_t * Data; \
+    } PACK_STRUCT_STRUCT
 
 
 #define OCAC_LIST(type, len) \

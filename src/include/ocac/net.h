@@ -51,7 +51,7 @@ enum ocac_net_ipver {
     )
 
 enum ocac_net_type {
-    ocac_net_type_none      = 0,
+    ocac_net_type_any       = 0,
     ocac_net_type_tcp       = 1,
     ocac_net_type_tcpsec    = 2,
     ocac_net_type_udp       = 3,
@@ -59,10 +59,16 @@ enum ocac_net_type {
 } PACK_STRUCT_STRUCT;
 
 #define OCAC_NET_TYPE_ISVALID(__type__) (\
-    (__type__) == ocac_net_type_none || \
     (__type__) == ocac_net_type_tcp || \
     (__type__) == ocac_net_type_tcpsec || \
     (__type__) == ocac_net_type_udp || \
+    (__type__) == ocac_net_type_websocket \
+    )
+
+
+#define OCAC_NET_TYPE_ISSTATEFUL(__type__) (\
+    (__type__) == ocac_net_type_tcp || \
+    (__type__) == ocac_net_type_tcpsec || \
     (__type__) == ocac_net_type_websocket \
     )
 

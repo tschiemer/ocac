@@ -23,70 +23,54 @@
  *
  */
 
-#ifndef OCAC_SESSION_H
-#define OCAC_SESSION_H
+#ifndef OCAC_API_H
+#define OCAC_API_H
 
-#include "ocac/arch.h"
-#include "ocac/ocp/ocp1.h"
-#include "ocac/net.h"
-#include "ocac/host/timer.h"
 #include "ocac/host/sock.h"
+#include "ocac/ocp/ocp1.h"
+#include "ocac/opt.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
-#define OCAC_SESSION_STATUS_USED    1
-
-struct ocac_session {
-    u8_t status;
-
-//    struct ocac_net_addr addr;
-
-    struct ocac_sock sock;
-
-//    OcaNetworkControlProtocol ocp; // well, as long there is only ocp1 this is somewhat unnecessary..
-
-    u32_t heartbeat_msec;
-
-    struct ocac_timer heartbeat_timer;
-    struct ocac_timer heartbeat_remote_timeout;
-
-    #if OCAC_USE_EVENTS == 1
-    u16_t subscription_count;
-    struct ocac_net_addr subscription_addr; // fast subscriptions only
-    #endif
-
-//    void * user_data; // any custom data linked to a session
-
-    #if OCAC_USE_SESSION_POOL == 0
-    struct ocac_session * next;
-    #endif
-
-} PACK_STRUCT_STRUCT;
+//struct ocac_api_buffer {
+//    Ocp1Header header;
+//    u16_t maxlen;
+//    u16_t curlen;
+//    u8_t * bytes;
+//};
+//#define OCAC_API_BUFFER_INIT(__bytes__, __maxlen__) {.bytes = __bytes__, .maxlen = __maxlen__, .curlen = 0 }
+//
+//inline void ocac_api_buffer_init( struct ocac_api_buffer * buf, u8_t * bytes, u16_t maxlen ){
+//    OCAC_ASSERT("buf != NULL", buf != NULL);
+//    OCAC_ASSERT("bytes != NULL", bytes != NULL);
+//    OCAC_ASSERT("maxlen > 0", maxlen > 0);
+//
+//    buf->bytes = bytes;
+//    buf->maxlen = maxlen;
+//    buf->curlen = 0;
+//}
 
 
-void ocac_session_init(void);
-void ocac_session_deinit(void);
+void ocac_core_init();
 
-u16_t ocac_session_count(void);
-
-struct ocac_session * ocac_session_get(struct ocac_sock * sock);
-
-//struct ocac_session * ocac_session_get_by_address(struct ocac_net_addr * addr);
-
-struct ocac_session * ocac_session_new(struct ocac_sock * sock);
-
-void ocac_session_delete(struct ocac_session * session);
-
-struct ocac_session * ocac_session_get_timedout(void);
+void ocac_core_deinit();
 
 
+void ocac_core_rx_packet(struct ocac_sock *sock, u8_t *inbuf, u16_t inlen, u8_t *outbuf, u16_t maxoutlen);
+
+#if OCAC_USE_RESPONSE_HANDLER == 1
+void ocac_core_response_handler(Ocp1ResponseRef * response);
+#endif
+
+
+#if OCAC_USE_NOTIFICATION_HANDLER == 1
+void ocac_core_notification_handler(Ocp1Notification * notification);
+#endif
 
 #ifdef __cplusplus
 }
 #endif
 
-
-#endif //OCAC_SESSION_H
+#endif //OCAC_API_H

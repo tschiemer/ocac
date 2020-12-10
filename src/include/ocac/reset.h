@@ -52,7 +52,7 @@ struct ocac_reset_cfg {
 extern struct ocac_reset_cfg ocac_reset;
 
 
-u8_t ocac_reset_set(OcaBlobFixedLen16 * key);
+void ocac_reset_set(OcaBlobFixedLen16 * key);
 
 u8_t ocac_reset_check(u8_t * bytes, u16_t length);
 

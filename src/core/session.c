@@ -77,14 +77,18 @@ void ocac_session_deinit(void)
     #endif
 }
 
-struct ocac_session * ocac_session_get_by_address(struct ocac_net_addr * addr)
+struct ocac_session * ocac_session_get(struct ocac_sock * sock)
 {
-    OCAC_ASSERT("addr != NULL", addr != NULL);
+    OCAC_ASSERT("sock != NULL", sock != NULL);
 
     #if OCAC_USE_SESSION_POOL == 1
     for(int i = 0; i < OCAC_SESSION_MAX_COUNT; i++){
-        if ( (pool[i].status & OCAC_SESSION_STATUS_USED) == OCAC_SESSION_STATUS_USED && ocac_net_addreq(&pool[i].sock.addr, addr)){
-            ocac_session_delete(&pool[i]);
+
+        if ( (pool[i].status & OCAC_SESSION_STATUS_USED) == OCAC_SESSION_STATUS_USED
+            && ocac_net_addreq(&pool[i].sock.addr, &sock->addr)
+            && (sock->type == ocac_net_type_any || pool[i].sock.type == sock->type)){
+
+            return &pool[i];
         }
     }
     return NULL;
@@ -97,10 +101,30 @@ struct ocac_session * ocac_session_get_by_address(struct ocac_net_addr * addr)
     #endif
 }
 
+//struct ocac_session * ocac_session_get_by_address(struct ocac_net_addr * addr)
+//{
+//    OCAC_ASSERT("addr != NULL", addr != NULL);
+//
+//    #if OCAC_USE_SESSION_POOL == 1
+//    for(int i = 0; i < OCAC_SESSION_MAX_COUNT; i++){
+//        if ( (pool[i].status & OCAC_SESSION_STATUS_USED) == OCAC_SESSION_STATUS_USED && ocac_net_addreq(&pool[i].sock.addr, addr)){
+//            ocac_session_delete(&pool[i]);
+//        }
+//    }
+//    return NULL;
+//    #else
+//    struct ocac_session * ptr = first;
+//    while(ptr != NULL && ocac_net_addreq(&ptr->addr, addr) == 0){
+//        ptr = ptr->next;
+//    }
+//    return ptr;
+//    #endif
+//}
 
-struct ocac_session * ocac_session_new_from_address(struct ocac_net_addr * addr)
+
+struct ocac_session * ocac_session_new(struct ocac_sock * sock)
 {
-    OCAC_ASSERT("addr != NULL", addr != NULL);
+    OCAC_ASSERT("sock != NULL", sock != NULL);
 
     if (count >= OCAC_SESSION_MAX_COUNT) {
         return NULL;
@@ -109,33 +133,71 @@ struct ocac_session * ocac_session_new_from_address(struct ocac_net_addr * addr)
 
     struct ocac_session * session = NULL;
 
-    #if OCAC_USE_SESSION_POOL == 1
+#if OCAC_USE_SESSION_POOL == 1
     for(int i = 0; i < OCAC_SESSION_MAX_COUNT && session == NULL; i++){
         if ( (pool[i].status & OCAC_SESSION_STATUS_USED) == 0){
             session = &pool[i];
         }
     }
-    #else
+#else
     session = OCAC_SESSION_NEW();
-    #endif
+#endif
 
     OCAC_ASSERT("session != NULL", session != NULL);
 
     session->status = OCAC_SESSION_STATUS_USED;
 
-    ocac_memcpy(&session->sock.addr, addr, sizeof(struct ocac_net_addr));
+    ocac_memcpy(&session->sock, sock, sizeof(struct ocac_sock));
 
-    ocac_timer_init( &session->timeout );
+    ocac_timer_init( &session->heartbeat_remote_timeout );
 
-    #if OCAC_USE_SESSION_POOL == 0
+#if OCAC_USE_SESSION_POOL == 0
     session->next = first;
     first = session;
-    #endif
-
-//    session->sock.impl = sock_impl;
+#endif
 
     return session;
 }
+
+//
+//struct ocac_session * ocac_session_new_from_address(struct ocac_net_addr * addr)
+//{
+//    OCAC_ASSERT("addr != NULL", addr != NULL);
+//
+//    if (count >= OCAC_SESSION_MAX_COUNT) {
+//        return NULL;
+//    }
+//    count ++;
+//
+//    struct ocac_session * session = NULL;
+//
+//    #if OCAC_USE_SESSION_POOL == 1
+//    for(int i = 0; i < OCAC_SESSION_MAX_COUNT && session == NULL; i++){
+//        if ( (pool[i].status & OCAC_SESSION_STATUS_USED) == 0){
+//            session = &pool[i];
+//        }
+//    }
+//    #else
+//    session = OCAC_SESSION_NEW();
+//    #endif
+//
+//    OCAC_ASSERT("session != NULL", session != NULL);
+//
+//    session->status = OCAC_SESSION_STATUS_USED;
+//
+//    ocac_memcpy(&session->sock.addr, addr, sizeof(struct ocac_net_addr));
+//
+//    ocac_timer_init( &session->timeout );
+//
+//    #if OCAC_USE_SESSION_POOL == 0
+//    session->next = first;
+//    first = session;
+//    #endif
+//
+////    session->sock.impl = sock_impl;
+//
+//    return session;
+//}
 
 void ocac_session_delete(struct ocac_session * session)
 {
@@ -143,7 +205,7 @@ void ocac_session_delete(struct ocac_session * session)
 
     session->status = 0;
 
-    ocac_timer_deinit( &session->timeout );
+    ocac_timer_deinit( &session->heartbeat_remote_timeout );
 
     #if OCAC_USE_SESSION_POOL == 1
 
@@ -186,7 +248,7 @@ struct ocac_session * ocac_session_get_timedout(void)
     #if OCAC_USE_SESSION_POOL==1
 
     for(int i = 0; i < OCAC_SESSION_MAX_COUNT && session == NULL; i++){
-        if ( (pool[i].status & OCAC_SESSION_STATUS_USED) == OCAC_SESSION_STATUS_USED && pool[i].timeout.expired){
+        if ( (pool[i].status & OCAC_SESSION_STATUS_USED) == OCAC_SESSION_STATUS_USED && pool[i].heartbeat_remote_timeout.expired){
             session = &pool[i];
         }
     }

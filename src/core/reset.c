@@ -33,7 +33,7 @@ struct ocac_reset_cfg ocac_reset = {
 };
 
 
-u8_t ocac_reset_set(OcaBlobFixedLen16 * key)
+void ocac_reset_set(OcaBlobFixedLen16 * key)
 {
     ocac_memcpy(ocac_reset.key.bytes, key->bytes, sizeof(OcaBlobFixedLen16));
 

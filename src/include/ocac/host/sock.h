@@ -28,6 +28,7 @@
 
 #include "ocac/arch.h"
 #include "ocac/net.h"
+#include "ocac/occ/datatypes/framework.h"
 
 #ifndef OCAC_HOST_SOCK_TYPE
 #define OCAC_HOST_SOCK_TYPE void *
@@ -35,7 +36,7 @@
 
 struct ocac_sock {
     struct ocac_net_addr addr;  // remote address
-//    enum ocac_net_type type;    // basic OCP1 connection type (not necessary, really)
+    enum ocac_net_type type;    // basic OCP1 connection type
     OCAC_HOST_SOCK_TYPE impl;                // host implementation reference
 };
 
@@ -53,6 +54,13 @@ extern void ocac_sock_tx(struct ocac_sock * sock, u8_t * data, u16_t length);
 #if OCAC_USE_EVENTS == 1
 extern void ocac_sock_tx_fast_notification(struct ocac_net_addr * dst, u8_t * data, u16_t length);
 #endif
+
+
+/**
+ * The system might request sockets to be closed/reset.
+ * In particular this might be the case, when the first received byte of a PDU is NOT the sync byte.
+ */
+extern void ocac_sock_close(struct ocac_sock * sock);
 
 /**
  * Open UDP port as given in address struct. If a multicast address is given, join said multicast group.
