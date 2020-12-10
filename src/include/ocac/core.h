@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef OCAC_API_H
-#define OCAC_API_H
+#ifndef OCAC_CORE_H
+#define OCAC_CORE_H
 
 #include "ocac/host/sock.h"
 #include "ocac/ocp/ocp1.h"
@@ -73,4 +73,4 @@ void ocac_core_notification_handler(Ocp1Notification * notification);
 }
 #endif
 
-#endif //OCAC_API_H
+#endif //OCAC_CORE_H
