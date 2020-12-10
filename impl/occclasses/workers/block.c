@@ -40,7 +40,7 @@ OCAC_CLASS_TYPE(OcaBlock) OCAC_CLASS_NAME(OcaBlock) = {
 
 
 OCAC_OBJ_TYPE(OcaBlock) OCAC_OBJ_NAME(OcacRootBlock) = {
-    .ono = OCAC_ROOT_BLOCK_ONO,
+    .ono = OCAC_OBJ_ROOTBLOCK_ONO,
     .class_ptr = (OCAC_CLASS_BASE *) &OCAC_CLASS_NAME(OcaBlock),
 
     #ifdef OCAC_OBJ_WORKER_DEF_ENABLED_USE
@@ -56,7 +56,7 @@ OCAC_OBJ_TYPE(OcaBlock) OCAC_OBJ_NAME(OcacRootBlock) = {
     #endif
 
     #ifdef OCAC_OBJ_WORKER_DEF_OWNER_USE
-    .owner = OCAC_ROOT_BLOCK_ONO,
+    .owner = OCAC_OBJ_ROOTBLOCK_ONO,
     #endif
 
     #ifdef OCAC_OBJ_WORKER_DEF_LATENCY_USE
@@ -64,7 +64,7 @@ OCAC_OBJ_TYPE(OcaBlock) OCAC_OBJ_NAME(OcacRootBlock) = {
     #endif
 
     #ifdef OCAC_OBJ_BLOCK_DEF_TYPE_USE
-    .type = OCAC_ROOT_BLOCK_TYPE,
+    .type = OCAC_OBJ_ROOTBLOCK_TYPE,
     #endif
 
     #ifdef OCAC_OBJ_BLOCK_DEF_MEMBERS_USE
