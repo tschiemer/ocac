@@ -87,7 +87,7 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
 
     ocac_ocp1_header_read(&header, &inbuf[1]);
 
-    // check if actual packet length is equal to inbuffer length
+    // check if actual packet length is equal to inbuffer length (+1 for syn byte)
     if (header.pduSize + 1 != inlen){
 
         OCAC_DEBUGF(OCAC_DBG_TRACE | OCAC_DBG_LEVEL_WARNING, "Invalid packet length");
@@ -96,8 +96,8 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
         return;
     }
 
-    // heartbeat messages MUST have a message count of 1 ..
-    if (header.messageCount <= 1){
+    // messagecount must be at least 1
+    if (header.messageCount == 0){
 
         OCAC_DEBUGF(OCAC_DBG_TRACE | OCAC_DBG_LEVEL_WARNING, "invalid message count");
 
@@ -116,7 +116,7 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
             return;
         }
 
-        if (inlen == 1 + sizeof(Ocp1Header) + Ocp1HeartBeatTimeType_Seconds){
+        if (inlen == 1 + sizeof(Ocp1Header) + sizeof(OcaUint16)){
 
             u32_t sec = ocac_ntohs(*(u16_t*)&inbuf[1 + sizeof(Ocp1Header)]);
 
@@ -127,7 +127,7 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
 
             session->heartbeat_msec = 1000 * (u32_t)sec;
         }
-        else if (inlen == 1 + sizeof(Ocp1Header) + Ocp1HeartBeatTimeType_Milliseconds){
+        else if (inlen == 1 + sizeof(Ocp1Header) + sizeof(OcaUint32)){
 
             u32_t msec = ocac_ntohl(*(u16_t*)&inbuf[1 + sizeof(Ocp1Header)]);
 
@@ -153,10 +153,10 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
 
     #if OCAC_USE_RESPONSE_HANDLER == 1
     if (header.pduType == OcaMessageType_Response){
-        u16_t pos = 1 + sizeof(Ocp1Header);
-        u16_t msgn = header.messageCount;
 
-        for(u16_t i = 0; i < msgn; i++){
+        u32_t pos = 1 + sizeof(Ocp1Header);
+
+        for(u16_t i = 0; i < header.messageCount; i++){
 
             // make sure the four first bytes of the message (denoting its total length) are there
             if (pos + 4 > inlen){
@@ -180,17 +180,19 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
 
             pos += len;
         }
+
+        return;
     }
     #endif //OCAC_USE_RESPONSE_HANDLER == 1
 
     #if OCAC_USE_NOTIFICATION_HANDLER == 1
     if (header.pduType == OcaMessageType_Notification){
-        u16_t pos = 1 + sizeof(Ocp1Header);
-        u16_t msgn = header.messageCount;
 
-        for(u16_t i = 0; i < msgn; i++){
+        u32_t pos = 1 + sizeof(Ocp1Header);
 
-            // make sure the two first bytes of the message (denoting its total length) are there
+        for(u16_t i = 0; i < header.messageCount; i++){
+
+            // make sure the four first bytes of the message (denoting its total length) are there
             if (pos + 4 > inlen){
                 OCAC_DEBUGF(OCAC_DBG_TRACE | OCAC_DBG_LEVEL_WARNING, "missing msg size");
                 return;
@@ -215,6 +217,8 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
 
             pos += len;
         }
+
+        return;
     }
     #endif //OCAC_USE_NOTIFICATION_HANDLER == 1
 
