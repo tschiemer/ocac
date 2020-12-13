@@ -23,9 +23,16 @@
  *
  */
 
+#include <ocac/ocp/ocp1.h>
+#include <ocac/obj.h>
+#include <ocac/occ/datatypes/framework.h>
 #include "ocac/core.h"
 
 #include "ocac/session.h"
+
+
+extern OCAC_OBJ_BASE * ocac_obj_registry_get(OcaONo ono);
+
 
 void ocac_core_init()
 {
@@ -38,7 +45,7 @@ void ocac_core_deinit()
 }
 
 
-void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_t * outbuf, u16_t maxoutlen)
+void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u32_t inlen, u8_t * outbuf, u32_t maxoutlen)
 {
     OCAC_ASSERT("sock != NULL", sock != NULL);
     OCAC_ASSERT("OCAC_NET_TYPE_ISVALID(sock->type)", OCAC_NET_TYPE_ISVALID(sock->type));
@@ -83,12 +90,12 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
 
 
     // read out PDU header
-    Ocp1Header header;
+    Ocp1Header inheader;
 
-    ocac_ocp1_header_read(&header, &inbuf[1]);
+    ocac_ocp1_header_read(&inheader, &inbuf[1]);
 
     // check if actual packet length is equal to inbuffer length (+1 for syn byte)
-    if (header.pduSize + 1 != inlen){
+    if (inheader.pduSize + 1 != inlen){
 
         OCAC_DEBUGF(OCAC_DBG_TRACE | OCAC_DBG_LEVEL_WARNING, "Invalid packet length");
 
@@ -97,7 +104,7 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
     }
 
     // messagecount must be at least 1
-    if (header.messageCount == 0){
+    if (inheader.messageCount == 0){
 
         OCAC_DEBUGF(OCAC_DBG_TRACE | OCAC_DBG_LEVEL_WARNING, "invalid message count");
 
@@ -105,10 +112,10 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
         return;
     }
 
-    if (header.pduType == OcaMessageType_KeepAlive){
+    if (inheader.pduType == OcaMessageType_KeepAlive){
 
         // heartbeat messages MUST have a message count of 1 ..
-        if (header.messageCount != 1){
+        if (inheader.messageCount != 1){
 
             OCAC_DEBUGF(OCAC_DBG_TRACE | OCAC_DBG_LEVEL_WARNING, "invalid message count");
 
@@ -151,12 +158,73 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
         return;
     }
 
+    if (inheader.pduType == OcaMessageType_Command || inheader.pduType == OcaMessageType_CommandNR){
+
+        u32_t inpos = 1 + sizeof(Ocp1Header); // sync byte + header
+        u32_t outpos = 1 + sizeof(Ocp1Header);
+
+        Ocp1Header outheader;
+
+        ocac_memset( &outheader, 0, sizeof(Ocp1Header));
+
+        for(u16_t i = 0; i < inheader.messageCount; i++){
+
+            // make sure the four first bytes of the message (denoting its total length) are there
+            if (inpos + 4 > inlen){
+                OCAC_DEBUGF(OCAC_DBG_TRACE | OCAC_DBG_LEVEL_WARNING, "missing msg size");
+                return;
+            }
+
+            u32_t len = ocac_ntohl(*(u32_t*)&inbuf[inpos]);
+
+            // make sure all bytes of the message are there
+            if (inpos + len > inlen){
+                OCAC_DEBUGF(OCAC_DBG_TRACE | OCAC_DBG_LEVEL_WARNING, "missing msg data");
+                return;
+            }
+
+            Ocp1CommandRef command;
+
+            ocac_ocp1_commandref_read(&command, &inbuf[inpos]);
+
+            u32_t posbefore = outheader.pduSize;
+
+            ocac_core_command_handler(&command, (inheader.pduType == OcaMessageType_Command), &outbuf[outpos], &outpos, maxoutlen, session);
+
+            // if the outpos changed, a response was written to outbuf
+            if (outpos != posbefore){
+                outheader.messageCount++;
+            }
+
+            inpos += len;
+        }
+
+        // if outpos changed response data was written by the handler
+        if (outheader.messageCount > 0) {
+
+            // finalize header
+            outheader.pduSize = outpos;
+            outheader.pduType = OcaMessageType_Response;
+            outheader.protocolVersion = OCAC_OCA_VERSION;
+
+            outbuf[0] = OCP_SYNC_VAL;
+
+            //write header to outbuf
+            ocac_ocp1_header_write(&outbuf[1], &outheader);
+
+            // TX of outbuf
+            ocac_sock_tx(sock, outbuf, outheader.pduSize + 1);
+        }
+
+        return;
+    }
+
     #if OCAC_USE_RESPONSE_HANDLER == 1
-    if (header.pduType == OcaMessageType_Response){
+    if (inheader.pduType == OcaMessageType_Response){
 
         u32_t pos = 1 + sizeof(Ocp1Header);
 
-        for(u16_t i = 0; i < header.messageCount; i++){
+        for(u16_t i = 0; i < inheader.messageCount; i++){
 
             // make sure the four first bytes of the message (denoting its total length) are there
             if (pos + 4 > inlen){
@@ -186,11 +254,11 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
     #endif //OCAC_USE_RESPONSE_HANDLER == 1
 
     #if OCAC_USE_NOTIFICATION_HANDLER == 1
-    if (header.pduType == OcaMessageType_Notification){
+    if (inheader.pduType == OcaMessageType_Notification){
 
         u32_t pos = 1 + sizeof(Ocp1Header);
 
-        for(u16_t i = 0; i < header.messageCount; i++){
+        for(u16_t i = 0; i < inheader.messageCount; i++){
 
             // make sure the four first bytes of the message (denoting its total length) are there
             if (pos + 4 > inlen){
@@ -224,6 +292,59 @@ void ocac_core_rx_packet(struct ocac_sock * sock, u8_t * inbuf, u16_t inlen, u8_
 
 }
 
+u8_t ocac_core_command_handler(Ocp1CommandRef * command, u8_t requirersp, u8_t * outbuf, u32_t * outlen, u32_t maxoutlen, struct ocac_session * session)
+{
+    OCAC_ASSERT("command != NULL", command != NULL);
+    OCAC_ASSERT("outbuf != NULL", outbuf != NULL);
+    OCAC_ASSERT("outlen != NULL", outlen != NULL);
+
+
+    // if a response is required, make sure there is at least space for response meta data
+    if (requirersp != 0 && *outlen + sizeof(Ocp1Response) < maxoutlen){
+
+        OCAC_DEBUGF(OCAC_DBG_TRACE | OCAC_DBG_LEVEL_WARNING, "not enough space for msg");
+
+        return 1;
+    }
+
+    Ocp1ResponseRef response;
+
+    response.statusCode = OcaStatus_OK;
+
+    // attempt to get the called object
+    OCAC_OBJ_BASE * obj = ocac_obj_registry_get(command->targetONo);
+
+    if (obj == NULL){
+        response.statusCode = OcaStatus_BadONo;
+        response.responseSize = 0;
+    } else {
+        // note
+        // developers implementing class methods may intuitively assume that the passed buffer is the starting point
+        // for writing response data and that the outlen reference thus initially is zero.
+        // This assumption (which makes developing methods easier in the first place) should be true.
+
+        u32_t pos = *outlen + sizeof(Ocp1Response);
+        u32_t len = 0;
+        u32_t max = maxoutlen - pos;
+
+        // call class method on object
+        // note: response data is written directly to outbuf
+        response.statusCode = ocac_obj_exec(obj, command->methodID.DefLevel, command->methodID.MethodIndex, command->parameters.parameters, command->parameters.parameterCount, &outbuf[pos], &len, max, session);
+
+        response.responseSize = len;
+    }
+
+    // write response header if either required, there is response data or the command failed
+    if (requirersp != 0 || response.responseSize > 0 || response.statusCode != OcaStatus_OK){
+
+        response.responseSize += sizeof(Ocp1Response);
+        response.handle = command->handle;
+
+        ocac_ocp1_responseref_write(outbuf, &response);
+    }
+
+    return 0;
+}
 
 #if OCAC_USE_RESPONSE_HANDLER == 1
 __weak void ocac_core_response_handler(Ocp1ResponseRef * response);

@@ -25,7 +25,7 @@
 
 #include "ocac/obj.h"
 
-OcaStatus ocac_obj_exec(OCAC_OBJ_BASE * obj, u16_t deflevel, u16_t index, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_obj_exec(OCAC_OBJ_BASE * obj, u16_t deflevel, u16_t index, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_ASSERT("obj != NULL", obj != NULL);
     OCAC_ASSERT("obj->class_ptr != NULL", obj->class_ptr != NULL);

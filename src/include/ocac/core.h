@@ -34,31 +34,16 @@
 extern "C" {
 #endif
 
-//struct ocac_api_buffer {
-//    Ocp1Header header;
-//    u16_t maxlen;
-//    u16_t curlen;
-//    u8_t * bytes;
-//};
-//#define OCAC_API_BUFFER_INIT(__bytes__, __maxlen__) {.bytes = __bytes__, .maxlen = __maxlen__, .curlen = 0 }
-//
-//inline void ocac_api_buffer_init( struct ocac_api_buffer * buf, u8_t * bytes, u16_t maxlen ){
-//    OCAC_ASSERT("buf != NULL", buf != NULL);
-//    OCAC_ASSERT("bytes != NULL", bytes != NULL);
-//    OCAC_ASSERT("maxlen > 0", maxlen > 0);
-//
-//    buf->bytes = bytes;
-//    buf->maxlen = maxlen;
-//    buf->curlen = 0;
-//}
-
 
 void ocac_core_init();
 
 void ocac_core_deinit();
 
 
-void ocac_core_rx_packet(struct ocac_sock *sock, u8_t *inbuf, u16_t inlen, u8_t *outbuf, u16_t maxoutlen);
+void ocac_core_rx_packet(struct ocac_sock *sock, u8_t *inbuf, u32_t inlen, u8_t *outbuf, u32_t maxoutlen);
+
+u8_t ocac_core_command_handler(Ocp1CommandRef * command, u8_t requirersp, u8_t * outbuf, u32_t * outlen, u32_t maxoutlen, struct ocac_session * session);
+
 
 #if OCAC_USE_RESPONSE_HANDLER == 1
 void ocac_core_response_handler(Ocp1ResponseRef * response);

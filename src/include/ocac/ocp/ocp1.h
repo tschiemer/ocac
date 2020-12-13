@@ -104,6 +104,16 @@ typedef struct {
     Ocp1Parameters  parameters;
 } PACK_STRUCT_STRUCT Ocp1Command;
 
+typedef struct {
+    OcaUint32       commandSize;    // size (in bytes) of complete command segment (incl. commandSize)
+    OcaUint32       handle;         // random command id used for responses
+    OcaONo          targetONo;
+    OcaMethodID     methodID;
+    struct {
+        OcaUint8    parameterCount;
+        OcaUint8 *  parameters;
+    } PACK_STRUCT_STRUCT parameters;
+} PACK_STRUCT_STRUCT Ocp1CommandRef;
 
 
 typedef struct {
@@ -176,13 +186,32 @@ inline void ocac_ocp1_header_read(Ocp1Header * header, u8_t * bytes)
     header->messageCount = ocac_ntohs(*(u16_t*)(&bytes[7]));
 }
 
+inline void ocac_ocp1_commandref_read(Ocp1CommandRef * cmd, u8_t * bytes)
+{
+    cmd->commandSize = ocac_ntohl(*(u32_t *) (&bytes[0]));
+    cmd->handle = ocac_ntohl(*(u32_t *) (&bytes[4]));
+    cmd->targetONo = ocac_ntohl(*(u32_t *) (&bytes[8]));
+    cmd->methodID.DefLevel = ocac_ntohs(*(u16_t *) (&bytes[12]));
+    cmd->methodID.DefLevel = ocac_ntohs(*(u16_t *) (&bytes[14]));
+    cmd->parameters.parameterCount = bytes[15];
+    cmd->parameters.parameters = &bytes[16];
+}
+
 inline void ocac_ocp1_responseref_read(Ocp1ResponseRef * response, u8_t * bytes)
 {
     response->responseSize = ocac_ntohl(*(u32_t *) (&bytes[0]));
     response->handle = ocac_ntohl(*(u32_t *) (&bytes[4]));
-    response->statusCode = bytes[8];
+    response->statusCode = (OcaStatus)bytes[8];
     response->parameters.parameterCount = bytes[9];
-    response->parameters.parameterCount = bytes[9];
+    response->parameters.parameters = &bytes[10];
+}
+
+inline void ocac_ocp1_responseref_write(u8_t * bytes, Ocp1ResponseRef * response)
+{
+    *(u32_t *) (&bytes[0]) = response->responseSize;
+    *(u32_t *) (&bytes[4]) = response->handle;
+    bytes[8] = (u8_t)response->statusCode;
+    bytes[9] = response->parameters.parameterCount;
 }
 
 inline u8_t ocac_ocp1_notification_read(Ocp1Notification * notification, u8_t * bytes)
