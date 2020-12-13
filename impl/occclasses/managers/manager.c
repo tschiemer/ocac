@@ -2,7 +2,7 @@
 // Created by Philip Tschiemer on 14.06.20.
 //
 
-#include "occclasses/managers/abstract.h"
+#include "occclasses/managers/manager.h"
 
 
 

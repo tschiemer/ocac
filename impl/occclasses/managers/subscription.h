@@ -6,7 +6,7 @@
 #define OCAC_IMPL_OCCCLASSES_MANAGERS_SUBSCRIPTION_H
 
 #include "ocac/occ/datatypes/eventsubscription.h"
-#include "occclasses/managers/abstract.h"
+#include "occclasses/managers/manager.h"
 
 #ifdef __cplusplus
 extern "C" {

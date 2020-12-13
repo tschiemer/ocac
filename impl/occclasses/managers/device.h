@@ -6,7 +6,7 @@
 #define OCAC_IMPL_OCCCLASSES_MANAGERS_DEVICE_H
 
 #include "ocac/occ/datatypes/management.h"
-#include "occclasses/managers/abstract.h"
+#include "occclasses/managers/manager.h"
 
 #ifdef __cplusplus
 extern "C" {

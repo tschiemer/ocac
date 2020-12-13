@@ -86,7 +86,7 @@ set(OCAC_IMPL_INCLUDES
         "${OCAC_IMPL_DIR}/occclasses/root.h"
         "${OCAC_IMPL_DIR}/occclasses/workers/worker.h"
         "${OCAC_IMPL_DIR}/occclasses/workers/block.h"
-        "${OCAC_IMPL_DIR}/occclasses/managers/abstract.h"
+        "${OCAC_IMPL_DIR}/occclasses/managers/manager.h"
         "${OCAC_IMPL_DIR}/occclasses/managers/device.h"
         "${OCAC_IMPL_DIR}/occclasses/managers/subscription.h"
 )
@@ -96,7 +96,7 @@ set(OCAC_IMPL_SOURCE_FILES
         "${OCAC_IMPL_DIR}/occclasses/root.c"
         "${OCAC_IMPL_DIR}/occclasses/workers/worker.c"
         "${OCAC_IMPL_DIR}/occclasses/workers/block.c"
-        "${OCAC_IMPL_DIR}/occclasses/managers/abstract.c"
+        "${OCAC_IMPL_DIR}/occclasses/managers/manager.c"
         "${OCAC_IMPL_DIR}/occclasses/managers/device.c"
         "${OCAC_IMPL_DIR}/occclasses/managers/subscription.c"
 )
