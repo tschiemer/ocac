@@ -121,7 +121,7 @@ OCAC_OBJ_BASE * ocac_managers[OCAC_MANAGER_COUNT] = {
 // linked chain of objects
 extern struct ocac_obj_registry_entry * ocac_obj_registry_firstobj;
 
-OCAC_OBJ_BASE * ocac_obj_registry_get_by_id(OcaONo ono)
+OCAC_OBJ_BASE * ocac_obj_registry_get(OcaONo ono)
 {
     if (ono < OCAC_RESERVED_ONOS){
 
@@ -198,7 +198,7 @@ OCAC_OBJ_BASE * ocac_obj_registry_get_by_id(OcaONo ono)
         }
     }
 
-
+    /** Your object lookup mechanism comes here **/
 
     return NULL;
 }

@@ -96,7 +96,7 @@ void ocac_obj_registry_init();
 void ocac_obj_registry_add(OCAC_OBJ_BASE * obj);
 void ocac_obj_registry_rm(OCAC_OBJ_BASE * obj);
 
-OCAC_OBJ_BASE * ocac_obj_registry_get_by_id(OcaONo ono);
+OCAC_OBJ_BASE * ocac_obj_registry_get(OcaONo ono);
 
 
 extern OCAC_OBJ_BASE * ocac_managers[OCAC_MANAGER_COUNT];
