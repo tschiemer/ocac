@@ -288,19 +288,19 @@ extern OCAC_CLASS_TYPE(OcaWorker) OCAC_CLASS_NAME(OcaWorker);
 
 
 /** Class methods */
-OcaStatus ocac_m_worker_getEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_worker_setEnabled(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_worker_addPort(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_worker_deletePort(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_worker_getPorts(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_worker_getPortName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_worker_setPortName(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_worker_getLabel(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_worker_setLabel(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_worker_getOwner(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_worker_getLatency(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_worker_setLatency(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_worker_getPath(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OCAC_CLASS_METHOD(ocac_m_worker_getEnabled);
+OCAC_CLASS_METHOD(ocac_m_worker_setEnabled);
+OCAC_CLASS_METHOD(ocac_m_worker_addPort);
+OCAC_CLASS_METHOD(ocac_m_worker_deletePort);
+OCAC_CLASS_METHOD(ocac_m_worker_getPorts);
+OCAC_CLASS_METHOD(ocac_m_worker_getPortName);
+OCAC_CLASS_METHOD(ocac_m_worker_setPortName);
+OCAC_CLASS_METHOD(ocac_m_worker_getLabel);
+OCAC_CLASS_METHOD(ocac_m_worker_setLabel);
+OCAC_CLASS_METHOD(ocac_m_worker_getOwner);
+OCAC_CLASS_METHOD(ocac_m_worker_getLatency);
+OCAC_CLASS_METHOD(ocac_m_worker_setLatency);
+OCAC_CLASS_METHOD(ocac_m_worker_getPath);
 
 /** /CLASS/OBJECT DECLARATION **/
 

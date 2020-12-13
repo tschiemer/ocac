@@ -26,11 +26,12 @@
 #ifndef OCAC_IMPL_OCCCLASSES_SHARED_H
 #define OCAC_IMPL_OCCCLASSES_SHARED_H
 
-// for memcpy (tmp)
-#include <string.h>
 
 #include "ocac/arch.h"
 #include "ocac/session.h"
+
+// for memcpy (tmp)
+//#include <string.h>
 
 
 #ifdef __cplusplus
@@ -55,7 +56,7 @@ extern "C" {
     OCAC_ASSERT("session != NULL", session != NULL);
 
 
-#define OCAC_CLASS_METHOD(__method__) OcaStatus __method__(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+//#define OCAC_CLASS_METHOD(__method__) OcaStatus __method__(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
 
 #ifdef __cplusplus
 }

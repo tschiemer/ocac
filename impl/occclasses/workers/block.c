@@ -97,7 +97,7 @@ OCAC_OBJ_TYPE(OcaBlock) OCAC_OBJ_NAME(OcacRootBlock) = {
     #endif
 };
 
-OcaStatus ocac_m_block_getType(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_getType(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
@@ -117,133 +117,133 @@ OcaStatus ocac_m_block_getType(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8
     #endif
 }
 
-OcaStatus ocac_m_block_constructMember(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_constructMember(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_constructMemberUsingFactory(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_constructMemberUsingFactory(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_deleteMember(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_deleteMember(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_getMembers(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_getMembers(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_getMembersRecursive(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_getMembersRecursive(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_addSignalPath(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_addSignalPath(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_deleteSignalPath(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_deleteSignalPath(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_getSignalPaths(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_getSignalPaths(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_getSignalPathsRecursive(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_getSignalPathsRecursive(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_getMostRecentParamSetIdentifier(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_getMostRecentParamSetIdentifier(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_applyParamSet(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_applyParamSet(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_getCurrentParamSetData(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_getCurrentParamSetData(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_storeCurrentParamSetData(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_storeCurrentParamSetData(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_getGlobalType(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_getGlobalType(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_getONoMap(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_getONoMap(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_findObjectsByRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_findObjectsByRole(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_findObjectsByRoleRecursive(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_findObjectsByRoleRecursive(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_findObjectsByLabelRecursive(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_findObjectsByLabelRecursive(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 
     return OcaStatus_NotImplemented;
 }
 
-OcaStatus ocac_m_block_findObjectsByPath(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session)
+OcaStatus ocac_m_block_findObjectsByPath(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
 {
     OCAC_METHOD_ASSERT_PARAMS
 

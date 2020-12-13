@@ -55,16 +55,26 @@ extern "C" {
     PACK_STRUCT_END \
     // End of class definition: name
 
+// undefine forward declaration in class.h
+#ifdef OCAC_OBJ_BASE
+#undef OCAC_OBJ_BASE
+#endif
 
 #define OCAC_OBJ_TYPE(name)         struct ocac_obj_ ## name
 #define OCAC_OBJ_BASE               OCAC_OBJ_TYPE(base)
 #define OCAC_OBJ_CAST(name,obj_ptr) ((OCAC_OBJ_TYPE(name)*)obj_ptr)
 #define OCAC_OBJ_PTR(obj_ptr)       OCAC_OBJ_CAST(base, obj_ptr)
 
+/** struct ocac_obj_base
+ * declaration of object base type
+ *
+ * When renaming remember to change forward declaration in class.h used for method pointers
+ */
 OCAC_OBJ_DEF_BEGIN(base)
 OCAC_OBJ_DEF_END(base)
 
-OcaStatus ocac_obj_exec(OCAC_OBJ_BASE * obj, u16_t deflevel, u16_t index, u8_t * argv, u16_t argvlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+
+OcaStatus ocac_obj_exec(OCAC_OBJ_BASE * obj, u16_t deflevel, u16_t index, u8_t * argv, u32_t argvlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session);
 
 #ifdef DEBUG
 

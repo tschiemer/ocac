@@ -385,26 +385,27 @@ extern OCAC_CLASS_TYPE(OcaWorker) OCAC_CLASS_NAME(OcaWorker);
 extern OCAC_OBJ_TYPE(OcaBlock) OCAC_OBJ_NAME(RootBlock);
 
 /** Class methods */
-OcaStatus ocac_m_block_getType(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_constructMember(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_constructMemberUsingFactory(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_deleteMember(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_getMembers(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_getMembersRecursive(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_addSignalPath(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_deleteSignalPath(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_getSignalPaths(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_getSignalPathsRecursive(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_getMostRecentParamSetIdentifier(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_applyParamSet(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_getCurrentParamSetData(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_storeCurrentParamSetData(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_getGlobalType(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_getONoMap(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_findObjectsByRole(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_findObjectsByRoleRecursive(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_findObjectsByLabelRecursive(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
-OcaStatus ocac_m_block_findObjectsByPath(OCAC_OBJ_BASE * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+OCAC_CLASS_METHOD(ocac_m_block_getType);
+OCAC_CLASS_METHOD(ocac_m_block_constructMember);
+OCAC_CLASS_METHOD(ocac_m_block_constructMemberUsingFactory);
+OCAC_CLASS_METHOD(ocac_m_block_deleteMember);
+OCAC_CLASS_METHOD(ocac_m_block_getMembers);
+OCAC_CLASS_METHOD(ocac_m_block_getMembersRecursive);
+OCAC_CLASS_METHOD(ocac_m_block_addSignalPath);
+OCAC_CLASS_METHOD(ocac_m_block_deleteSignalPath);
+OCAC_CLASS_METHOD(ocac_m_block_getSignalPaths);
+OCAC_CLASS_METHOD(ocac_m_block_getSignalPathsRecursive);
+OCAC_CLASS_METHOD(ocac_m_block_getMostRecentParamSetIdentifier);
+OCAC_CLASS_METHOD(ocac_m_block_applyParamSet);
+OCAC_CLASS_METHOD(ocac_m_block_getCurrentParamSetData);
+OCAC_CLASS_METHOD(ocac_m_block_storeCurrentParamSetData);
+OCAC_CLASS_METHOD(ocac_m_block_getGlobalType);
+OCAC_CLASS_METHOD(ocac_m_block_getONoMap);
+OCAC_CLASS_METHOD(ocac_m_block_findObjectsByRole);
+OCAC_CLASS_METHOD(ocac_m_block_findObjectsByRoleRecursive);
+OCAC_CLASS_METHOD(ocac_m_block_findObjectsByLabelRecursive);
+OCAC_CLASS_METHOD(ocac_m_block_findObjectsByPath);
+
 
 /** /CLASS/OBJECT DECLARATION **/
 

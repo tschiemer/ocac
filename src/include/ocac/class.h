@@ -35,8 +35,14 @@
 extern "C" {
 #endif
 
-//forward declaration
-struct ocac_obj_base;
+
+//used for forward declaration
+#ifndef OCAC_OBJ_BASE
+#define OCAC_OBJ_BASE struct ocac_obj_base
+#endif
+
+// forward declaration
+OCAC_OBJ_BASE;
 
 
 #if OCAC_USE_PROPERTIES == 1
@@ -55,7 +61,13 @@ struct ocac_class_event {
 };
 #endif
 
-typedef OcaStatus (*ocac_method_ptr)(struct ocac_obj_base * obj, u8_t * req, u16_t reqlen, u8_t * rsp, u16_t * rsplen, u16_t maxrsplen, struct ocac_session * session);
+
+#define OCAC_CLASS_METHOD(__method__) OcaStatus __method__(OCAC_OBJ_BASE * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session)
+
+typedef OCAC_CLASS_METHOD( ocac_method );
+typedef OCAC_CLASS_METHOD( (*ocac_method_ptr) );
+
+//typedef OcaStatus (*ocac_method_ptr)(struct ocac_obj_base * obj, u8_t * req, u32_t reqlen, u8_t * rsp, u32_t * rsplen, u32_t maxrsplen, struct ocac_session * session);
 
 struct ocac_class_method {
     OcaMethodID id;
