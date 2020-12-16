@@ -2,7 +2,7 @@
 
 Human readable form of AES70-2-2018 Appendix A (also see [XMI](http://www.aes.org/standards/models/AES70-2-2018-AnnexA.xmi), [EAP](http://www.aes.org/standards/models/AES70-2-2018-AnnexA.eap)) *(extract)*
 
-Required functionality according to AES70-2 Appendix B.
+Required functionality according to AES70-2-2018 Appendix B.
 
 ## Overview
 
@@ -42,10 +42,10 @@ Ver | ID | Class | ONo [1] | Required
 2 | 1 3 1 | OcaDeviceManager | 1 | YES
 2 | 1 3 2 | OcaSecurityManager | 2 | YES [3]
 2 | 1 3 3 | OcaFirmwareManager | 3 | YES
-2 | 1 3 4 | OcaSubscriptionManager | 4 | YES
+2 | 1 3 4 | OcaSubscriptionManager | 4 | (YES [4])
 2 | 1 3 5 | OcaPowerManager | 5
 2 | 1 3 6 | OcaNetworkManager | 6 | YES
-2 | 1 3 7 | OcaMediaClockManager | 7 | YES [4]
+2 | 1 3 7 | OcaMediaClockManager | 7 | YES [5]
 2 | 1 3 8 | OcaLibraryManager | 8
 2 | 1 3 9 | OcaAudioProcessingManager | 9
 2 | 1 3 10 | OcaDeviceTimeManager | 10
@@ -54,14 +54,14 @@ Ver | ID | Class | ONo [1] | Required
 1 | 1 3 13 | OcaDiagnosticManager | 13
 | |
 1 | 1 4 | OcaApplicationNetwork | | (YES)
-1 | 1 4 1 | OcaControlNetwork | | YES [5]
-1 | 1 4 2 | OcaMediaTransportNetwork | | YES [4]
+1 | 1 4 1 | OcaControlNetwork | | YES
+1 | 1 4 2 | OcaMediaTransportNetwork | | YES [5]
 
 1. iff singleton (manager) or object root
 2. Object root is an instance of OcaBlock
 3. For secured devices
-4. For streaming devices
-5.
+4. Streaming devices must support at least 2-3 events of OcaMediaTransportNetwork.
+5. For streaming devices
 
 ## OcaRoot
 ID 1, Version 2
@@ -661,9 +661,9 @@ ID | Declaration | Required
 02m01 | GetLabel() -> OcaString
 02m02 | SetLabel(OcaString)
 02m03 | GetOwner() -> OcaONo
-02m04 | GetServiceID() -> OcaApplicationNetworkServiceID
+02m04 | GetServiceID() [1] -> OcaApplicationNetworkServiceID | YES
 02m05 | SetServiceID(OcaApplicationNetworkServiceID)
-02m06 | GetSystemInterfaces() -> OcaList<OcaNetworkSystemInterfaceDescriptor>
+02m06 | GetSystemInterfaces() -> OcaList<OcaNetworkSystemInterfaceDescriptor> | YES
 02m07 | SetSystemInterfaces(OcaList<OcaNetworkSystemInterfaceDescriptor>)
 02m08 | GetState() -> OcaApplicationNetworkState
 02m09 | GetErrorCode() -> OcaUint16
@@ -677,45 +677,47 @@ ID | Declaration | Required
 02p05 | OcaApplicationNetworkState State
 02p06 | OcaUint16 ErrorCode
 
+[1] Note: According to AES70-2-2018 Appendix A this methods name is `GetServiceID` whereas in AES70-2-2018 Appendix B.4.14-15 it is `GetIDAdvertised`.
+
 ### OcaControlNetwork
 ID 1 4 1, Version 1
 
 ID | Declaration | Required
 --- | --- | ---
-03m01 | GetControlProtocol() -> OcaNetworkControlProtocol
+03m01 | GetControlProtocol() -> OcaNetworkControlProtocol | YES
 | |
 03p01 | OcaNetworkControlProtocol Protocol
 
 
-### OcaControlNetwork
+### OcaMediaTransportNetwork
 ID 1 4 1, Version 1
 
 ID | Declaration | Required
 --- | --- | ---
-03m01 | GetMediaProtocol) -> OcaNetworkMediaProtocol
-03m02 | GetPorts() -> OcaList<OcaPort>
+03m01 | GetMediaProtocol) -> OcaNetworkMediaProtocol | YES
+03m02 | GetPorts() -> OcaList<OcaPort> | YES
 03m03 | GetPortName(OcaPortID) -> OcaString
 03m04 | SetPortName(OcaPortID, OcaString)
-03m05 | GetMaxSourceConnectors() -> OcaUint16
-03m06 | GetMaxSinkConnectors() -> OcaUint16
-03m07 | GetMaxPinsPerConnector() -> OcaUint16
-03m08 | GetMaxPortsPerPin() -> OcaUint16
-03m09 | GetSourceConnectors() -> OcaList<OcaMediaSourceConnector>
-03m10 | GetSourceConnector(OcaMediaConnectorID) -> OcaMediaSourceConnector
-03m11 | GetSinkConnectors() -> OcaList<OcaMediaSinkConnector>
-03m12 | GetSinkConnector(OcaMediaConnectorID) -> OcaMediaSinkConnector
-03m13 | GetConnectorsStatuses() -> OcaList<OcaMediaConnectorStatus>
-03m14 | GetConnectorStatus(OcaMediaConnectorID) -> OcaMediaConnectorStatus
-03m15 | AddSourceConnector(OcaMediaSourceConnector, OcaMediaConnectorState)
-03m16 | AddSinkConnector(OcaMediaConnectorStatus initial, OcaMediaSinkConnector)
+03m05 | GetMaxSourceConnectors() -> OcaUint16 | YES
+03m06 | GetMaxSinkConnectors() -> OcaUint16 | YES
+03m07 | GetMaxPinsPerConnector() -> OcaUint16 | YES
+03m08 | GetMaxPortsPerPin() -> OcaUint16 | YES
+03m09 | GetSourceConnectors() -> OcaList<OcaMediaSourceConnector> | YES [1]
+03m10 | GetSourceConnector(OcaMediaConnectorID) -> OcaMediaSourceConnector | YES [1]
+03m11 | GetSinkConnectors() -> OcaList<OcaMediaSinkConnector> | YES [2]
+03m12 | GetSinkConnector(OcaMediaConnectorID) -> OcaMediaSinkConnector | YES [2]
+03m13 | GetConnectorsStatuses() -> OcaList<OcaMediaConnectorStatus> | YES
+03m14 | GetConnectorStatus(OcaMediaConnectorID) -> OcaMediaConnectorStatus | YES
+03m15 | AddSourceConnector(OcaMediaSourceConnector, OcaMediaConnectorState) | YES [1]
+03m16 | AddSinkConnector(OcaMediaConnectorStatus initial, OcaMediaSinkConnector) | YES [2]
 03m17 | ControlConnector(OcaMediaConnectorID, OcaMediaConnectorCommand)
-03m18 | SetSourceConnectorPinMap(OcaMediaConnectorID, OcaMultiMap<OcaUint16, OcaPortID>)
-03m19 | SetSinkConnectorPinMap(OcaMediaConnectorID, OcaMultiMap<OcaUint16, OcaPortID>)
-03m20 | SetConnectorConnection(OcaMediaConnectorID, OcaMediaConnection)
-03m21 | SetConnectorCoding(OcaMediaConnectorID, OcaMediaCoding)
-03m22 | SetConnectorAlignmentLevel(OcaMediaConnectorID, OcaDBFS)
-03m23 | SetConnectorAlignmentGain(OcaMediaConnectorID, OcaMediaCoding)
-03m24 | DeleteConnector(OcaMediaConnectorID)
+03m18 | SetSourceConnectorPinMap(OcaMediaConnectorID, OcaMultiMap<OcaUint16, OcaPortID>) | YES [1]
+03m19 | SetSinkConnectorPinMap(OcaMediaConnectorID, OcaMultiMap<OcaUint16, OcaPortID>) | YES [2]
+03m20 | SetConnectorConnection(OcaMediaConnectorID, OcaMediaConnection) | YES [1,2]
+03m21 | SetConnectorCoding(OcaMediaConnectorID, OcaMediaCoding) | YES [1,2]
+03m22 | SetConnectorAlignmentLevel(OcaMediaConnectorID, OcaDBFS) | YES [1,2]
+03m23 | SetConnectorAlignmentGain(OcaMediaConnectorID, OcaMediaCoding) | YES [2]
+03m24 | DeleteConnector(OcaMediaConnectorID) | YES
 03m25 | GetAlignmentLevel) -> OcaDBFS level, OcaDBFS minLevel, OcaDBFS maxLevel
 03m26 | GetAlignmentGain() -> OcaDB gain, OcaDB minGain, OcaDB maxGain
 | |
@@ -728,6 +730,9 @@ ID | Declaration | Required
 03p07 | OcaDBFS AlignmentLevel
 03p08 | OcaDB AlignementGain
 | |
-03e01 | SourceConnectorChanged -> OcaMediaSourceConnectorChangedEventData
-03e02 | SinkConnectorChanged -> OcaMediaSinkConnectorChangedEventData
-03e03 | ConnectorStatusChanged -> OcaMediaConnectorStatusChangedEventData
+03e01 | SourceConnectorChanged -> OcaMediaSourceConnectorChangedEventData | YES [1]
+03e02 | SinkConnectorChanged -> OcaMediaSinkConnectorChangedEventData | YES [2]
+03e03 | ConnectorStatusChanged -> OcaMediaConnectorStatusChangedEventData | YES
+
+[1] Required when a source is present.
+[2] Required when a sink is present.
