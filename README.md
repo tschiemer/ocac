@@ -18,6 +18,8 @@ that thus would act like protocol callbacks.
 
 For every target platform some basic functionality must be implemented, also see interfaces in `src/include/ocac/host/`.
 
+See directory `docs` for further documentation of AES70 ..
+
 ## Very short and simple intro to AES70
 
 AES70 is an object-oriented protocol which means that it more or less works like a remote API or RPC framework
@@ -53,11 +55,6 @@ Websockets | `_ocaws._tcp` | `txtvers=1` `protovers=V`, optional: `path=XYZ` [3]
 3. base path or websocket, if missing `/` is assumed
 
 Also see header `src/include/ocac/mdns.h`.
-
-
-## Connection Management (audio streams)
-
-TODO
 
 
 ## Resources & Related
